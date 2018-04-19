@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>The Twelve-Factor App Dies ist eine Übersetzung.</title>
+  <meta name="description" content="A methodology for building modern, scalable, maintainable software-as-a-service apps.">
+  <meta name="author" content="Adam Wiggins">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" href="images/favicon.ico">
+
+  <link rel="stylesheet" href="/css/screen.css" media="screen">
+  <link rel="stylesheet" href="/css/mobile.css" media="screen">
+
+  <script type="text/javascript" src="//use.typekit.com/rsq7tro.js"></script>
+  <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+</head>
+<body>
+  
+  <!-- Google Tag Manager -->
+  <noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-TK5QTP"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-TK5QTP');</script>
+  <!-- End Google Tag Manager -->
+  
+
+  <header>
+    <h1><a href="./" title="The Twelve-Factor App">The Twelve-Factor App</a></h1>
+  </header>
+
+  <section class="abstract" id="factor">
+  <article>
+    
+<h2 id="ii_abhngigkeiten">II. Abhängigkeiten</h2>
+
+<h3 id="abhngigkeiten_explizit_deklarieren_und_isolieren">Abhängigkeiten explizit deklarieren und isolieren</h3>
+
+<p>Die meisten Programmiersprachen bieten ein System an, um unterstützende Bibliotheken zu verbreiten, wie <a href="http://www.cpan.org/">CPAN</a> für Perl oder <a href="http://rubygems.org/">Rubygems</a> für Ruby. Aus einem Paketsystem stammende Bibliotheken können systemweit installiert werden (auch “Site Packages” genannt) oder in ein Verzeichnis der App beschränkt werden (genannt “vendoring” oder “bundling” - deutsch auch “mitliefern”).</p>
+
+<p><strong>Eine Zwölf-Faktor-App verlässt sich nie auf die Existenz von systemweiten Paketen.</strong> Sie deklariert alle Abhängigkeiten vollständig und korrekt über eine <em>Abhängigkeitsdeklaration</em>. Weiter benutzt sie zur Laufzeit ein Werkzeug zur <em>Isolation von Abhängigkeiten</em> um sicherzustellen, dass keine impliziten Abhängigkeiten aus dem umgebenden System “hereinsickern”. Die vollständige und explizite Spezifikation der Abhängigkeiten wird gleichermaßen in Produktion und Entwicklung angewandt.</p>
+
+<p>So bietet zum Beispiel <a href="https://bundler.io/">Bundler</a> für Ruby das Format <code>Gemfile</code> zur Abhängigkeitsdeklaration und <code>bundle exec</code> zur Isolation von Abhängigkeiten. In Python gibt es für diese Schritte zwei unterschiedliche Werkzeuge – <a href="http://www.pip-installer.org/en/latest/">Pip</a> für die Deklaration und <a href="http://www.virtualenv.org/en/latest/">Virtualenv</a> für die Isolation. Selbst C hat <a href="http://www.gnu.org/s/autoconf/">Autoconf</a> zur Deklaration der Abhängigkeiten, und statisches Linken kann für Isolation sorgen. Unabhängig von den Werkzeugen müssen Abhängigkeitsdeklaration und Isolation immer zusammen benutzt werden – eines alleine genügt für die zwölf Faktoren nicht.</p>
+
+<p>Ein Nutzen der expliziten Abhängigkeitsdeklaration ist das einfachere Aufsetzen der App für neue Entwickler. Neue Entwickler können die Codebase der App auf ihre Entwicklungsmaschine auschecken und brauchen dazu nur eine Sprach-Runtime und eine Abhängigkeitsverwaltung. Um die App zum Laufen zu bringen wird lediglich ein deterministisches <em>Build-Kommando</em> benötigt. So ist zum Beispiel das Build-Kommando für Ruby/Bundler <code>bundle install</code> und für Clojure/<a href="https://github.com/technomancy/leiningen#readme">Leiningen</a> ist es <code>lein deps</code>.</p>
+
+<p>Zwölf-Faktor-Apps verlassen sich auch nicht auf die implizite Existenz irgendwelcher Systemwerkzeuge. Beispiele dafür sind Shell-Aufrufe von ImageMagick oder <code>curl</code>. Auch wenn diese Werkzeuge auf vielen und sogar den meisten Systemen vorhanden sind, gibt es keine Garantie, dass sie auf allen Systemen vorhanden sind, auf denen die App in Zukunft laufen wird, oder dass die Werkzeug-Version die in Zukunft auf einem System vorhanden sein wird, kompatibel ist. Wenn die App per Shell auf ein Systemwerkzeug zugreift, sollte die App das Werkzeug mitliefern.</p>
+
+  </article>
+</section>
+
+<section class="concrete">
+  <nav>
+    <div id="locales"><a href="/ru/dependencies">Русский (ru)</a> | <a href="/dependencies">English (en)</a> | <a href="/ja/dependencies">日本語 (ja)</a> | <a href="/tr/dependencies">Turkish (tr)</a> | <a href="/ko/dependencies">한국어 (ko)</a> | <a href="/fr/dependencies">Français (fr)</a> | <span>Deutsch (de)</span> | <a href="/pl/dependencies">Polski (pl)</a> | <a href="/it/dependencies">Italiano (it)</a> | <a href="/uk/dependencies">Українська (uk)</a> | <a href="/es/dependencies">Español (es)</a> | <a href="/zh_cn/dependencies">简体中文 (zh_cn)</a> | <a href="/pt_br/dependencies">Brazilian Portuguese (pt_br)</a></div>
+    <div id="prev"><a href="./codebase">&laquo; Previous</a></div>
+    <div id="next"><a href="./config">Next &raquo;</a></div>
+  </nav>
+</section>
+
+
+  <footer>
+  <div id="locales"><a href="/ru/dependencies">Русский (ru)</a> | <a href="/dependencies">English (en)</a> | <a href="/ja/dependencies">日本語 (ja)</a> | <a href="/tr/dependencies">Turkish (tr)</a> | <a href="/ko/dependencies">한국어 (ko)</a> | <a href="/fr/dependencies">Français (fr)</a> | <span>Deutsch (de)</span> | <a href="/pl/dependencies">Polski (pl)</a> | <a href="/it/dependencies">Italiano (it)</a> | <a href="/uk/dependencies">Українська (uk)</a> | <a href="/es/dependencies">Español (es)</a> | <a href="/zh_cn/dependencies">简体中文 (zh_cn)</a> | <a href="/pt_br/dependencies">Brazilian Portuguese (pt_br)</a></div>
+  <div>Written by Adam Wiggins</div>
+  <div>Last updated 2017</div>
+  <div><a href="https://github.com/heroku/12factor">Sourcecode</a></div>
+  <div><a href="/12factor.epub">Download ePub Book</a></div>
+  <div><a href="https://www.heroku.com/policy/privacy">Privacy Policy</a></div>
+</footer>
+</body>
+</html>

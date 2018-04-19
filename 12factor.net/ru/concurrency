@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>The Twelve-Factor App (Русский перевод)</title>
+  <meta name="description" content="A methodology for building modern, scalable, maintainable software-as-a-service apps.">
+  <meta name="author" content="Adam Wiggins">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" href="images/favicon.ico">
+
+  <link rel="stylesheet" href="/css/screen.css" media="screen">
+  <link rel="stylesheet" href="/css/mobile.css" media="screen">
+
+  <script type="text/javascript" src="//use.typekit.com/rsq7tro.js"></script>
+  <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+</head>
+<body>
+  
+  <!-- Google Tag Manager -->
+  <noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-TK5QTP"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-TK5QTP');</script>
+  <!-- End Google Tag Manager -->
+  
+
+  <header>
+    <h1><a href="./" title="The Twelve-Factor App">The Twelve-Factor App</a></h1>
+  </header>
+
+  <section class="abstract" id="factor">
+  <article>
+    
+<h2 id="viii_">VIII. Параллелизм</h2>
+
+<h3 id="____">Масштабируйте приложение с помощью процессов</h3>
+
+<p>Любая компьютерная программа после запуска представляет собой один или несколько работающих процессов. Исторически веб-приложения принимали различные формы выполнения процессов. К примеру, PHP-процессы выполнятся как дочерние процессы Apache и запускаются по требованию в необходимом для обслуживания поступивших запросов количестве. Java-процессы используют противоположный подход, JVM представляет собой один монолитный мета-процесс, который резервирует большой объём системных ресурсов (процессор и память) при запуске и управляет параллельностью внутри себя с помощью нитей исполнения (threads). В обоих случаях запущенные процессы лишь минимально видны для разработчика приложения.</p>
+
+<p><img src="/images/process-types.png" alt="Масштабирование выражается в количестве запущенных процессов, различие рабочей нагрузки выражается в типах процессов." /></p>
+
+<p><strong>В приложении двенадцати факторов процессы являются сущностями первого класса.</strong> Процессы в приложении двенадцати факторов взяли сильные стороны из <a href="https://adam.herokuapp.com/past/2011/5/9/applying_the_unix_process_model_to_web_apps/">модели процессов Unix для запуска демонов</a>. С помощью этой модели разработчик может спроектировать своё приложение таким образом, что для обработки различной рабочей нагрузки необходимо назначить каждому типу работы своего <em>типа процесса</em>. Например, HTTP-запросы могут быть обработаны веб-процессом, а длительные фоновые задачи обработаны рабочим процессом.</p>
+
+<p>Это не исключает возможность использования внутреннего мультиплексирования для индивидуальных процессов через потоки выполнения виртуальной машины или асинхронные/событийные модели в инструментах таких, как <a href="http://rubyeventmachine.com/">EventMachine</a>, <a href="http://twistedmatrix.com/trac/">Twisted</a> и <a href="http://nodejs.org/">Node.js</a>. Но каждая индивидуальная виртуальная машина может масштабироваться только ограничено (вертикальное масштабирование), поэтому приложение должно иметь возможность быть запущенным как несколько процессов на различных физических машинах.</p>
+
+<p>Модель, построенная на процессах, действительно сияет, когда приходит время масштабирования. <a href="./processes">Отсутствие разделяемых данных и горизонтальное разделение процессов приложения двенадцати факторов</a> означает, что добавление большего параллелизма является простой и надёжной операцией. Массив процессов различного типа и количество процессов каждого типа называются <em>формированием процессов (process formation)</em>.</p>
+
+<p>Процессы приложения двенадцати факторов <a href="http://dustin.github.com/2010/02/28/running-processes.html">никогда не должны демонизироваться</a> и записывать PID файлы. Вместо этого они должны полагаться на менеджер процессов операционной системы (например, <a href="https://www.freedesktop.org/wiki/Software/systemd/">systemd</a>, распределённый менеджер процессов на облачной платформе, или инструмент как <a href="http://blog.daviddollar.org/2011/05/06/introducing-foreman.html">Foreman</a> в процессе разработки) для управления <a href="./logs">потоком вывода</a>, реагирования на падения процесса и обработки инициированных пользователем перезагрузки или завершения работы.</p>
+
+  </article>
+</section>
+
+<section class="concrete">
+  <nav>
+    <div id="locales"><span>Русский (ru)</span> | <a href="/concurrency">English (en)</a> | <a href="/ja/concurrency">日本語 (ja)</a> | <a href="/tr/concurrency">Turkish (tr)</a> | <a href="/ko/concurrency">한국어 (ko)</a> | <a href="/fr/concurrency">Français (fr)</a> | <a href="/de/concurrency">Deutsch (de)</a> | <a href="/pl/concurrency">Polski (pl)</a> | <a href="/it/concurrency">Italiano (it)</a> | <a href="/uk/concurrency">Українська (uk)</a> | <a href="/es/concurrency">Español (es)</a> | <a href="/zh_cn/concurrency">简体中文 (zh_cn)</a> | <a href="/pt_br/concurrency">Brazilian Portuguese (pt_br)</a></div>
+    <div id="prev"><a href="./port-binding">&laquo; Previous</a></div>
+    <div id="next"><a href="./disposability">Next &raquo;</a></div>
+  </nav>
+</section>
+
+
+  <footer>
+  <div id="locales"><span>Русский (ru)</span> | <a href="/concurrency">English (en)</a> | <a href="/ja/concurrency">日本語 (ja)</a> | <a href="/tr/concurrency">Turkish (tr)</a> | <a href="/ko/concurrency">한국어 (ko)</a> | <a href="/fr/concurrency">Français (fr)</a> | <a href="/de/concurrency">Deutsch (de)</a> | <a href="/pl/concurrency">Polski (pl)</a> | <a href="/it/concurrency">Italiano (it)</a> | <a href="/uk/concurrency">Українська (uk)</a> | <a href="/es/concurrency">Español (es)</a> | <a href="/zh_cn/concurrency">简体中文 (zh_cn)</a> | <a href="/pt_br/concurrency">Brazilian Portuguese (pt_br)</a></div>
+  <div>Written by Adam Wiggins</div>
+  <div>Last updated 2017</div>
+  <div><a href="https://github.com/heroku/12factor">Sourcecode</a></div>
+  <div><a href="/12factor.epub">Download ePub Book</a></div>
+  <div><a href="https://www.heroku.com/policy/privacy">Privacy Policy</a></div>
+</footer>
+</body>
+</html>

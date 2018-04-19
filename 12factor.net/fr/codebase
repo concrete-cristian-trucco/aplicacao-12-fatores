@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>The Twelve-Factor App Ce texte est une traduction</title>
+  <meta name="description" content="A methodology for building modern, scalable, maintainable software-as-a-service apps.">
+  <meta name="author" content="Adam Wiggins">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" href="images/favicon.ico">
+
+  <link rel="stylesheet" href="/css/screen.css" media="screen">
+  <link rel="stylesheet" href="/css/mobile.css" media="screen">
+
+  <script type="text/javascript" src="//use.typekit.com/rsq7tro.js"></script>
+  <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+</head>
+<body>
+  
+  <!-- Google Tag Manager -->
+  <noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-TK5QTP"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-TK5QTP');</script>
+  <!-- End Google Tag Manager -->
+  
+
+  <header>
+    <h1><a href="./" title="The Twelve-Factor App">The Twelve-Factor App</a></h1>
+  </header>
+
+  <section class="abstract" id="factor">
+  <article>
+    
+<h2 id="i_base_de_code">I. Base de code</h2>
+
+<h3 id="une_base_de_code_suivie_avec_un_systme_de_contrle_de_version_plusieurs_dploiements">Une base de code suivie avec un système de contrôle de version, plusieurs déploiements</h3>
+
+<p>Une application 12 facteurs est toujours suivie dans un système de contrôle de version, tel que <a href="http://git-scm.com/">Git</a>, <a href="https://www.mercurial-scm.org/">Mercurial</a>, ou <a href="http://subversion.apache.org/">Subversion</a>. Une copie de la base de données de suivi des révisions est appelée <em>dépôt de code</em>, souvent raccourci en <em>dépôt</em>. Le terme anglais <em>code repository</em>, raccourci en <em>repository</em> et <em>repo</em> est également utilisé.</p>
+
+<p>Une <em>base de code</em> correspond à chaque dépôt (dans un système de contrôle de version centralisé tel que Subversion), ou tout ensemble de dépôts qui partage un commit racine (dans un système de contrôle de version décentralisé comme Git).</p>
+
+<p><img src="/images/codebase-deploys.png" alt="Une base de code est associée à plusieurs déploiements" /></p>
+
+<p>Il y a toujours un rapport direct entre la base de code et l’application :</p>
+
+<ul>
+<li>S’il y a plusieurs bases de code, ce n’est pas une application, c’est un système distribué. Chaque composant du système distribué est une application, et chacun peut individuellement respecter la méthodologie 12 facteurs.</li>
+
+<li>Plusieurs applications partageant le même code est une violation des 12 facteurs. La solution dans ce cas est de factoriser le code partagé dans des bibliothèques qui peuvent être intégrées via un <a href="./dependencies">gestionnaire de dépendances</a>.</li>
+</ul>
+
+<p>Il y a seulement une base de code par application, mais il y aura plusieurs déploiements de l’application. Un <em>déploiement</em> est une instance en fonctionnement de l’application. C’est, par exemple, le site en production, ou bien un ou plusieurs sites de validation. En plus de cela, chaque développeur a une copie de l’application qui fonctionne dans son environnement local de développement, ce qui compte également comme un déploiement.</p>
+
+<p>La base de code est la même à travers tous les déploiements, bien que différentes versions puissent être actives dans chaque déploiement. Par exemple, un développeur a des commits qui ne sont pas encore déployés dans l’environnement de validation. L’environnement de validation a des commits qui ne sont pas encore déployés en production. Par contre, ils partagent tous la même base de code, ce qui les identifie comme étant des déploiements différents d’une même application.</p>
+
+  </article>
+</section>
+
+<section class="concrete">
+  <nav>
+    <div id="locales"><a href="/ru/codebase">Русский (ru)</a> | <a href="/codebase">English (en)</a> | <a href="/ja/codebase">日本語 (ja)</a> | <a href="/tr/codebase">Turkish (tr)</a> | <a href="/ko/codebase">한국어 (ko)</a> | <span>Français (fr)</span> | <a href="/de/codebase">Deutsch (de)</a> | <a href="/pl/codebase">Polski (pl)</a> | <a href="/it/codebase">Italiano (it)</a> | <a href="/uk/codebase">Українська (uk)</a> | <a href="/es/codebase">Español (es)</a> | <a href="/zh_cn/codebase">简体中文 (zh_cn)</a> | <a href="/pt_br/codebase">Brazilian Portuguese (pt_br)</a></div>
+    <div id="prev"></div>
+    <div id="next"><a href="./dependencies">Next &raquo;</a></div>
+  </nav>
+</section>
+
+
+  <footer>
+  <div id="locales"><a href="/ru/codebase">Русский (ru)</a> | <a href="/codebase">English (en)</a> | <a href="/ja/codebase">日本語 (ja)</a> | <a href="/tr/codebase">Turkish (tr)</a> | <a href="/ko/codebase">한국어 (ko)</a> | <span>Français (fr)</span> | <a href="/de/codebase">Deutsch (de)</a> | <a href="/pl/codebase">Polski (pl)</a> | <a href="/it/codebase">Italiano (it)</a> | <a href="/uk/codebase">Українська (uk)</a> | <a href="/es/codebase">Español (es)</a> | <a href="/zh_cn/codebase">简体中文 (zh_cn)</a> | <a href="/pt_br/codebase">Brazilian Portuguese (pt_br)</a></div>
+  <div>Written by Adam Wiggins</div>
+  <div>Last updated 2017</div>
+  <div><a href="https://github.com/heroku/12factor">Sourcecode</a></div>
+  <div><a href="/12factor.epub">Download ePub Book</a></div>
+  <div><a href="https://www.heroku.com/policy/privacy">Privacy Policy</a></div>
+</footer>
+</body>
+</html>

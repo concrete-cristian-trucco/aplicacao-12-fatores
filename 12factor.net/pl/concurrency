@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>The Twelve-Factor App To jest tłumaczenie.</title>
+  <meta name="description" content="A methodology for building modern, scalable, maintainable software-as-a-service apps.">
+  <meta name="author" content="Adam Wiggins">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" href="images/favicon.ico">
+
+  <link rel="stylesheet" href="/css/screen.css" media="screen">
+  <link rel="stylesheet" href="/css/mobile.css" media="screen">
+
+  <script type="text/javascript" src="//use.typekit.com/rsq7tro.js"></script>
+  <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+</head>
+<body>
+  
+  <!-- Google Tag Manager -->
+  <noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-TK5QTP"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-TK5QTP');</script>
+  <!-- End Google Tag Manager -->
+  
+
+  <header>
+    <h1><a href="./" title="The Twelve-Factor App">The Twelve-Factor App</a></h1>
+  </header>
+
+  <section class="abstract" id="factor">
+  <article>
+    
+<h2 id="viii_wspbieno">VIII. Współbieżność</h2>
+
+<h3 id="skaluj_przez_odpowiednio_dobrane_procesy">Skaluj przez odpowiednio dobrane procesy</h3>
+
+<p>Każdy program komputerowy od momentu uruchomienia jest reprezentowany przez jeden lub więcej procesów. Aplikacje internetowe mogą być uruchamiane w różnorodny sposób. Dla przykładu - procesy PHP uruchamiane są na żądanie (w zależności od potrzeby obsługi odpowiednio dużej liczby zapytań) jako podrzędne procesy Apache’a. W Javie procesy obsługiwane są zupełnie inaczej, z JVM zapewniającym jeden nadrzędny proces, który rezerwuje zasoby systemu (CPU oraz pamięć) na starcie oraz współbieżnością zarządzaną wewnętrznie i opartą na wątkach. Dla developerów aplikacji różnica jednak nie będzie szczególnie odczuwalna.</p>
+
+<p><img src="/images/process-types.png" alt="Skala wyrażana jest przez działające procesy, natomiast różnorodność obciążenia wyrażana jest w typach procesów" /></p>
+
+<p><strong>W aplikacji 12factor, procesy są typem pierwszoklasowym</strong> Zachowanie tych procesów jest mocno wzorowane na <a href="https://adam.herokuapp.com/past/2011/5/9/applying_the_unix_process_model_to_web_apps/">modelu procesów unixowych dla usług działających w wewnątrz systemu operacyjnego</a>. Używając tego modelu programista może zaprojektować aplikację by radziła sobie z różnorodnym obciążeniem przez przypisywanie każdej czynności do <em>typu procesu</em>. Przykłady to m.in obsługa procesów sieciowych przez HTTP oraz długotrwałe działanie zadań w tle opierających się na procesach roboczych.</p>
+
+<p>Mimo tego procesy wciąż mogą się zwielokrotnić przez wątki w środowisku maszyny wirtualnej lub w asynchronicznym modelu wydarzeń, którego implementację możemy znaleźć wśród narzędzi takich jak <a href="http://rubyeventmachine.com/">EventMachine</a>, <a href="http://twistedmatrix.com/trac/">Twisted</a>, albo <a href="http://nodejs.org/">Node.js</a>. Należy pamiętać, że pojedyncza maszyna wirtualna może z czasem wymagać coraz więcej zasobów (skala pionowa), dlatego aplikacja musi być również w stanie pracować w oparciu o wiele procesów działających na wielu fizycznych maszynach.</p>
+
+<p>Największa zaleta modelu procesów objawia się w momencie skalowania. <a href="./processes">Niezależność oraz dzielenie się na podprocesy</a> umożliwia proste i bezproblemowe dodawanie wiekszej liczby równolegle działajacych procesów. Tablica typów procesów i liczba procesów nazywana jest ich <em>formacją</em>.</p>
+
+<p>Procesy aplikacji 12factor <a href="http://dustin.github.com/2010/02/28/running-processes.html">nigdy nie powinny być uruchamiane w tle</a> i nie mogą zapisywać plików PID. Zamiast tego opierają się na narzędziach systemu operacyjnego: do zarządzania procesami (np. <a href="https://www.freedesktop.org/wiki/Software/systemd/">systemd</a>, do zarządzania rozproszonymi procesami w chmurze, lub <a href="http://blog.daviddollar.org/2011/05/06/introducing-foreman.html">Foreman</a> w developmencie) do zarządzania <a href="./logs">stumieniami wyjściowymi</a>, do obsługi zatrzymanych procesów, restartu i zakończenia działań zainicjowanych przez użytkownika.</p>
+
+  </article>
+</section>
+
+<section class="concrete">
+  <nav>
+    <div id="locales"><a href="/concurrency">English (en)</a> | <a href="/ko/concurrency">한국어 (ko)</a> | <a href="/ja/concurrency">日本語 (ja)</a> | <a href="/it/concurrency">Italiano (it)</a> | <span>Polski (pl)</span> | <a href="/zh_cn/concurrency">简体中文 (zh_cn)</a> | <a href="/de/concurrency">Deutsch (de)</a> | <a href="/es/concurrency">Español (es)</a> | <a href="/fr/concurrency">Français (fr)</a> | <a href="/tr/concurrency">Turkish (tr)</a> | <a href="/uk/concurrency">Українська (uk)</a> | <a href="/pt_br/concurrency">Brazilian Portuguese (pt_br)</a> | <a href="/ru/concurrency">Русский (ru)</a></div>
+    <div id="prev"><a href="./port-binding">&laquo; Previous</a></div>
+    <div id="next"><a href="./disposability">Next &raquo;</a></div>
+  </nav>
+</section>
+
+
+  <footer>
+  <div id="locales"><a href="/concurrency">English (en)</a> | <a href="/ko/concurrency">한국어 (ko)</a> | <a href="/ja/concurrency">日本語 (ja)</a> | <a href="/it/concurrency">Italiano (it)</a> | <span>Polski (pl)</span> | <a href="/zh_cn/concurrency">简体中文 (zh_cn)</a> | <a href="/de/concurrency">Deutsch (de)</a> | <a href="/es/concurrency">Español (es)</a> | <a href="/fr/concurrency">Français (fr)</a> | <a href="/tr/concurrency">Turkish (tr)</a> | <a href="/uk/concurrency">Українська (uk)</a> | <a href="/pt_br/concurrency">Brazilian Portuguese (pt_br)</a> | <a href="/ru/concurrency">Русский (ru)</a></div>
+  <div>Written by Adam Wiggins</div>
+  <div>Last updated 2017</div>
+  <div><a href="https://github.com/heroku/12factor">Sourcecode</a></div>
+  <div><a href="/12factor.epub">Download ePub Book</a></div>
+  <div><a href="https://www.heroku.com/policy/privacy">Privacy Policy</a></div>
+</footer>
+</body>
+</html>

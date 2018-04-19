@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>The Twelve-Factor App （日本語訳）</title>
+  <meta name="description" content="A methodology for building modern, scalable, maintainable software-as-a-service apps.">
+  <meta name="author" content="Adam Wiggins">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" href="images/favicon.ico">
+
+  <link rel="stylesheet" href="/css/screen.css" media="screen">
+  <link rel="stylesheet" href="/css/mobile.css" media="screen">
+
+  <script type="text/javascript" src="//use.typekit.com/rsq7tro.js"></script>
+  <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+</head>
+<body>
+  
+  <!-- Google Tag Manager -->
+  <noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-TK5QTP"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-TK5QTP');</script>
+  <!-- End Google Tag Manager -->
+  
+
+  <header>
+    <h1><a href="./" title="The Twelve-Factor App">The Twelve-Factor App</a></h1>
+  </header>
+
+  <section class="abstract" id="factor">
+  <article>
+    
+<h2 id="xi_">XI. ログ</h2>
+
+<h3 id="">ログをイベントストリームとして扱う</h3>
+
+<p><em>ログ</em> は実行中のアプリケーションの挙動を可視化する。サーバーベースの環境では、ログは一般的にディスク上のファイル（“ログファイル”）に書き込まれる。しかしこれは出力フォーマットの一つに過ぎない。</p>
+
+<p>ログは、すべての実行中のプロセスとバックエンドサービスの出力ストリームから収集されたイベントが、集約されて時刻順に並べられた<a href="https://adam.herokuapp.com/past/2011/4/1/logs_are_streams_not_files/">ストリーム</a>である。生の状態のログは、通常1行が1つのイベントを表すテキストフォーマットである（例外のバックトレースは複数行に渡る場合もあるが）。ログには固定の始まりと終わりはなく、アプリケーションが稼動している限り流れ続ける。</p>
+
+<p><strong>Twelve-Factor Appはアプリケーションの出力ストリームの送り先やストレージについて一切関知しない。</strong> アプリケーションはログファイルに書き込んだり管理しようとするべきではない。代わりに、それぞれの実行中のプロセスはイベントストリームを<code>stdout</code>（標準出力）にバッファリングせずに書きだす。ローカルでの開発中、開発者はこのストリームをターミナルのフォアグラウンドで見ることで、アプリケーションの挙動を観察する。</p>
+
+<p>ステージングや本番のデプロイでは、それぞれのプロセスのストリームは実行環境に捕らえられ、アプリケーションからの他のすべてのストリームと一緒に並べられ、表示や長期アーカイブのために1つもしくは複数の最終目的地に送られる。これらの保存のための目的地は、アプリケーションからは見ることも設定することもできず、代わりに実行環境によって完全に管理される。<a href="https://github.com/heroku/logplex">Logplex</a> や <a href="https://github.com/fluent/fluentd">Fluentd</a> などのオープンソースのログルーターがこの目的に利用できる。</p>
+
+<p>アプリケーションのイベントストリームは、ファイルに送られたり、ターミナルでtailを使ってリアルタイムに見られたりする。最も重要な用途として、ストリームは、<a href="http://www.splunk.com/">Splunk</a>などのログインデックス・解析システムや、<a href="http://hive.apache.org/">Hadoop/Hive</a>などの汎用データウェアハウスシステムに送られることもある。これらのシステムは、長期に渡ってアプリケーションの挙動を確認するための大きな力と柔軟性をもたらし、次のようなことができるようになる。</p>
+
+<ul>
+<li>過去の特定のイベントを見つける。</li>
+
+<li>大きなスケールの傾向をグラフ化する。（1分あたりのリクエスト数など）</li>
+
+<li>ユーザー定義のヒューリスティクスに基づいて素早くアラートを出す。（1分あたりのエラー数がある閾値を超えた場合にアラートを出すなど）</li>
+</ul>
+
+  </article>
+</section>
+
+<section class="concrete">
+  <nav>
+    <div id="locales"><a href="/logs">English (en)</a> | <a href="/ko/logs">한국어 (ko)</a> | <span>日本語 (ja)</span> | <a href="/it/logs">Italiano (it)</a> | <a href="/pl/logs">Polski (pl)</a> | <a href="/zh_cn/logs">简体中文 (zh_cn)</a> | <a href="/de/logs">Deutsch (de)</a> | <a href="/es/logs">Español (es)</a> | <a href="/fr/logs">Français (fr)</a> | <a href="/tr/logs">Turkish (tr)</a> | <a href="/uk/logs">Українська (uk)</a> | <a href="/pt_br/logs">Brazilian Portuguese (pt_br)</a> | <a href="/ru/logs">Русский (ru)</a></div>
+    <div id="prev"><a href="./dev-prod-parity">&laquo; Previous</a></div>
+    <div id="next"><a href="./admin-processes">Next &raquo;</a></div>
+  </nav>
+</section>
+
+
+  <footer>
+  <div id="locales"><a href="/logs">English (en)</a> | <a href="/ko/logs">한국어 (ko)</a> | <span>日本語 (ja)</span> | <a href="/it/logs">Italiano (it)</a> | <a href="/pl/logs">Polski (pl)</a> | <a href="/zh_cn/logs">简体中文 (zh_cn)</a> | <a href="/de/logs">Deutsch (de)</a> | <a href="/es/logs">Español (es)</a> | <a href="/fr/logs">Français (fr)</a> | <a href="/tr/logs">Turkish (tr)</a> | <a href="/uk/logs">Українська (uk)</a> | <a href="/pt_br/logs">Brazilian Portuguese (pt_br)</a> | <a href="/ru/logs">Русский (ru)</a></div>
+  <div>Written by Adam Wiggins</div>
+  <div>Last updated 2017</div>
+  <div><a href="https://github.com/heroku/12factor">Sourcecode</a></div>
+  <div><a href="/12factor.epub">Download ePub Book</a></div>
+  <div><a href="https://www.heroku.com/policy/privacy">Privacy Policy</a></div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>The Twelve-Factor App （日本語訳）</title>
+  <meta name="description" content="A methodology for building modern, scalable, maintainable software-as-a-service apps.">
+  <meta name="author" content="Adam Wiggins">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" href="images/favicon.ico">
+
+  <link rel="stylesheet" href="/css/screen.css" media="screen">
+  <link rel="stylesheet" href="/css/mobile.css" media="screen">
+
+  <script type="text/javascript" src="//use.typekit.com/rsq7tro.js"></script>
+  <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+</head>
+<body>
+  
+  <!-- Google Tag Manager -->
+  <noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-TK5QTP"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-TK5QTP');</script>
+  <!-- End Google Tag Manager -->
+  
+
+  <header>
+    <h1><a href="./" title="The Twelve-Factor App">The Twelve-Factor App</a></h1>
+  </header>
+
+  <section class="abstract">
+  <article>
+<h1 id="">はじめに</h1>
+
+<p>現代では、ソフトウェアは一般にサービスとして提供され、<em>Webアプリケーション</em> や <em>Software as a Service</em> と呼ばれる。Twelve-Factor Appは、次のようなSoftware as a Serviceを作り上げるための方法論である。</p>
+
+<ul>
+<li>セットアップ自動化のために <strong>宣言的な</strong> フォーマットを使い、プロジェクトに新しく加わった開発者が要する時間とコストを最小化する。</li>
+
+<li>下層のOSへの <strong>依存関係を明確化</strong> し、実行環境間での <strong>移植性を最大化</strong> する。</li>
+
+<li>モダンな <strong>クラウドプラットフォーム</strong> 上への <strong>デプロイ</strong> に適しており、サーバー管理やシステム管理を不要なものにする。</li>
+
+<li>開発環境と本番環境の <strong>差異を最小限</strong> にし、アジリティを最大化する <strong>継続的デプロイ</strong> を可能にする。</li>
+
+<li>ツール、アーキテクチャ、開発プラクティスを大幅に変更することなく <strong>スケールアップ</strong> できる。</li>
+</ul>
+
+<p>Twelve-Factorの方法論は、どのようなプログラミング言語で書かれたアプリケーションにでも適用できる。また、どのようなバックエンドサービス（データベース、メッセージキュー、メモリキャッシュなど）の組み合わせを使っていても適用できる。</p>
+</article>
+  <article>
+<h1 id="">背景</h1>
+
+<p>このドキュメントへの寄稿者は、何百ものアプリケーションの開発とデプロイに直接関わり、<a href="http://www.heroku.com/">Heroku</a>プラットフォーム上での仕事を通して、何百何千ものアプリケーションの開発・運用・スケールに間接的に立ち会った。</p>
+
+<p>このドキュメントは、多種多様なSaaSアプリケーション開発現場での私たちの経験と観察をすべてまとめたものである。これは、アプリケーション開発における理想的なプラクティスを見出すための三角測量である。特に、アプリケーションが時間と共に有機的に成長する力学、アプリケーションのコードベースに取り組む開発者間のコラボレーションの力学、そして<a href="http://blog.heroku.com/archives/2011/6/28/the_new_heroku_4_erosion_resistance_explicit_contracts/">ソフトウェア腐敗によるコストの回避</a>に注目している。</p>
+
+<p>私たちの動機は、私たちがモダンなアプリケーション開発で見てきたある種のシステム的な問題への関心を高めること、この問題を議論するための共通の語彙を提供すること、そしてこの問題に対する広い概念的な解決策と専門用語を提供することである。フォーマットはMartin Fowlerの書籍、<em><a href="http://books.google.com/books/about/Patterns_of_enterprise_application_archi.html?id=FyWZt5DdvFkC">Patterns of Enterprise Application Architecture</a></em> および <em><a href="http://books.google.com/books/about/Refactoring.html?id=1MsETFPD3I0C">Refactoring</a></em> に着想を得ている。</p>
+</article>
+  <article>
+<h1 id="">このドキュメントの対象者</h1>
+
+<p>サービスとして動くアプリケーションを開発しているすべての開発者。およびそのようなアプリケーションをデプロイまたは管理しているインフラエンジニア。</p>
+</article>
+</section>
+
+<section class="concrete">
+  <article>
+<h1 id="the_twelve_factors">The Twelve Factors</h1>
+
+<h2 id="i_"><a href="./codebase">I. コードベース</a></h2>
+
+<h3 id="1">バージョン管理されている1つのコードベースと複数のデプロイ</h3>
+
+<h2 id="ii_"><a href="./dependencies">II. 依存関係</a></h2>
+
+<h3 id="">依存関係を明示的に宣言し分離する</h3>
+
+<h2 id="iii_"><a href="./config">III. 設定</a></h2>
+
+<h3 id="_2">設定を環境変数に格納する</h3>
+
+<h2 id="iv_"><a href="./backing-services">IV. バックエンドサービス</a></h2>
+
+<h3 id="_3">バックエンドサービスをアタッチされたリソースとして扱う</h3>
+
+<h2 id="v_"><a href="./build-release-run">V. ビルド、リリース、実行</a></h2>
+
+<h3 id="3">ビルド、リリース、実行の3つのステージを厳密に分離する</h3>
+
+<h2 id="vi_"><a href="./processes">VI. プロセス</a></h2>
+
+<h3 id="1_2">アプリケーションを1つもしくは複数のステートレスなプロセスとして実行する</h3>
+
+<h2 id="vii_"><a href="./port-binding">VII. ポートバインディング</a></h2>
+
+<h3 id="_4">ポートバインディングを通してサービスを公開する</h3>
+
+<h2 id="viii_"><a href="./concurrency">VIII. 並行性</a></h2>
+
+<h3 id="_5">プロセスモデルによってスケールアウトする</h3>
+
+<h2 id="ix_"><a href="./disposability">IX. 廃棄容易性</a></h2>
+
+<h3 id="_6">高速な起動とグレースフルシャットダウンで堅牢性を最大化する</h3>
+
+<h2 id="x_"><a href="./dev-prod-parity">X. 開発/本番一致</a></h2>
+
+<h3 id="_7">開発、ステージング、本番環境をできるだけ一致させた状態を保つ</h3>
+
+<h2 id="xi_"><a href="./logs">XI. ログ</a></h2>
+
+<h3 id="_8">ログをイベントストリームとして扱う</h3>
+
+<h2 id="xii_"><a href="./admin-processes">XII. 管理プロセス</a></h2>
+
+<h3 id="1_3">管理タスクを1回限りのプロセスとして実行する</h3>
+</article>
+</section>
+
+
+  <footer>
+  <div id="locales"><a href="/">English (en)</a> | <a href="/ko/">한국어 (ko)</a> | <span>日本語 (ja)</span> | <a href="/it/">Italiano (it)</a> | <a href="/pl/">Polski (pl)</a> | <a href="/zh_cn/">简体中文 (zh_cn)</a> | <a href="/de/">Deutsch (de)</a> | <a href="/es/">Español (es)</a> | <a href="/fr/">Français (fr)</a> | <a href="/tr/">Turkish (tr)</a> | <a href="/uk/">Українська (uk)</a> | <a href="/pt_br/">Brazilian Portuguese (pt_br)</a> | <a href="/ru/">Русский (ru)</a></div>
+  <div>Written by Adam Wiggins</div>
+  <div>Last updated 2017</div>
+  <div><a href="https://github.com/heroku/12factor">Sourcecode</a></div>
+  <div><a href="/12factor.epub">Download ePub Book</a></div>
+  <div><a href="https://www.heroku.com/policy/privacy">Privacy Policy</a></div>
+</footer>
+</body>
+</html>

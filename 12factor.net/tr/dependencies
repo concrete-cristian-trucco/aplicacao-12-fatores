@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>The Twelve-Factor App Türkçe çeviri</title>
+  <meta name="description" content="A methodology for building modern, scalable, maintainable software-as-a-service apps.">
+  <meta name="author" content="Adam Wiggins">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" href="images/favicon.ico">
+
+  <link rel="stylesheet" href="/css/screen.css" media="screen">
+  <link rel="stylesheet" href="/css/mobile.css" media="screen">
+
+  <script type="text/javascript" src="//use.typekit.com/rsq7tro.js"></script>
+  <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+</head>
+<body>
+  
+  <!-- Google Tag Manager -->
+  <noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-TK5QTP"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-TK5QTP');</script>
+  <!-- End Google Tag Manager -->
+  
+
+  <header>
+    <h1><a href="./" title="The Twelve-Factor App">The Twelve-Factor App</a></h1>
+  </header>
+
+  <section class="abstract" id="factor">
+  <article>
+    
+<h2 id="ii_bamlklar">II. Bağımlıklar</h2>
+
+<h3 id="bamlklar_ak_bir_ekilde_aklama_ve_ayrma">Bağımlıkları açık bir şekilde açıklama ve ayırma</h3>
+
+<p>Çoğu programlama dili destek kitaplıklarını dağıtmak için bir paketleme sistemi sunar, Perl için <a href="http://www.cpan.org/">CPAN</a>, Ruby için <a href="http://rubygems.org/">Rubygems</a>. Bir paketleme sistemi aracılığıyla yüklenen kütüphaneler, sistem genelinde (“site paketleri” olarak bilinir) yüklenebilir veya uygulamanın bulunduğu dizine (“sağlayıcı” veya “paketleme” olarak bilinir) dahil edilebilir.</p>
+
+<p><strong>On iki faktör bir uygulama asla sistem çapında paketlerin gizli var olmasına dayanmaz.</strong> Bir <em>bağımlılık bildirimi</em> ile tüm bağımlılıkları tamamen ve eksiksiz olarak bildirir. Üstelik bağımlılıkların çevredeki sistemden sızmamasını sağlamak için yürütme sırasında bir <em>bağımlılık yalıtım</em> aracı kullanılır. Tam ve açık bağımlılık belirtimi hem üretim hem de geliştirme için eşit olarak uygulanmaktadır.</p>
+
+<p>Örneğin, Ruby için <a href="https://bundler.io/">Bundler</a>, bağımlılık bildirimi için <code>Gemfile</code> manifest formatını ve bağımlılık yalıtımı için <code>bundle exec</code>‘i önerir. Python’da bu adımlar için iki ayrı araç bulunur: <a href="http://www.pip-installer.org/en/latest/">Pip</a>, bildirimde ve <a href="http://www.virtualenv.org/en/latest/">Virtualenv’de</a> yalıtımda kullanılır. C bile bağımlılık bildirimi için <a href="http://www.gnu.org/s/autoconf/">Autoconf’a</a> sahiptir ve bağımlılık yalıtımı statik link ile sağlanır. Ne olursa olsun birbiriyle uyumlu çalışan yazılım uygulaması, bağımlılık bildirimi ve bağımlılık yalıtımı birlikte kullanılmalıdır, sadece herhangi birinin olması on iki faktör için yeterli değildir.</p>
+
+<p>Açık bağımlılık bildiriminin bir faydası da uygulamaya yeni olan geliştiriciler için kurulumu kolaylaştırır. Yeni geliştirici geliştirme aracında uygulamanın kod tabanını kontrol edebilir, ön koşul olarak dil çalıştırma platformu ve bağımlılık yöneticisinin yüklenmiş olmasını ister. Rastgele olmayan <em>derleme komutları</em> ile birlikte uygulama kodunun çalışması için ihtiyaç duyulan her şeyi yükleyebilecekler. Örneğin, Clojure/<a href="https://github.com/technomancy/leiningen#readme">Leiningen</a> için <code>lein deps</code> iken, Ruby/Bundler için <code>bundle install</code>‘dir.</p>
+
+<p>On iki faktör uygulamaları ayrıca herhangi bir sistem aracının kapalı olmasına güvenmez. Örnekler <code>ImageMagick</code> yada <code>curl</code> kullanımını içerir. Bu araçlar çoğu sistemde var olabilse de, uygulamanın gelecekte çalışabileceği sistemlerde bu araçların var olup olmayacağının veya bu araçların sürümlerinin uygulamayla uyumlu olup olmayacağının garantisi yoktur. Uygulamanın bir sistem aracına geçirilmesi gerekiyorsa, o aracın uygulamayı sağlaması gerekiyor.</p>
+
+  </article>
+</section>
+
+<section class="concrete">
+  <nav>
+    <div id="locales"><a href="/dependencies">English (en)</a> | <a href="/ko/dependencies">한국어 (ko)</a> | <a href="/ja/dependencies">日本語 (ja)</a> | <a href="/it/dependencies">Italiano (it)</a> | <a href="/pl/dependencies">Polski (pl)</a> | <a href="/zh_cn/dependencies">简体中文 (zh_cn)</a> | <a href="/de/dependencies">Deutsch (de)</a> | <a href="/es/dependencies">Español (es)</a> | <a href="/fr/dependencies">Français (fr)</a> | <span>Turkish (tr)</span> | <a href="/uk/dependencies">Українська (uk)</a> | <a href="/pt_br/dependencies">Brazilian Portuguese (pt_br)</a> | <a href="/ru/dependencies">Русский (ru)</a></div>
+    <div id="prev"><a href="./codebase">&laquo; Previous</a></div>
+    <div id="next"><a href="./config">Next &raquo;</a></div>
+  </nav>
+</section>
+
+
+  <footer>
+  <div id="locales"><a href="/dependencies">English (en)</a> | <a href="/ko/dependencies">한국어 (ko)</a> | <a href="/ja/dependencies">日本語 (ja)</a> | <a href="/it/dependencies">Italiano (it)</a> | <a href="/pl/dependencies">Polski (pl)</a> | <a href="/zh_cn/dependencies">简体中文 (zh_cn)</a> | <a href="/de/dependencies">Deutsch (de)</a> | <a href="/es/dependencies">Español (es)</a> | <a href="/fr/dependencies">Français (fr)</a> | <span>Turkish (tr)</span> | <a href="/uk/dependencies">Українська (uk)</a> | <a href="/pt_br/dependencies">Brazilian Portuguese (pt_br)</a> | <a href="/ru/dependencies">Русский (ru)</a></div>
+  <div>Written by Adam Wiggins</div>
+  <div>Last updated 2017</div>
+  <div><a href="https://github.com/heroku/12factor">Sourcecode</a></div>
+  <div><a href="/12factor.epub">Download ePub Book</a></div>
+  <div><a href="https://www.heroku.com/policy/privacy">Privacy Policy</a></div>
+</footer>
+</body>
+</html>

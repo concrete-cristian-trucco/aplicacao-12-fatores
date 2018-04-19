@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>The Twelve-Factor App Dies ist eine Übersetzung.</title>
+  <meta name="description" content="A methodology for building modern, scalable, maintainable software-as-a-service apps.">
+  <meta name="author" content="Adam Wiggins">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" href="images/favicon.ico">
+
+  <link rel="stylesheet" href="/css/screen.css" media="screen">
+  <link rel="stylesheet" href="/css/mobile.css" media="screen">
+
+  <script type="text/javascript" src="//use.typekit.com/rsq7tro.js"></script>
+  <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+</head>
+<body>
+  
+  <!-- Google Tag Manager -->
+  <noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-TK5QTP"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-TK5QTP');</script>
+  <!-- End Google Tag Manager -->
+  
+
+  <header>
+    <h1><a href="./" title="The Twelve-Factor App">The Twelve-Factor App</a></h1>
+  </header>
+
+  <section class="abstract" id="factor">
+  <article>
+    
+<h2 id="xii_adminprozesse">XII. Admin-Prozesse</h2>
+
+<h3 id="adminmanagementaufgaben_als_einmalige_vorgnge_behandeln">Admin/Management-Aufgaben als einmalige Vorgänge behandeln</h3>
+
+<p>Die <a href="./concurrency">Prozess-Formation</a> ist das Bündel von Prozessen zur Erledigung der üblichen Aufgaben einer App (wie die Abarbeitung von Web-Requests) während sie läuft. Daneben möchten Entwickler oft einmalige Administrativ- oder Wartungsaufgaben an der App erledigen, wie zum Beispiel:</p>
+
+<ul>
+<li>Datenbank-Migrationen starten (z.B. <code>manage.py migrate</code> in Django, <code>rake db:migrate</code> in Rails)</li>
+
+<li>Eine Konsole starten (auch bekannt als <a href="http://en.wikipedia.org/wiki/Read-eval-print_loop">REPL</a> Shell) um beliebigen Code zu starten oder die Modelle der App gegen die Live-Datenbank zu prüfen. Die meisten Sprachen stellen eine REPL zur Verfügung, wenn man den Interpreter ohne Argumente startet (z.B. <code>python</code> oder <code>perl</code>) oder in manchen Fällen mit einem anderen Kommando (z.B. <code>irb</code> für Ruby, <code>rails console</code> für Rails).</li>
+
+<li>Einmalig auszuführende Skripte aus dem Repo der App starten (z.B. <code>php scripts/fix_bad_records.php</code>).</li>
+</ul>
+
+<p>Einmalige Administrationsprozesse sollten in einer Umgebung laufen, die identisch ist zu der Umgebung der üblichen <a href="./processes">langlaufenden Prozesse</a>. Sie laufen gegen einen <a href="./build-release-run">Release</a> und benutzen dieselbe <a href="./codebase">Codebase</a> und <a href="./config">Konfiguration</a> wie jeder Prozess, der gegen einen Release läuft. Administrationscode wird mit dem App-Code ausgeliefert um Synchronisationsprobleme zu vermeiden.</p>
+
+<p>Dieselben Techniken zur <a href="./dependencies">Isolation von Abhängigkeiten</a> sollten für alle Prozessarten verwendet werden. Wenn zum Beispiel ein Ruby-Web-Prozess das Kommando <code>bundle exec thin start</code> verwendet, dann sollte eine Datenbankmigration <code>bundle exec rake db:migrate</code> verwenden. Wenn ein Python-Programm Virtualenv nutzt, sollte es sein mitgeliefertes <code>bin/python</code> sowohl zum Start des Tornado Webservers als auch für alle <code>manage.py</code> Admin-Prozesse verwenden.</p>
+
+<p>Die Zwölf Faktoren bevorzugen Sprachen, die eine REPL Shell direkt mitbringen. Das erleichtert das Starten von einmal auszuführenden Skripten. In einem lokalen Deploy rufen Entwickler einmal auszuführende Admin-Prozesse direkt über ein Shell-Kommando im Checkout-Verzeichnis der App auf. In einem Produktions-Deploy können Entwickler ssh oder andere Kommando-Fernsteuerungs-Mechanismen benutzen, die die Ausführungsumgebung dieses Deploys für das Starten eines solchen Prozesses bereitstellt.</p>
+
+  </article>
+</section>
+
+<section class="concrete">
+  <nav>
+    <div id="locales"><a href="/ru/admin-processes">Русский (ru)</a> | <a href="/admin-processes">English (en)</a> | <a href="/ja/admin-processes">日本語 (ja)</a> | <a href="/tr/admin-processes">Turkish (tr)</a> | <a href="/ko/admin-processes">한국어 (ko)</a> | <a href="/fr/admin-processes">Français (fr)</a> | <span>Deutsch (de)</span> | <a href="/pl/admin-processes">Polski (pl)</a> | <a href="/it/admin-processes">Italiano (it)</a> | <a href="/uk/admin-processes">Українська (uk)</a> | <a href="/es/admin-processes">Español (es)</a> | <a href="/zh_cn/admin-processes">简体中文 (zh_cn)</a> | <a href="/pt_br/admin-processes">Brazilian Portuguese (pt_br)</a></div>
+    <div id="prev"><a href="./logs">&laquo; Previous</a></div>
+    <div id="next"></div>
+  </nav>
+</section>
+
+
+  <footer>
+  <div id="locales"><a href="/ru/admin-processes">Русский (ru)</a> | <a href="/admin-processes">English (en)</a> | <a href="/ja/admin-processes">日本語 (ja)</a> | <a href="/tr/admin-processes">Turkish (tr)</a> | <a href="/ko/admin-processes">한국어 (ko)</a> | <a href="/fr/admin-processes">Français (fr)</a> | <span>Deutsch (de)</span> | <a href="/pl/admin-processes">Polski (pl)</a> | <a href="/it/admin-processes">Italiano (it)</a> | <a href="/uk/admin-processes">Українська (uk)</a> | <a href="/es/admin-processes">Español (es)</a> | <a href="/zh_cn/admin-processes">简体中文 (zh_cn)</a> | <a href="/pt_br/admin-processes">Brazilian Portuguese (pt_br)</a></div>
+  <div>Written by Adam Wiggins</div>
+  <div>Last updated 2017</div>
+  <div><a href="https://github.com/heroku/12factor">Sourcecode</a></div>
+  <div><a href="/12factor.epub">Download ePub Book</a></div>
+  <div><a href="https://www.heroku.com/policy/privacy">Privacy Policy</a></div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>The Twelve-Factor App Dies ist eine Übersetzung.</title>
+  <meta name="description" content="A methodology for building modern, scalable, maintainable software-as-a-service apps.">
+  <meta name="author" content="Adam Wiggins">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" href="images/favicon.ico">
+
+  <link rel="stylesheet" href="/css/screen.css" media="screen">
+  <link rel="stylesheet" href="/css/mobile.css" media="screen">
+
+  <script type="text/javascript" src="//use.typekit.com/rsq7tro.js"></script>
+  <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+</head>
+<body>
+  
+  <!-- Google Tag Manager -->
+  <noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-TK5QTP"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-TK5QTP');</script>
+  <!-- End Google Tag Manager -->
+  
+
+  <header>
+    <h1><a href="./" title="The Twelve-Factor App">The Twelve-Factor App</a></h1>
+  </header>
+
+  <section class="abstract">
+  <article>
+<h1 id="einfhrung">Einführung</h1>
+
+<p>Heute wird Software oft als Dienst geliefert - auch <em>Web App</em> oder <em>Software-As-A-Service</em> genannt. Die Zwölf-Faktoren-App ist eine Methode um Software-As-A-Service Apps zu bauen die:</p>
+
+<ul>
+<li><strong>deklarative</strong> Formate benutzen für die Automatisierung der Konfiguration, um Zeit und Kosten für neue Entwickler im Projekt zu minimieren;</li>
+
+<li>einen <strong>sauberen Vertrag</strong> mit dem zugrundeliegenden Betriebssystem haben, <strong>maximale Portierbarkeit</strong> zwischen Ausführungsumgebungen bieten;</li>
+
+<li>sich für das <strong>Deployment</strong> auf modernen <strong>Cloud-Plattformen</strong> eignen, die Notwendigkeit von Servern und Serveradministration vermeiden;</li>
+
+<li>die <strong>Abweichung minimieren</strong> zwischen Entwicklung und Produktion, um <strong>Continuous Deployment</strong> für maximale Agilität ermöglichen;</li>
+
+<li>und <strong>skalieren</strong> können ohne wesentliche Änderungen im Tooling, in der Architektur oder in den Entwicklungsverfahren.</li>
+</ul>
+
+<p>Die Zwölf-Faktoren-Methode kann auf Apps angewendet werden, die in einer beliebigen Programmiersprache geschrieben sind, und die eine beliebige Kombination von unterstützenden Diensten benutzen (Datenbank, Queue, Cache, …)</p>
+</article>
+  <article>
+<h1 id="hintergrund">Hintergrund</h1>
+
+<p>Die Mitwirkenden an diesem Dokument waren direkt beteiligt an der Entwicklung und dem Deployment von hunderten von Apps und wurden Zeugen bei der Entwicklung, beim Betrieb und der Skalierung von hunderttausenden von Apps im Rahmen unserer Arbeit an der <a href="http://www.heroku.com/">Heroku</a>-Plattform.</p>
+
+<p>Dieses Dokument ist eine Synthese all unserer Erfahrungen und der Beobachtungen einer großen Bandbreite von Software-As-A-Service Apps. Es ist eine Bestimmung der idealen Praktiken bei der App-Entwicklung mit besonderem Augenmerk auf die Dynamik des organischen Wachstums einer App über die Zeit, die Dynamik der Zusammenarbeit zwischen den Entwicklern die an einer Codebase zusammenarbeiten und der <a href="http://blog.heroku.com/archives/2011/6/28/the_new_heroku_4_erosion_resistance_explicit_contracts/">Vermeidung der Kosten von Software-Erosion</a>.</p>
+
+<p>Unsere Motivation ist, das Bewusstsein zu schärfen für systembedingte Probleme in der aktuellen Applikationsentwicklung, ein gemeinsames Vokabular zur Diskussion dieser Probleme zu liefern und ein Lösungsportfolio zu diesen Problemen mit einer zugehörigen Terminologie anzubieten. Das Format ist angelehnt an Martin Fowlers Bücher <em><a href="http://books.google.com/books/about/Patterns_of_enterprise_application_archi.html?id=FyWZt5DdvFkC">Patterns of Enterprise Application Architecture</a></em> und <em><a href="http://books.google.com/books/about/Refactoring.html?id=1MsETFPD3I0C">Refactoring</a></em>.</p>
+</article>
+  <article>
+<h1 id="wer_sollte_dieses_dokument_lesen">Wer sollte dieses Dokument lesen?</h1>
+
+<p>Jeder Entwickler der Apps baut, die als Dienst laufen. Administratoren, die solche Apps managen oder deployen.</p>
+</article>
+</section>
+
+<section class="concrete">
+  <article>
+<h1 id="die_zwlf_faktoren">Die zwölf Faktoren</h1>
+
+<h2 id="i_codebase"><a href="./codebase">I. Codebase</a></h2>
+
+<h3 id="eine_im_versionsmanagementsystem_verwaltete_codebase_viele_deployments">Eine im Versionsmanagementsystem verwaltete Codebase, viele Deployments</h3>
+
+<h2 id="ii_abhngigkeiten"><a href="./dependencies">II. Abhängigkeiten</a></h2>
+
+<h3 id="abhngigkeiten_explizit_deklarieren_und_isolieren">Abhängigkeiten explizit deklarieren und isolieren</h3>
+
+<h2 id="iii_konfiguration"><a href="./config">III. Konfiguration</a></h2>
+
+<h3 id="die_konfiguration_in_umgebungsvariablen_ablegen">Die Konfiguration in Umgebungsvariablen ablegen</h3>
+
+<h2 id="iv_untersttzende_dienste"><a href="./backing-services">IV. Unterstützende Dienste</a></h2>
+
+<h3 id="untersttzende_dienste_als_angehngte_ressourcen_behandeln">Unterstützende Dienste als angehängte Ressourcen behandeln</h3>
+
+<h2 id="v_build_release_run"><a href="./build-release-run">V. Build, release, run</a></h2>
+
+<h3 id="build_und_runphase_strikt_trennen">Build- und Run-Phase strikt trennen</h3>
+
+<h2 id="vi_prozesse"><a href="./processes">VI. Prozesse</a></h2>
+
+<h3 id="die_app_als_einen_oder_mehrere_prozesse_ausfhren">Die App als einen oder mehrere Prozesse ausführen</h3>
+
+<h2 id="vii_bindung_an_ports"><a href="./port-binding">VII. Bindung an Ports</a></h2>
+
+<h3 id="dienste_durch_das_binden_von_ports_exportieren">Dienste durch das Binden von Ports exportieren</h3>
+
+<h2 id="viii_nebenlufigkeit"><a href="./concurrency">VIII. Nebenläufigkeit</a></h2>
+
+<h3 id="mit_dem_prozessmodell_skalieren">Mit dem Prozess-Modell skalieren</h3>
+
+<h2 id="ix_einweggebrauch"><a href="./disposability">IX. Einweggebrauch</a></h2>
+
+<h3 id="robuster_mit_schnellem_start_und_problemlosen_stopp">Robuster mit schnellem Start und problemlosen Stopp</h3>
+
+<h2 id="x_devprodvergleichbarkeit"><a href="./dev-prod-parity">X. Dev-Prod-Vergleichbarkeit</a></h2>
+
+<h3 id="entwicklung_staging_und_produktion_so_hnlich_wie_mglich_halten">Entwicklung, Staging und Produktion so ähnlich wie möglich halten</h3>
+
+<h2 id="xi_logs"><a href="./logs">XI. Logs</a></h2>
+
+<h3 id="logs_als_strom_von_ereignissen_behandeln">Logs als Strom von Ereignissen behandeln</h3>
+
+<h2 id="xii_adminprozesse"><a href="./admin-processes">XII. Admin-Prozesse</a></h2>
+
+<h3 id="adminmanagementaufgaben_als_einmalige_vorgnge_behandeln">Admin/Management-Aufgaben als einmalige Vorgänge behandeln</h3>
+</article>
+</section>
+
+
+  <footer>
+  <div id="locales"><a href="/">English (en)</a> | <a href="/ko/">한국어 (ko)</a> | <a href="/ja/">日本語 (ja)</a> | <a href="/it/">Italiano (it)</a> | <a href="/pl/">Polski (pl)</a> | <a href="/zh_cn/">简体中文 (zh_cn)</a> | <span>Deutsch (de)</span> | <a href="/es/">Español (es)</a> | <a href="/fr/">Français (fr)</a> | <a href="/tr/">Turkish (tr)</a> | <a href="/uk/">Українська (uk)</a> | <a href="/pt_br/">Brazilian Portuguese (pt_br)</a> | <a href="/ru/">Русский (ru)</a></div>
+  <div>Written by Adam Wiggins</div>
+  <div>Last updated 2017</div>
+  <div><a href="https://github.com/heroku/12factor">Sourcecode</a></div>
+  <div><a href="/12factor.epub">Download ePub Book</a></div>
+  <div><a href="https://www.heroku.com/policy/privacy">Privacy Policy</a></div>
+</footer>
+</body>
+</html>

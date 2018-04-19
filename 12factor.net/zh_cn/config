@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>The Twelve-Factor App （简体中文）</title>
+  <meta name="description" content="A methodology for building modern, scalable, maintainable software-as-a-service apps.">
+  <meta name="author" content="Adam Wiggins">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" href="images/favicon.ico">
+
+  <link rel="stylesheet" href="/css/screen.css" media="screen">
+  <link rel="stylesheet" href="/css/mobile.css" media="screen">
+
+  <script type="text/javascript" src="//use.typekit.com/rsq7tro.js"></script>
+  <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+</head>
+<body>
+  
+  <!-- Google Tag Manager -->
+  <noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-TK5QTP"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-TK5QTP');</script>
+  <!-- End Google Tag Manager -->
+  
+
+  <header>
+    <h1><a href="./" title="The Twelve-Factor App">The Twelve-Factor App</a></h1>
+  </header>
+
+  <section class="abstract" id="factor">
+  <article>
+    
+<h2 id="iii_">III. 配置</h2>
+
+<h3 id="">在环境中存储配置</h3>
+
+<p>通常，应用的 <em>配置</em> 在不同 <a href="./codebase">部署</a> (预发布、生产环境、开发环境等等)间会有很大差异。这其中包括：</p>
+
+<ul>
+<li>数据库，Memcached，以及其他 <a href="./backing-services">后端服务</a> 的配置</li>
+
+<li>第三方服务的证书，如 Amazon S3、Twitter 等</li>
+
+<li>每份部署特有的配置，如域名等</li>
+</ul>
+
+<p>有些应用在代码中使用常量保存配置，这与 12-Factor 所要求的<strong>代码和配置严格分离</strong>显然大相径庭。配置文件在各部署间存在大幅差异，代码却完全一致。</p>
+
+<p>判断一个应用是否正确地将配置排除在代码之外，一个简单的方法是看该应用的基准代码是否可以立刻开源，而不用担心会暴露任何敏感的信息。</p>
+
+<p>需要指出的是，这里定义的“配置”并<strong>不</strong>包括应用的内部配置，比如 Rails 的 <code>config/routes.rb</code>，或是使用 <a href="http://spring.io/">Spring</a> 时 <a href="http://docs.spring.io/spring/docs/current/spring-framework-reference/html/beans.html">代码模块间的依赖注入关系</a> 。这类配置在不同部署间不存在差异，所以应该写入代码。</p>
+
+<p>另外一个解决方法是使用配置文件，但不把它们纳入版本控制系统，就像 Rails 的 <code>config/database.yml</code> 。这相对于在代码中使用常量已经是长足进步，但仍然有缺点：总是会不小心将配置文件签入了代码库；配置文件的可能会分散在不同的目录，并有着不同的格式，这让找出一个地方来统一管理所有配置变的不太现实。更糟的是，这些格式通常是语言或框架特定的。</p>
+
+<p><strong>12-Factor推荐将应用的配置存储于 <em>环境变量</em> 中</strong>（ <em>env vars</em>, <em>env</em> ）。环境变量可以非常方便地在不同的部署间做修改，却不动一行代码；与配置文件不同，不小心把它们签入代码库的概率微乎其微；与一些传统的解决配置问题的机制（比如 Java 的属性配置文件）相比，环境变量与语言和系统无关。</p>
+
+<p>配置管理的另一个方面是分组。有时应用会将配置按照特定部署进行分组（或叫做“环境”），例如Rails中的 <code>development</code>,<code>test</code>, 和 <code>production</code> 环境。这种方法无法轻易扩展：更多部署意味着更多新的环境，例如 <code>staging</code> 或 <code>qa</code> 。 随着项目的不断深入，开发人员可能还会添加他们自己的环境，比如 <code>joes-staging</code> ，这将导致各种配置组合的激增，从而给管理部署增加了很多不确定因素。</p>
+
+<p>12-Factor 应用中，环境变量的粒度要足够小，且相对独立。它们永远也不会组合成一个所谓的“环境”，而是独立存在于每个部署之中。当应用程序不断扩展，需要更多种类的部署时，这种配置管理方式能够做到平滑过渡。</p>
+
+  </article>
+</section>
+
+<section class="concrete">
+  <nav>
+    <div id="locales"><a href="/config">English (en)</a> | <a href="/ko/config">한국어 (ko)</a> | <a href="/ja/config">日本語 (ja)</a> | <a href="/it/config">Italiano (it)</a> | <a href="/pl/config">Polski (pl)</a> | <span>简体中文 (zh_cn)</span> | <a href="/de/config">Deutsch (de)</a> | <a href="/es/config">Español (es)</a> | <a href="/fr/config">Français (fr)</a> | <a href="/tr/config">Turkish (tr)</a> | <a href="/uk/config">Українська (uk)</a> | <a href="/pt_br/config">Brazilian Portuguese (pt_br)</a> | <a href="/ru/config">Русский (ru)</a></div>
+    <div id="prev"><a href="./dependencies">&laquo; Previous</a></div>
+    <div id="next"><a href="./backing-services">Next &raquo;</a></div>
+  </nav>
+</section>
+
+
+  <footer>
+  <div id="locales"><a href="/config">English (en)</a> | <a href="/ko/config">한국어 (ko)</a> | <a href="/ja/config">日本語 (ja)</a> | <a href="/it/config">Italiano (it)</a> | <a href="/pl/config">Polski (pl)</a> | <span>简体中文 (zh_cn)</span> | <a href="/de/config">Deutsch (de)</a> | <a href="/es/config">Español (es)</a> | <a href="/fr/config">Français (fr)</a> | <a href="/tr/config">Turkish (tr)</a> | <a href="/uk/config">Українська (uk)</a> | <a href="/pt_br/config">Brazilian Portuguese (pt_br)</a> | <a href="/ru/config">Русский (ru)</a></div>
+  <div>Written by Adam Wiggins</div>
+  <div>Last updated 2017</div>
+  <div><a href="https://github.com/heroku/12factor">Sourcecode</a></div>
+  <div><a href="/12factor.epub">Download ePub Book</a></div>
+  <div><a href="https://www.heroku.com/policy/privacy">Privacy Policy</a></div>
+</footer>
+</body>
+</html>

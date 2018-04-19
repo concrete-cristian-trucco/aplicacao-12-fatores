@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>The Twelve-Factor App （日本語訳）</title>
+  <meta name="description" content="A methodology for building modern, scalable, maintainable software-as-a-service apps.">
+  <meta name="author" content="Adam Wiggins">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" href="images/favicon.ico">
+
+  <link rel="stylesheet" href="/css/screen.css" media="screen">
+  <link rel="stylesheet" href="/css/mobile.css" media="screen">
+
+  <script type="text/javascript" src="//use.typekit.com/rsq7tro.js"></script>
+  <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+</head>
+<body>
+  
+  <!-- Google Tag Manager -->
+  <noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-TK5QTP"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-TK5QTP');</script>
+  <!-- End Google Tag Manager -->
+  
+
+  <header>
+    <h1><a href="./" title="The Twelve-Factor App">The Twelve-Factor App</a></h1>
+  </header>
+
+  <section class="abstract" id="factor">
+  <article>
+    
+<h2 id="vi_">VI. プロセス</h2>
+
+<h3 id="1">アプリケーションを1つもしくは複数のステートレスなプロセスとして実行する</h3>
+
+<p>アプリケーションは、実行環境の中で1つもしくは複数の <em>プロセス</em> として実行される。</p>
+
+<p>最も単純な場合では、コードは単体のスクリプトであり、実行環境は言語ランタイムがインストールされた開発者のローカルノートPCであり、プロセスはコマンドラインから実行される（例：<code>python my_script.py</code>）。対極にあるのは、<a href="./concurrency">複数の実行プロセスとしてインスタンス化される多くのプロセスタイプ</a>を使う洗練されたアプリケーションの本番デプロイである。</p>
+
+<p><strong>Twelve-Factorのプロセスはステートレスかつ<a href="http://en.wikipedia.org/wiki/Shared_nothing_architecture">シェアードナッシング</a></strong> である。永続化する必要のあるすべてのデータは、ステートフルな<a href="./backing-services">バックエンドサービス</a>（典型的にはデータベース）に格納しなければならない。</p>
+
+<p>プロセスのメモリ空間やファイルシステムは、短い単一のトランザクション内でのキャッシュとして利用してもよい。例えば、大きなファイルをダウンロードし、そのファイルを処理し、結果をデータベースに格納するという一連の処理において、ファイルシステムをキャッシュとして利用できる。Twelve-Factor Appは、メモリやディスクにキャッシュされたものが将来のリクエストやジョブにおいて利用できることを決して仮定しない – それぞれのプロセスタイプのプロセスが多く実行されている場合、将来のリクエストやジョブが別のプロセスで処理される可能性が高い。1つのプロセスしか実行されていない場合であっても、プロセスが再起動すると、すべての局所的な状態（メモリやファイルシステムなど）が消えてしまうことがある。プロセスの再起動の要因としては、コードのデプロイ、設定の変更、プロセスを別の物理位置に再配置する実行環境などがある。</p>
+
+<p>アセットパッケージャー（例：<a href="http://documentcloud.github.com/jammit/">Jammit</a> や <a href="http://django-compressor.readthedocs.org/">django-compressor</a>）は、コンパイルされたアセットをキャッシュするためにファイルシステムを利用する。Twelve-Factor Appは、このコンパイル処理を実行時に行うよりも、<a href="http://guides.rubyonrails.org/asset_pipeline.html">Rails asset pipeline</a>のように<a href="./build-release-run">ビルドステージ</a>で行うほうが、望ましいと考えている。</p>
+
+<p>Webシステムの中には、<a href="http://en.wikipedia.org/wiki/Load_balancing_%28computing%29#Persistence">“スティッキーセッション”</a>に頼るものがある – これはユーザーのセッションデータをアプリケーションプロセスのメモリにキャッシュし、同じ訪問者からの将来のリクエストが同じプロセスに送られることを期待するものである。スティッキーセッションはTwelve-Factorに違反しており、決して使ったり頼ったりしてはならない。セッション状態のデータは、有効期限を持つデータストア（例：<a href="http://memcached.org/">Memcached</a> や <a href="http://redis.io/">Redis</a>）に格納すべきである。</p>
+
+  </article>
+</section>
+
+<section class="concrete">
+  <nav>
+    <div id="locales"><a href="/ru/processes">Русский (ru)</a> | <a href="/processes">English (en)</a> | <span>日本語 (ja)</span> | <a href="/tr/processes">Turkish (tr)</a> | <a href="/ko/processes">한국어 (ko)</a> | <a href="/fr/processes">Français (fr)</a> | <a href="/de/processes">Deutsch (de)</a> | <a href="/pl/processes">Polski (pl)</a> | <a href="/it/processes">Italiano (it)</a> | <a href="/uk/processes">Українська (uk)</a> | <a href="/es/processes">Español (es)</a> | <a href="/zh_cn/processes">简体中文 (zh_cn)</a> | <a href="/pt_br/processes">Brazilian Portuguese (pt_br)</a></div>
+    <div id="prev"><a href="./build-release-run">&laquo; Previous</a></div>
+    <div id="next"><a href="./port-binding">Next &raquo;</a></div>
+  </nav>
+</section>
+
+
+  <footer>
+  <div id="locales"><a href="/ru/processes">Русский (ru)</a> | <a href="/processes">English (en)</a> | <span>日本語 (ja)</span> | <a href="/tr/processes">Turkish (tr)</a> | <a href="/ko/processes">한국어 (ko)</a> | <a href="/fr/processes">Français (fr)</a> | <a href="/de/processes">Deutsch (de)</a> | <a href="/pl/processes">Polski (pl)</a> | <a href="/it/processes">Italiano (it)</a> | <a href="/uk/processes">Українська (uk)</a> | <a href="/es/processes">Español (es)</a> | <a href="/zh_cn/processes">简体中文 (zh_cn)</a> | <a href="/pt_br/processes">Brazilian Portuguese (pt_br)</a></div>
+  <div>Written by Adam Wiggins</div>
+  <div>Last updated 2017</div>
+  <div><a href="https://github.com/heroku/12factor">Sourcecode</a></div>
+  <div><a href="/12factor.epub">Download ePub Book</a></div>
+  <div><a href="https://www.heroku.com/policy/privacy">Privacy Policy</a></div>
+</footer>
+</body>
+</html>

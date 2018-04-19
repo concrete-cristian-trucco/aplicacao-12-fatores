@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>The Twelve-Factor App (Русский перевод)</title>
+  <meta name="description" content="A methodology for building modern, scalable, maintainable software-as-a-service apps.">
+  <meta name="author" content="Adam Wiggins">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" href="images/favicon.ico">
+
+  <link rel="stylesheet" href="/css/screen.css" media="screen">
+  <link rel="stylesheet" href="/css/mobile.css" media="screen">
+
+  <script type="text/javascript" src="//use.typekit.com/rsq7tro.js"></script>
+  <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+</head>
+<body>
+  
+  <!-- Google Tag Manager -->
+  <noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-TK5QTP"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-TK5QTP');</script>
+  <!-- End Google Tag Manager -->
+  
+
+  <header>
+    <h1><a href="./" title="The Twelve-Factor App">The Twelve-Factor App</a></h1>
+  </header>
+
+  <section class="abstract" id="factor">
+  <article>
+    
+<h2 id="iv___backing_services">IV. Сторонние службы (Backing Services)</h2>
+
+<h3 id="___backing_services__">Считайте сторонние службы (backing services) подключаемыми ресурсами</h3>
+
+<p><em>Сторонняя служба</em>– это любая служба, которая доступна приложению по сети и необходима как часть его нормальной работы. Например, хранилища данных (например, <a href="http://dev.mysql.com/">MySQL</a> и <a href="http://couchdb.apache.org/">CouchDB</a>), системы очередей сообщений (например, <a href="http://www.rabbitmq.com/">RabbitMQ</a> и <a href="http://kr.github.com/beanstalkd/">Beanstalkd</a>), службы SMTP для исходящей электронной почты (например, <a href="http://www.postfix.org/">Postfix</a>) и кэширующие системы (например, <a href="http://memcached.org/">Memcached</a>).</p>
+
+<p>Традиционно, сторонние службы, такие как базы данных, поддерживаются тем же самым системным администратором, который разворачивает приложение. Помимо локальных сервисов приложение может использовать сервисы, предоставленные и управляемые третьей стороной. Примеры включают в себя SMTP сервисы (например <a href="http://postmarkapp.com/">Postmark</a>), сервисы сбора метрик (такие как <a href="http://newrelic.com/">New Relic</a> и <a href="http://www.loggly.com/">Loggly</a>), хранилища бинарных данных (например, <a href="http://aws.amazon.com/s3/">Amazon S3</a>), а также использование API различных сервисов (таких как <a href="http://dev.twitter.com/">Twitter</a>, <a href="https://developers.google.com/maps/">Google Maps</a> и <a href="http://www.last.fm/api">Last.fm</a>).</p>
+
+<p><strong>Код приложения двенадцати факторов не делает различий между локальными и сторонними сервисами.</strong> Для приложения каждый из них является подключаемым ресурсом, доступным по URL-адресу или по другой паре расположение/учётные данные, хранящимися в <a href="./config">конфигурации</a>. Каждое <a href="./codebase">развёртывание</a> приложения двенадцати факторов должно иметь возможность заменить локальную базу данных MySQL на любую управляемую третьей стороной (например <a href="http://aws.amazon.com/rds/">Amazon RDS</a>) без каких либо изменений кода приложения. Аналогичным образом, локальный SMTP сервер может быть заменён сторонним (например Postmark) без изменения кода. В обоих случаях необходимо изменить только идентификатор ресурса в конфигурации.</p>
+
+<p>Каждая различная сторонняя служба является <em>ресурсом</em>. Например, база данных MySQL является ресурсом, две базы данных MySQL (используются для фрагментации на уровне приложения) квалифицируются как два отдельных ресурса. Приложение двенадцати факторов считает эти базы данных <em>подключёнными ресурсами</em>, что указывает на их слабое связывание с развёртыванием, в котором они подключены.</p>
+
+<p><img alt='Рабочее развёртывание приложения, подключённого к 4 сторонним сервисам.' class='full' src='/images/attached-resources.png' /></p>
+
+<p>Ресурсы можно по необходимости подключать к развёртыванию и отключать от развёртывания. Например, если база данных приложения функционирует некорректно из-за аппаратных проблем, администратор может запустить новый сервер базы данных, восстановленный из последней резервной копии. Текущая рабочая база данных может быть отключена, а новая база данных подключена – всё это без каких-либо изменений кода.</p>
+
+  </article>
+</section>
+
+<section class="concrete">
+  <nav>
+    <div id="locales"><a href="/backing-services">English (en)</a> | <a href="/ko/backing-services">한국어 (ko)</a> | <a href="/ja/backing-services">日本語 (ja)</a> | <a href="/it/backing-services">Italiano (it)</a> | <a href="/pl/backing-services">Polski (pl)</a> | <a href="/zh_cn/backing-services">简体中文 (zh_cn)</a> | <a href="/de/backing-services">Deutsch (de)</a> | <a href="/es/backing-services">Español (es)</a> | <a href="/fr/backing-services">Français (fr)</a> | <a href="/tr/backing-services">Turkish (tr)</a> | <a href="/uk/backing-services">Українська (uk)</a> | <a href="/pt_br/backing-services">Brazilian Portuguese (pt_br)</a> | <span>Русский (ru)</span></div>
+    <div id="prev"><a href="./config">&laquo; Previous</a></div>
+    <div id="next"><a href="./build-release-run">Next &raquo;</a></div>
+  </nav>
+</section>
+
+
+  <footer>
+  <div id="locales"><a href="/backing-services">English (en)</a> | <a href="/ko/backing-services">한국어 (ko)</a> | <a href="/ja/backing-services">日本語 (ja)</a> | <a href="/it/backing-services">Italiano (it)</a> | <a href="/pl/backing-services">Polski (pl)</a> | <a href="/zh_cn/backing-services">简体中文 (zh_cn)</a> | <a href="/de/backing-services">Deutsch (de)</a> | <a href="/es/backing-services">Español (es)</a> | <a href="/fr/backing-services">Français (fr)</a> | <a href="/tr/backing-services">Turkish (tr)</a> | <a href="/uk/backing-services">Українська (uk)</a> | <a href="/pt_br/backing-services">Brazilian Portuguese (pt_br)</a> | <span>Русский (ru)</span></div>
+  <div>Written by Adam Wiggins</div>
+  <div>Last updated 2017</div>
+  <div><a href="https://github.com/heroku/12factor">Sourcecode</a></div>
+  <div><a href="/12factor.epub">Download ePub Book</a></div>
+  <div><a href="https://www.heroku.com/policy/privacy">Privacy Policy</a></div>
+</footer>
+</body>
+</html>

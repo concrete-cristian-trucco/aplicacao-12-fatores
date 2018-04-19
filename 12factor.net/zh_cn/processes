@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>The Twelve-Factor App （简体中文）</title>
+  <meta name="description" content="A methodology for building modern, scalable, maintainable software-as-a-service apps.">
+  <meta name="author" content="Adam Wiggins">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" href="images/favicon.ico">
+
+  <link rel="stylesheet" href="/css/screen.css" media="screen">
+  <link rel="stylesheet" href="/css/mobile.css" media="screen">
+
+  <script type="text/javascript" src="//use.typekit.com/rsq7tro.js"></script>
+  <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+</head>
+<body>
+  
+  <!-- Google Tag Manager -->
+  <noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-TK5QTP"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-TK5QTP');</script>
+  <!-- End Google Tag Manager -->
+  
+
+  <header>
+    <h1><a href="./" title="The Twelve-Factor App">The Twelve-Factor App</a></h1>
+  </header>
+
+  <section class="abstract" id="factor">
+  <article>
+    
+<h2 id="vi_">VI. 进程</h2>
+
+<h3 id="">以一个或多个无状态进程运行应用</h3>
+
+<p>运行环境中，应用程序通常是以一个和多个 <em>进程</em> 运行的。</p>
+
+<p>最简单的场景中，代码是一个独立的脚本，运行环境是开发人员自己的笔记本电脑，进程由一条命令行（例如<code>python my_script.py</code>）。另外一个极端情况是，复杂的应用可能会使用很多 <a href="./concurrency">进程类型</a> ，也就是零个或多个进程实例。</p>
+
+<p><strong>12-Factor 应用的进程必须无状态且 <a href="http://en.wikipedia.org/wiki/Shared_nothing_architecture">无共享</a> 。</strong> 任何需要持久化的数据都要存储在 <a href="./backing-services">后端服务</a> 内，比如数据库。</p>
+
+<p>内存区域或磁盘空间可以作为进程在做某种事务型操作时的缓存，例如下载一个很大的文件，对其操作并将结果写入数据库的过程。12-Factor应用根本不用考虑这些缓存的内容是不是可以保留给之后的请求来使用，这是因为应用启动了多种类型的进程，将来的请求多半会由其他进程来服务。即使在只有一个进程的情形下，先前保存的数据（内存或文件系统中）也会因为重启（如代码部署、配置更改、或运行环境将进程调度至另一个物理区域执行）而丢失。</p>
+
+<p>源文件打包工具（<a href="http://documentcloud.github.com/jammit/">Jammit</a>, <a href="http://django-compressor.readthedocs.org/">django-compressor</a>） 使用文件系统来缓存编译过的源文件。12-Factor 应用更倾向于在 <a href="./build-release-run">构建步骤</a> 做此动作——正如 <a href="http://guides.rubyonrails.org/asset_pipeline.html">Rails资源管道</a> ，而不是在运行阶段。</p>
+
+<p>一些互联网系统依赖于 “<a href="http://en.wikipedia.org/wiki/Load_balancing_%28computing%29#Persistence">粘性 session</a>”， 这是指将用户 session 中的数据缓存至某进程的内存中，并将同一用户的后续请求路由到同一个进程。粘性 session 是 12-Factor 极力反对的。Session 中的数据应该保存在诸如 <a href="http://memcached.org/">Memcached</a> 或 <a href="http://redis.io/">Redis</a> 这样的带有过期时间的缓存中。</p>
+
+  </article>
+</section>
+
+<section class="concrete">
+  <nav>
+    <div id="locales"><a href="/processes">English (en)</a> | <a href="/ko/processes">한국어 (ko)</a> | <a href="/ja/processes">日本語 (ja)</a> | <a href="/it/processes">Italiano (it)</a> | <a href="/pl/processes">Polski (pl)</a> | <span>简体中文 (zh_cn)</span> | <a href="/de/processes">Deutsch (de)</a> | <a href="/es/processes">Español (es)</a> | <a href="/fr/processes">Français (fr)</a> | <a href="/tr/processes">Turkish (tr)</a> | <a href="/uk/processes">Українська (uk)</a> | <a href="/pt_br/processes">Brazilian Portuguese (pt_br)</a> | <a href="/ru/processes">Русский (ru)</a></div>
+    <div id="prev"><a href="./build-release-run">&laquo; Previous</a></div>
+    <div id="next"><a href="./port-binding">Next &raquo;</a></div>
+  </nav>
+</section>
+
+
+  <footer>
+  <div id="locales"><a href="/processes">English (en)</a> | <a href="/ko/processes">한국어 (ko)</a> | <a href="/ja/processes">日本語 (ja)</a> | <a href="/it/processes">Italiano (it)</a> | <a href="/pl/processes">Polski (pl)</a> | <span>简体中文 (zh_cn)</span> | <a href="/de/processes">Deutsch (de)</a> | <a href="/es/processes">Español (es)</a> | <a href="/fr/processes">Français (fr)</a> | <a href="/tr/processes">Turkish (tr)</a> | <a href="/uk/processes">Українська (uk)</a> | <a href="/pt_br/processes">Brazilian Portuguese (pt_br)</a> | <a href="/ru/processes">Русский (ru)</a></div>
+  <div>Written by Adam Wiggins</div>
+  <div>Last updated 2017</div>
+  <div><a href="https://github.com/heroku/12factor">Sourcecode</a></div>
+  <div><a href="/12factor.epub">Download ePub Book</a></div>
+  <div><a href="https://www.heroku.com/policy/privacy">Privacy Policy</a></div>
+</footer>
+</body>
+</html>

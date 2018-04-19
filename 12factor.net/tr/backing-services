@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>The Twelve-Factor App Türkçe çeviri</title>
+  <meta name="description" content="A methodology for building modern, scalable, maintainable software-as-a-service apps.">
+  <meta name="author" content="Adam Wiggins">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" href="images/favicon.ico">
+
+  <link rel="stylesheet" href="/css/screen.css" media="screen">
+  <link rel="stylesheet" href="/css/mobile.css" media="screen">
+
+  <script type="text/javascript" src="//use.typekit.com/rsq7tro.js"></script>
+  <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+</head>
+<body>
+  
+  <!-- Google Tag Manager -->
+  <noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-TK5QTP"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-TK5QTP');</script>
+  <!-- End Google Tag Manager -->
+  
+
+  <header>
+    <h1><a href="./" title="The Twelve-Factor App">The Twelve-Factor App</a></h1>
+  </header>
+
+  <section class="abstract" id="factor">
+  <article>
+    
+<h2 id="iv_destek_servisi">IV. Destek servisi</h2>
+
+<h3 id="destek_servislerine_ekli_kaynak_olarak_davranma">Destek servislerine ekli kaynak olarak davranma</h3>
+
+<p>Bir <em>destek servisi</em> uygulamanın kendi normal işleminin bir parçası olarak ağ üzerinden tüketim yapan bir servistir. Örnekler veri deposu(<a href="http://dev.mysql.com/">MySQL</a> veya <a href="http://couchdb.apache.org/">CouchDB</a> gibi), mesajlama/kuyruklama sistemleri( <a href="http://www.rabbitmq.com/">RabbitMQ</a> veya <a href="http://kr.github.com/beanstalkd/">Beanstalkd</a>), giden email için SMTP servisi(<a href="http://www.postfix.org/">Postfix</a> gibi) ve önbellekleme sistemleri(<a href="http://memcached.org/">Memcached</a> gibi) içerir.</p>
+
+<p>Destek servisleri, veri tabanı gibi, uygulamaların çalışma zamanlı dağıtımlarında olduğu gibi benzer sistem yöneticileri tarafından geleneksel olarak yönetilirler. Bu yerel yönetilen servislere ilave olarak, uygulama üçüncü parti uygulamalar tarafından onaylanmış ve yönetilmiş servislere sahip olabilirler. Örnekler SMTP servisleri(<a href="http://postmarkapp.com/">Postmark</a> gibi), Metrik toplama servisleri( <a href="http://newrelic.com/">New Relic</a> veya <a href="http://www.loggly.com/">Loggly</a> gibi), binary servisler(<a href="http://aws.amazon.com/s3/">Amazon S3</a> gibi) ve API-erişilebilir tüketici servisleri bile <a href="http://dev.twitter.com/">Twitter</a>, <a href="http://code.google.com/apis/maps/index.html">Google Maps</a>, ve <a href="http://www.last.fm/api">Last.fm</a> gibi) içerir.</p>
+
+<p><strong>On iki faktör uygulaması için bu kod, yerel ve üçüncü parti servisler arasında ayrım yapmaz.</strong> Uygulamada, her ikiside ek kaynaktır, <a href="./config">yapılandırmada</a> saklanmış yer belirleyici/kimlik bilgileri ve URL aracılığıyla erişilir. On iki faktör uygulamasının bir dağıtımı, uygulama kodunda hiçbir değişiklik olmadan üçüncü parti(<a href="http://aws.amazon.com/rds/">Amazon RDS</a> gibi) tarafından yönetilenle yerel MySQL veritabanı silebilmelidir. Aynı şekilde bir yerel SMTP servisi(Postmark gibi), kod değişikliksiz bir üçüncü parti SMTP servisiyle değiş tokuş yapılabilir. Her iki durumda da, kaynak sadece değişmesi gereken yapılandırmada ele alınır.</p>
+
+<p>Her bir belirgin destek servisi bir <em>kaynaktır</em>. Örneğin, bir MySQL veritabanı(Uygulama katmanında parçalanma için kullanılmış) bir kaynaktır; iki MySQL veritabanı iki belirgin kaynak olarak nitelendirilir. On iki faktör uygulaması veritabanlarına, bağlı oldukları dağıtımlara gevşek bağlaşımlarını belirten <em>ek kaynak</em> olarak davranır.</p>
+
+<p><img alt='A production deploy attached to four backing services.' class='full' src='/images/attached-resources.png' /></p>
+
+<p>Kaynaklar dağıtımlara istenilen zamanda eklenilip çıkartılabilir. Örneğin, eğer uygulamanın veritabanı donanım sorununa göre yanlış davranıyorsa, uygulamanın yöneticisi son yedeklemeden geri yüklenmiş yeni bir veri tabanı sunucusunu döndürebilir. Şuanki veritabanı ekten çıkarılmış olabilir ve yeni veri tabanı eklenmiş olabilir, hiç bir kod değişikliği olmadan.</p>
+
+  </article>
+</section>
+
+<section class="concrete">
+  <nav>
+    <div id="locales"><a href="/ru/backing-services">Русский (ru)</a> | <a href="/backing-services">English (en)</a> | <a href="/ja/backing-services">日本語 (ja)</a> | <span>Turkish (tr)</span> | <a href="/ko/backing-services">한국어 (ko)</a> | <a href="/fr/backing-services">Français (fr)</a> | <a href="/de/backing-services">Deutsch (de)</a> | <a href="/pl/backing-services">Polski (pl)</a> | <a href="/it/backing-services">Italiano (it)</a> | <a href="/uk/backing-services">Українська (uk)</a> | <a href="/es/backing-services">Español (es)</a> | <a href="/zh_cn/backing-services">简体中文 (zh_cn)</a> | <a href="/pt_br/backing-services">Brazilian Portuguese (pt_br)</a></div>
+    <div id="prev"><a href="./config">&laquo; Previous</a></div>
+    <div id="next"><a href="./build-release-run">Next &raquo;</a></div>
+  </nav>
+</section>
+
+
+  <footer>
+  <div id="locales"><a href="/ru/backing-services">Русский (ru)</a> | <a href="/backing-services">English (en)</a> | <a href="/ja/backing-services">日本語 (ja)</a> | <span>Turkish (tr)</span> | <a href="/ko/backing-services">한국어 (ko)</a> | <a href="/fr/backing-services">Français (fr)</a> | <a href="/de/backing-services">Deutsch (de)</a> | <a href="/pl/backing-services">Polski (pl)</a> | <a href="/it/backing-services">Italiano (it)</a> | <a href="/uk/backing-services">Українська (uk)</a> | <a href="/es/backing-services">Español (es)</a> | <a href="/zh_cn/backing-services">简体中文 (zh_cn)</a> | <a href="/pt_br/backing-services">Brazilian Portuguese (pt_br)</a></div>
+  <div>Written by Adam Wiggins</div>
+  <div>Last updated 2017</div>
+  <div><a href="https://github.com/heroku/12factor">Sourcecode</a></div>
+  <div><a href="/12factor.epub">Download ePub Book</a></div>
+  <div><a href="https://www.heroku.com/policy/privacy">Privacy Policy</a></div>
+</footer>
+</body>
+</html>

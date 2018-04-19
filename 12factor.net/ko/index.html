@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>The Twelve-Factor App (한국어)</title>
+  <meta name="description" content="A methodology for building modern, scalable, maintainable software-as-a-service apps.">
+  <meta name="author" content="Adam Wiggins">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" href="images/favicon.ico">
+
+  <link rel="stylesheet" href="/css/screen.css" media="screen">
+  <link rel="stylesheet" href="/css/mobile.css" media="screen">
+
+  <script type="text/javascript" src="//use.typekit.com/rsq7tro.js"></script>
+  <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+</head>
+<body>
+  
+  <!-- Google Tag Manager -->
+  <noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-TK5QTP"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-TK5QTP');</script>
+  <!-- End Google Tag Manager -->
+  
+
+  <header>
+    <h1><a href="./" title="The Twelve-Factor App">The Twelve-Factor App</a></h1>
+  </header>
+
+  <section class="abstract">
+  <article>
+<h1 id="">머리말</h1>
+
+<p>최근 소프트웨어를 서비스 형태로 제공하는게 일반화 되면서, 웹앱 혹은 SaaS(Software As A Service)라고 부르게 되었다. Twelve-Factor app은 아래 특징을 가진 SaaS 앱을 만들기 위한 방법론이다.</p>
+
+<ul>
+<li>설정 자동화를 위한 <strong>절차(declarative)</strong> 를 체계화 하여 새로운 개발자가 프로젝트에 참여하는데 드는 시간과 비용을 최소화한다.</li>
+
+<li>OS에 따라 <strong>달라지는 부분을 명확히</strong>하고, 실행 환경 사이의 <strong>이식성을 극대화</strong> 한다.</li>
+
+<li>최근 등장한 <strong>클라우드 플랫폼</strong> <strong>배포에</strong> 적합하고, 서버와 시스템의 관리가 필요없게 된다.</li>
+
+<li>개발 환경과 운영 환경의 <strong>차이를 최소화</strong>하고 민첩성을 극대화하기 위해 <strong>지속적인 배포</strong>가 가능하다.</li>
+
+<li>툴, 아키텍처, 개발 방식을 크게 바꾸지 않고 <strong>확장(scale up)</strong> 할 수 있다.</li>
+</ul>
+
+<p>Twelve-Factor 방법론은 어떤 프로그래밍 언어로 작성된 앱에도 적용할 수 있고 백엔드 서비스(데이터베이스, 큐, 메모리 캐시 등)와 다양한 조합으로 사용할 수 있다.</p>
+</article>
+  <article>
+<h1 id="">배경</h1>
+
+<p>이 문서에 기여한 사람들은 수백개 앱의 개발과 배포에 직접 참여했으며, <a href="http://www.heroku.com/">Heroku</a> 플랫폼을 통해서 방대한 앱의 개발, 운영, 확장을 간접적으로 관찰했다.</p>
+
+<p>이 문서는 실제로 쓰이는 다양한 SaaS 앱에 대한 경험과 관찰을 종합한 결과물이다. 특히 시간이 지나면서 앱이 유기적으로 성장하는 부분, 앱 코드베이스에서 작업하는 개발자들 간의 협업, <a href="http://blog.heroku.com/archives/2011/6/28/the_new_heroku_4_erosion_resistance_explicit_contracts/">시간이 지나면서 망가지는 소프트웨어 유지비용을 줄이는 법</a>에 집중하여 이상적인 앱 개발 방법을 찾고자 했다.</p>
+
+<p>이 문서는 우리가 최신 애플리케이션 개발에서 만났던 몇가지 시스템적인 문제에 대한 인지도를 높이고, 이 문제들을 가지고 논의 하는데 필요한 공통의 어휘를 제공하며, 이 문제들에 대한 넓은 개념의 해결책과 용어를 제공하기 위해 작성 했다. 형식은 Martin Fowler의 책, <em><a href="http://books.google.com/books/about/Patterns_of_enterprise_application_archi.html?id=FyWZt5DdvFkC">Patterns of Enterprise Application Architecture</a></em>과 <em><a href="http://books.google.com/books/about/Refactoring.html?id=1MsETFPD3I0C">Refactoring</a></em>에서 영감을 받았다.</p>
+</article>
+  <article>
+<h1 id="__">이 문서의 대상</h1>
+
+<p>서비스로 동작하는 애플리케이션을 개발하는 모든 개발자. 그런 애플리케이션을 배포하고 관리하는 인프라 엔지니어.</p>
+</article>
+</section>
+
+<section class="concrete">
+  <article>
+<h1 id="the_twelve_factors">The Twelve Factors</h1>
+
+<h2 id="i_"><a href="./codebase">I. 코드베이스</a></h2>
+
+<h3 id="_____">버전 관리되는 하나의 코드베이스와 다양한 배포</h3>
+
+<h2 id="ii_"><a href="./dependencies">II. 종속성</a></h2>
+
+<h3 id="___">명시적으로 선언되고 분리된 종속성</h3>
+
+<h2 id="iii_"><a href="./config">III. 설정</a></h2>
+
+<h3 id="environment__">환경(environment)에 저장된 설정</h3>
+
+<h2 id="iv__"><a href="./backing-services">IV. 백엔드 서비스</a></h2>
+
+<h3 id="____">백엔드 서비스를 연결된 리소스로 취급</h3>
+
+<h2 id="v___"><a href="./build-release-run">V. 빌드, 릴리즈, 실행</a></h2>
+
+<h3 id="_____2">철저하게 분리된 빌드와 실행 단계</h3>
+
+<h2 id="vi_"><a href="./processes">VI. 프로세스</a></h2>
+
+<h3 id="____stateless__">애플리케이션을 하나 혹은 여러개의 무상태(stateless) 프로세스로 실행</h3>
+
+<h2 id="vii__"><a href="./port-binding">VII. 포트 바인딩</a></h2>
+
+<h3 id="_____3">포트 바인딩을 사용해서 서비스를 공개함</h3>
+
+<h2 id="viii_concurrency"><a href="./concurrency">VIII. 동시성(Concurrency)</a></h2>
+
+<h3 id="____2">프로세스 모델을 사용한 확장</h3>
+
+<h2 id="ix__disposability"><a href="./disposability">IX. 폐기 가능(Disposability)</a></h2>
+
+<h3 id="___graceful_shutdown___">빠른 시작과 그레이스풀 셧다운(graceful shutdown)을 통한 안정성 극대화</h3>
+
+<h2 id="x__"><a href="./dev-prod-parity">X. 개발/프로덕션환경 일치</a></h2>
+
+<h3 id="______">개발, 스테이징, 프로덕션 환경을 최대한 비슷하게 유지</h3>
+
+<h2 id="xi_"><a href="./logs">XI. 로그</a></h2>
+
+<h3 id="____3">로그를 이벤트 스트림으로 취급</h3>
+
+<h2 id="xii_admin_"><a href="./admin-processes">XII. Admin 프로세스</a></h2>
+
+<h3 id="adminmaintenance____">admin/maintenance 작업을 일회성 프로세스로 실행</h3>
+</article>
+</section>
+
+
+  <footer>
+  <div id="locales"><a href="/">English (en)</a> | <span>한국어 (ko)</span> | <a href="/ja/">日本語 (ja)</a> | <a href="/it/">Italiano (it)</a> | <a href="/pl/">Polski (pl)</a> | <a href="/zh_cn/">简体中文 (zh_cn)</a> | <a href="/de/">Deutsch (de)</a> | <a href="/es/">Español (es)</a> | <a href="/fr/">Français (fr)</a> | <a href="/tr/">Turkish (tr)</a> | <a href="/uk/">Українська (uk)</a> | <a href="/pt_br/">Brazilian Portuguese (pt_br)</a> | <a href="/ru/">Русский (ru)</a></div>
+  <div>Written by Adam Wiggins</div>
+  <div>Last updated 2017</div>
+  <div><a href="https://github.com/heroku/12factor">Sourcecode</a></div>
+  <div><a href="/12factor.epub">Download ePub Book</a></div>
+  <div><a href="https://www.heroku.com/policy/privacy">Privacy Policy</a></div>
+</footer>
+</body>
+</html>

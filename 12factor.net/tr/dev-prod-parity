@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>The Twelve-Factor App Türkçe çeviri</title>
+  <meta name="description" content="A methodology for building modern, scalable, maintainable software-as-a-service apps.">
+  <meta name="author" content="Adam Wiggins">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" href="images/favicon.ico">
+
+  <link rel="stylesheet" href="/css/screen.css" media="screen">
+  <link rel="stylesheet" href="/css/mobile.css" media="screen">
+
+  <script type="text/javascript" src="//use.typekit.com/rsq7tro.js"></script>
+  <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+</head>
+<body>
+  
+  <!-- Google Tag Manager -->
+  <noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-TK5QTP"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-TK5QTP');</script>
+  <!-- End Google Tag Manager -->
+  
+
+  <header>
+    <h1><a href="./" title="The Twelve-Factor App">The Twelve-Factor App</a></h1>
+  </header>
+
+  <section class="abstract" id="factor">
+  <article>
+    
+<h2 id="xgelitirmeretim_eitlii">X.Geliştirme/Üretim Eşitliği</h2>
+
+<h3 id="geliim_evreleme_ve_retimi_olabildike_benzer_tutma">Gelişim, evreleme ve üretimi olabildikçe benzer tutma</h3>
+
+<p>Tarihsel olarak, geliştirme (bir geliştirici uygulamanın yerel <a href="./codebase">dağıtımına</a> canlı düzenlemeler yapar) ve ürün (uygulamanın çalışan dağıtımı son kullanıcılar tarafından erişilmiştir) arasında önemli aralıklar vardır. Bu aralıklar üç alanda belirtilir:</p>
+
+<ul>
+<li><strong>Zaman aralığı:</strong> bir geliştirici kod üzerinde günler,haftalar hatta aylar boyunca bile ürünü oluşturmak için çalışabilir.</li>
+
+<li><strong>Eleman aralığı:</strong> Geliştiriciler kod yazar, ops mühendisleri dağıtır.</li>
+
+<li><strong>Araçların aralığı:</strong> Geliştiriciler ürün dağıtımı Apache, MySQL ve Linux kullanırken; Nginx, SQLite, ve OS X gibi yığınları kullanıyor olabilir.</li>
+</ul>
+
+<p><strong>On iki faktör uygulaması, geliştirme ve ürün aralığını küçük tutarak, <a href="http://avc.com/2011/02/continuous-deployment/">sürekli dağıtım</a> için tasarlanmıştır.</strong> Yukarda tanımlanan üç aralığa bakarsak:</p>
+
+<ul>
+<li>Zaman aralığını küçültme: bir geliştirici kod yazabilir ve bu kodu saatler veya hatta dakikalar sonra dağıtmış olabilir.</li>
+
+<li>Eleman aralığını küçültme: kodu yazan geliştiriciler, kodu dağıtmakla yakından ilişkilidir ve üründeki davranışını izler.</li>
+
+<li>Araçların aralığını küçültme: geliştirmeyi ve ürünü olabildiği kadar benzer tut.</li>
+</ul>
+
+<p>Üstekileri bir tablo olarak özetlersek:</p>
+<table>
+  <tr>
+    <th />
+    <th>Geleneksel uygulama</th>
+    <th>On iki faktör uygulaması</th>
+  </tr>
+  <tr>
+    <th>Dağıtımlar arasındaki zaman</th>
+    <td>Haftalar</td>
+    <td>Saatler</td>
+  </tr>
+  <tr>
+    <th>Kod yazarları ve kod dağıtımcıları</th>
+    <td>Farklı insanlar</td>
+    <td>Aynı insanlar</td>
+  </tr>
+  <tr>
+    <th>Geliştirme ve ürün ortamı</th>
+    <td>Farklı</td>
+    <td>Olabildiğince benzer</td>
+  </tr>
+</table>
+<p><a href="./backing-services">Destek servisler</a>; uygulamanın veritabanı, kuyruk sistemi veya önbellek gibi, geliştirme/üretim eşitliğinin önemli olduğu bir alandır. Bir çok dil, farklı tipteki servislerin <em>uyarlayıcılarını</em> içeren, destek servislerine ulaşımı kolaylaştıran kütüphanleri önerir. Bazı örnekler aşağıdaki tabloda vardır.</p>
+<table>
+  <tr>
+    <th>Tip</th>
+    <th>Dil</th>
+    <th>Kütüphane</th>
+    <th>Uyarlayıcı</th>
+  </tr>
+  <tr>
+    <td>Veritabanı</td>
+    <td>Ruby/Rails</td>
+    <td>ActiveRecord</td>
+    <td>MySQL, PostgreSQL, SQLite</td>
+  </tr>
+  <tr>
+    <td>Kuyruk</td>
+    <td>Python/Django</td>
+    <td>Celery</td>
+    <td>RabbitMQ, Beanstalkd, Redis</td>
+  </tr>
+  <tr>
+    <td>Önbellek</td>
+    <td>Ruby/Rails</td>
+    <td>ActiveSupport::Cache</td>
+    <td>Bellek, dosya sistemi, Memcached</td>
+  </tr>
+</table>
+<p>Geliştiriciler, üründe ciddi ve sağlam destek servisleri kullanırken, bazen kendi yerel ortamlarında önemsiz destek servislerini kullanmak için istek duyarlar. Örneğin, yerelde SQLite üründe PostgreSQL kullanılır veya geliştirmede depolama için yerel süreç belleği ve üründe de Memcached kullanılır.</p>
+
+<p><strong>On iki faktör geliştiricisi</strong>, uyarlayıcılar teorik olarak destek servislerindeki herhangi bir farklılığı soyutladığı zaman bile <strong>geliştirme ve ürün arasında faklı destek servisi kullanma isteğine karşı direnir.</strong> Destek hizmetleri arasındaki farklılıklar, küçük uyumsuzlukların ortaya çıkması, kodun işe yaraması ve geliştirme aşamasında testlere geçilmesi veya üretimde başarısız olmaya neden olması anlamına gelir. Bu tür hatalar, sürekli dağıtımın etkisini azaltan bir sürtüşme yaratır. Bu sürtünme maliyeti ve sonraki devamlı dağıtımın azaltılması, bir uygulamanın ömrü süresince toplamda düşünüldüğünde oldukça yüksektir.</p>
+
+<p>Önemsiz yerel servisler bir zamanlar olduğundan daha zorlayıcıdır. Memcached, PostgreSQL ve RabbitMQ gibi modern destek servisleri, <a href="http://mxcl.github.com/homebrew/">Homebrew</a> ve <a href="https://help.ubuntu.com/community/AptGet/Howto">apt-get</a> gibi modern paket sistemleri sayesinde yüklemesi ve çalıştırılması zor değildir. Alternatif olarak, <a href="http://www.opscode.com/chef/">Chef</a> ve <a href="http://docs.puppetlabs.com/">Puppet</a> gibi bildiri sağlayıcı araçlar önemsiz sanal ortamlarla birleşir, <a href="http://vagrantup.com/">Vagrant</a> gibi, geliştiricilerin yerel ortamda çalışmalarına izin verir, yaklaşık olarak ürün ortamına benzer. Bu sistemlerin yüklenmesi ve kullanımının maliyeti, geliştirme üretim eşitliği ve sürekli dağıtımın faydasıyla karşılaştırıldığında düşüktür.</p>
+
+<p>Farklı destek servislerinin uyarlayıcıları hala kullanışlıdır, çünkü yeni destek servislerine bağlanmayı nispeten zahmetsiz yapar. Ama uygulamanın bütün dağıtımları (geliştirme ortamları, evreleme, ürün) her bir destek servisinin aynı tip ve versiyonunu kullanmalıdır.</p>
+
+  </article>
+</section>
+
+<section class="concrete">
+  <nav>
+    <div id="locales"><a href="/ru/dev-prod-parity">Русский (ru)</a> | <a href="/dev-prod-parity">English (en)</a> | <a href="/ja/dev-prod-parity">日本語 (ja)</a> | <span>Turkish (tr)</span> | <a href="/ko/dev-prod-parity">한국어 (ko)</a> | <a href="/fr/dev-prod-parity">Français (fr)</a> | <a href="/de/dev-prod-parity">Deutsch (de)</a> | <a href="/pl/dev-prod-parity">Polski (pl)</a> | <a href="/it/dev-prod-parity">Italiano (it)</a> | <a href="/uk/dev-prod-parity">Українська (uk)</a> | <a href="/es/dev-prod-parity">Español (es)</a> | <a href="/zh_cn/dev-prod-parity">简体中文 (zh_cn)</a> | <a href="/pt_br/dev-prod-parity">Brazilian Portuguese (pt_br)</a></div>
+    <div id="prev"><a href="./disposability">&laquo; Previous</a></div>
+    <div id="next"><a href="./logs">Next &raquo;</a></div>
+  </nav>
+</section>
+
+
+  <footer>
+  <div id="locales"><a href="/ru/dev-prod-parity">Русский (ru)</a> | <a href="/dev-prod-parity">English (en)</a> | <a href="/ja/dev-prod-parity">日本語 (ja)</a> | <span>Turkish (tr)</span> | <a href="/ko/dev-prod-parity">한국어 (ko)</a> | <a href="/fr/dev-prod-parity">Français (fr)</a> | <a href="/de/dev-prod-parity">Deutsch (de)</a> | <a href="/pl/dev-prod-parity">Polski (pl)</a> | <a href="/it/dev-prod-parity">Italiano (it)</a> | <a href="/uk/dev-prod-parity">Українська (uk)</a> | <a href="/es/dev-prod-parity">Español (es)</a> | <a href="/zh_cn/dev-prod-parity">简体中文 (zh_cn)</a> | <a href="/pt_br/dev-prod-parity">Brazilian Portuguese (pt_br)</a></div>
+  <div>Written by Adam Wiggins</div>
+  <div>Last updated 2017</div>
+  <div><a href="https://github.com/heroku/12factor">Sourcecode</a></div>
+  <div><a href="/12factor.epub">Download ePub Book</a></div>
+  <div><a href="https://www.heroku.com/policy/privacy">Privacy Policy</a></div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>The Twelve-Factor App Ce texte est une traduction</title>
+  <meta name="description" content="A methodology for building modern, scalable, maintainable software-as-a-service apps.">
+  <meta name="author" content="Adam Wiggins">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" href="images/favicon.ico">
+
+  <link rel="stylesheet" href="/css/screen.css" media="screen">
+  <link rel="stylesheet" href="/css/mobile.css" media="screen">
+
+  <script type="text/javascript" src="//use.typekit.com/rsq7tro.js"></script>
+  <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+</head>
+<body>
+  
+  <!-- Google Tag Manager -->
+  <noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-TK5QTP"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-TK5QTP');</script>
+  <!-- End Google Tag Manager -->
+  
+
+  <header>
+    <h1><a href="./" title="The Twelve-Factor App">The Twelve-Factor App</a></h1>
+  </header>
+
+  <section class="abstract" id="factor">
+  <article>
+    
+<h2 id="xi_logs">XI. Logs</h2>
+
+<h3 id="traitez_les_logs_comme_des_flux_dvnements">Traitez les logs comme des flux d’évènements</h3>
+
+<p>Les <em>logs</em> fournissent de la visibilité au comportement de l’application qui s’exécute. Dans des environnements de type serveur, ils sont généralement écrits dans un fichier, sur le disque (dans un fichier de log). Mais c’est simplement un format de sortie.</p>
+
+<p>Les logs sont des <a href="https://adam.herokuapp.com/past/2011/4/1/logs_are_streams_not_files/">flux (en)</a> d’agrégats d’évènements, ordonnés dans le temps, collectés à travers les flux de sortie de tous les processus et services externes qui tournent. Les logs, dans leur forme brute, sont au format texte avec un événement par ligne (bien que les traces d’exécutions puissent s’étaler sur plusieurs lignes). Les logs n’ont pas de début ou de fin fixe, mais se remplissent en continu tant que l’application est en marche.</p>
+
+<p><strong>Une application 12 facteurs ne s’inquiète jamais du routage ou du stockage de ses flux de sortie.</strong> Elle ne devrait pas tenter d’écrire ou de gérer les fichiers de logs. À la place, chaque processus qui tourne écrit ses flux d’événements, sans tampon, vers <code>stdout</code>, la sortie standard ; en phase de développement local, les développeurs pourront voir ce flux dans leur terminal et observer le comportement de l’application.</p>
+
+<p>Dans les déploiements de validation ou de production, les flux de chaque processus seront capturés par leur environnement d’exécution, assemblés avec les autres flux de l’application, et routés vers une ou plusieurs destinations pour un visionnage et un archivage de longue durée. Le lieu d’archivage n’est pas visible et ne peut être configuré par l’application : ils sont complètements gérés par l’environnement d’exécution. Des routeurs opensource de logs, (tel que <a href="https://github.com/heroku/logplex">Logplex</a> et <a href="https://github.com/fluent/fluentd">Fluentd</a>) existent pour cela.</p>
+
+<p>Le flux d’événements d’une application peut être routé dans un fichier, ou surveillé en temps réel (avec tail) dans un terminal. Plus pertinent, les flux peuvent être envoyés vers un outil d’indexation et d’archivage des logs tel que <a href="http://www.splunk.com/">Splunk</a>, ou bien dans un entrepôt de données générique comme <a href="http://hive.apache.org/">Hadoop/Hive</a>. Ces systèmes sont très puissants et flexibles pour inspecter le comportement de l’application au cours du temps, ce qui inclut :</p>
+
+<ul>
+<li>Trouver un événement spécifique dans le passé</li>
+
+<li>Faire des graphiques à grande échelle des tendances (comme le nombre de requêtes par minutes)</li>
+
+<li>Lever des alertes, à partir d’heuristiques définies par l’utilisateur (comme alerter dès que la quantité d’erreurs par minutes dépasse un certain seuil)</li>
+</ul>
+
+  </article>
+</section>
+
+<section class="concrete">
+  <nav>
+    <div id="locales"><a href="/ru/logs">Русский (ru)</a> | <a href="/logs">English (en)</a> | <a href="/ja/logs">日本語 (ja)</a> | <a href="/tr/logs">Turkish (tr)</a> | <a href="/ko/logs">한국어 (ko)</a> | <span>Français (fr)</span> | <a href="/de/logs">Deutsch (de)</a> | <a href="/pl/logs">Polski (pl)</a> | <a href="/it/logs">Italiano (it)</a> | <a href="/uk/logs">Українська (uk)</a> | <a href="/es/logs">Español (es)</a> | <a href="/zh_cn/logs">简体中文 (zh_cn)</a> | <a href="/pt_br/logs">Brazilian Portuguese (pt_br)</a></div>
+    <div id="prev"><a href="./dev-prod-parity">&laquo; Previous</a></div>
+    <div id="next"><a href="./admin-processes">Next &raquo;</a></div>
+  </nav>
+</section>
+
+
+  <footer>
+  <div id="locales"><a href="/ru/logs">Русский (ru)</a> | <a href="/logs">English (en)</a> | <a href="/ja/logs">日本語 (ja)</a> | <a href="/tr/logs">Turkish (tr)</a> | <a href="/ko/logs">한국어 (ko)</a> | <span>Français (fr)</span> | <a href="/de/logs">Deutsch (de)</a> | <a href="/pl/logs">Polski (pl)</a> | <a href="/it/logs">Italiano (it)</a> | <a href="/uk/logs">Українська (uk)</a> | <a href="/es/logs">Español (es)</a> | <a href="/zh_cn/logs">简体中文 (zh_cn)</a> | <a href="/pt_br/logs">Brazilian Portuguese (pt_br)</a></div>
+  <div>Written by Adam Wiggins</div>
+  <div>Last updated 2017</div>
+  <div><a href="https://github.com/heroku/12factor">Sourcecode</a></div>
+  <div><a href="/12factor.epub">Download ePub Book</a></div>
+  <div><a href="https://www.heroku.com/policy/privacy">Privacy Policy</a></div>
+</footer>
+</body>
+</html>

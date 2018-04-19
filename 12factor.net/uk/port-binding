@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>The Twelve-Factor App (Переклад українською)</title>
+  <meta name="description" content="A methodology for building modern, scalable, maintainable software-as-a-service apps.">
+  <meta name="author" content="Adam Wiggins">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" href="images/favicon.ico">
+
+  <link rel="stylesheet" href="/css/screen.css" media="screen">
+  <link rel="stylesheet" href="/css/mobile.css" media="screen">
+
+  <script type="text/javascript" src="//use.typekit.com/rsq7tro.js"></script>
+  <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+</head>
+<body>
+  
+  <!-- Google Tag Manager -->
+  <noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-TK5QTP"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-TK5QTP');</script>
+  <!-- End Google Tag Manager -->
+  
+
+  <header>
+    <h1><a href="./" title="The Twelve-Factor App">The Twelve-Factor App</a></h1>
+  </header>
+
+  <section class="abstract" id="factor">
+  <article>
+    
+<h2 id="vii__">VII. Прив’язка портів</h2>
+
+<h3 id="______port_binding">Експортуйте сервіси за допомогою прив’язки портів (port binding)</h3>
+
+<p>Веб-застосунки іноді запускаються всередині контейнера веб-сервера. Наприклад, PHP-застосунок може бути запущений як модуль всередині <a href="http://httpd.apache.org/">Apache HTTPD</a> або Java-застосунок може бути запущений всередині <a href="http://tomcat.apache.org/">Tomcat</a>.</p>
+
+<p><strong>Застосунок дванадцяти факторів є повністю автономним</strong> і в процесі виконання, щоб створити веб-сервіс, доступний через web, не покладається на ін’єкцію веб-сервера в середовище виконання. Веб-застосунок <strong>експортує HTTP-сервіс шляхом прив’язки до порту</strong> і прослуховує запити, що надходять на цей порт.</p>
+
+<p>У локальному development середовищі розробник відвідує URL-адресу вигляду <code>http://localhost:5000/</code> для доступу до сервісу, що експортується застосунком. При розгортанні рівень маршрутизації обробляє запити до загальнодоступного хосту і перенаправляє їх до порту, до якого прив’язано веб-процес.</p>
+
+<p>Як правило, це реалізується за допомогою <a href="./dependencies">оголошення залежностей</a> шляхом додавання бібліотеки веб-сервера до застосунку, наприклад, <a href="http://www.tornadoweb.org/">Tornado</a> для Python, <a href="http://code.macournoyer.com/thin/">Thin</a> для Ruby або <a href="http://www.eclipse.org/jetty/">Jetty</a> для Java та інших мов на основі JVM. Це відбувається повністю в <em>просторі користувача</em>, тобто в коді застосунку. Прив’язка до порту для обробки запитів є “угодою” із середовищем виконання.</p>
+
+<p>HTTP — не єдиний сервіс, який може бути експортований шляхом прив’язки до порту. Майже будь-який вид серверного програмного забезпечення може бути запущений, прив’язаний до порту і може очікувати вхідні запити. Прикладами є <a href="http://www.ejabberd.im/">ejabberd</a> (використовує <a href="http://xmpp.org/">XMPP</a>) і <a href="http://redis.io/">Redis</a> (використовує <a href="http://redis.io/topics/protocol">протокол Redis</a>).</p>
+
+<p>Також зверніть увагу, що підхід прив’язки до портів означає, що застосунок може виступати як <a href="./backing-services">стороння служба</a> для іншого застосунку, надаючи свою URL-адресу як ресурс в <a href="./config">конфігурації</a> застосунку-споживача.</p>
+
+  </article>
+</section>
+
+<section class="concrete">
+  <nav>
+    <div id="locales"><a href="/port-binding">English (en)</a> | <a href="/ko/port-binding">한국어 (ko)</a> | <a href="/ja/port-binding">日本語 (ja)</a> | <a href="/it/port-binding">Italiano (it)</a> | <a href="/pl/port-binding">Polski (pl)</a> | <a href="/zh_cn/port-binding">简体中文 (zh_cn)</a> | <a href="/de/port-binding">Deutsch (de)</a> | <a href="/es/port-binding">Español (es)</a> | <a href="/fr/port-binding">Français (fr)</a> | <a href="/tr/port-binding">Turkish (tr)</a> | <span>Українська (uk)</span> | <a href="/pt_br/port-binding">Brazilian Portuguese (pt_br)</a> | <a href="/ru/port-binding">Русский (ru)</a></div>
+    <div id="prev"><a href="./processes">&laquo; Previous</a></div>
+    <div id="next"><a href="./concurrency">Next &raquo;</a></div>
+  </nav>
+</section>
+
+
+  <footer>
+  <div id="locales"><a href="/port-binding">English (en)</a> | <a href="/ko/port-binding">한국어 (ko)</a> | <a href="/ja/port-binding">日本語 (ja)</a> | <a href="/it/port-binding">Italiano (it)</a> | <a href="/pl/port-binding">Polski (pl)</a> | <a href="/zh_cn/port-binding">简体中文 (zh_cn)</a> | <a href="/de/port-binding">Deutsch (de)</a> | <a href="/es/port-binding">Español (es)</a> | <a href="/fr/port-binding">Français (fr)</a> | <a href="/tr/port-binding">Turkish (tr)</a> | <span>Українська (uk)</span> | <a href="/pt_br/port-binding">Brazilian Portuguese (pt_br)</a> | <a href="/ru/port-binding">Русский (ru)</a></div>
+  <div>Written by Adam Wiggins</div>
+  <div>Last updated 2017</div>
+  <div><a href="https://github.com/heroku/12factor">Sourcecode</a></div>
+  <div><a href="/12factor.epub">Download ePub Book</a></div>
+  <div><a href="https://www.heroku.com/policy/privacy">Privacy Policy</a></div>
+</footer>
+</body>
+</html>

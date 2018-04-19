@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>The Twelve-Factor App (Questo testo è una traduzione della versione originale in inglese.)</title>
+  <meta name="description" content="A methodology for building modern, scalable, maintainable software-as-a-service apps.">
+  <meta name="author" content="Adam Wiggins">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" href="images/favicon.ico">
+
+  <link rel="stylesheet" href="/css/screen.css" media="screen">
+  <link rel="stylesheet" href="/css/mobile.css" media="screen">
+
+  <script type="text/javascript" src="//use.typekit.com/rsq7tro.js"></script>
+  <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+</head>
+<body>
+  
+  <!-- Google Tag Manager -->
+  <noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-TK5QTP"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-TK5QTP');</script>
+  <!-- End Google Tag Manager -->
+  
+
+  <header>
+    <h1><a href="./" title="The Twelve-Factor App">The Twelve-Factor App</a></h1>
+  </header>
+
+  <section class="abstract" id="factor">
+  <article>
+    
+<h2 id="viii_concorrenza">VIII. Concorrenza</h2>
+
+<h3 id="scalare_attraverso_il_process_model">Scalare attraverso il process model</h3>
+
+<p>Ogni software, una volta avviato, è rappresentato da uno o più processi. Le web application in particolare hanno assunto nel tempo una gran varietà di forme e di tipologie di esecuzione, in tal senso. Per esempio, i processi PHP vengono eseguiti come sotto-processi figli di Apache, avviati su richiesta quando necessari in base al volume di richieste. Java invece gestisce le cose nella maniera opposta, tramite un superprocesso unico che usa una grande quantità di risorse sul server (CPU e memoria) dall’avvio, con una concorrenza gestita “internamente” tramite i threads. In entrambi i casi, comunque, i processi non sono esplicitamente visibili allo sviluppatore.</p>
+
+<p><img src="/images/process-types.png" alt="Il fattore di scale è espresso con un numero di processi dello stesso tipo avviati, la diversità del carico di lavoro, invece, come le varie tipologie di processo." /></p>
+
+<p><strong>In un’applicazione twelve-factor, i processi sono “first class citizen”</strong>. La visione del concetto di processo prende spunto dal <a href="https://adam.herokuapp.com/past/2011/5/9/applying_the_unix_process_model_to_web_apps/">concetto, in unix, dedicato all’esecuzione di demoni di servizi</a>. Attraverso l’uso di questo modello, lo sviluppatore può realizzare la propria applicazione in modo tale da farle gestire senza problemi diversi livelli di carico di lavoro, assegnando ogni tipo di lavoro a un tipo di processo ben definito. Per esempio, le richieste HTTP possono essere gestite da un web process, mentre dei compiti più lunghi (in background) possono essere gestiti da un altro processo separato.</p>
+
+<p>Questo non esclude che un certo processo, individualmente, possa gestire in modo autonomo e interno il multiplexing, tramite threading, all’interno della VM in esecuzione, o magari un modello asincrono o basato su eventi come quello di <a href="http://rubyeventmachine.com/">EventMachine</a>, <a href="http://twistedmatrix.com/trac/">Twisted</a>, o <a href="http://nodejs.org/">Node.js</a>. Tuttavia, tutto questo può non bastare: l’applicazione deve essere anche adatta all’esecuzione su più macchine fisiche.</p>
+
+<p>Il modello di processo così come presentato rende il massimo quando arriva il momento di scalare. La <a href="./processes">natura orizzontalmente partizionabile (e non soggetta a condivisioni) di un “processo twelve-factor”</a> permette di gestire la concorrenza in modo semplice e affidabile. L’array dei tipi di processo e il numero di processi presenti per ogni tipo è conosciuto come <em>process formation</em> (formazione di processi).</p>
+
+<p>I processi di un’app twelve-factor non dovrebbero <a href="http://dustin.github.com/2010/02/28/running-processes.html">essere soggetti a daemonizing</a>, o scrivere file PID. Al contrario, facendo affidamento sul process manager del sistema operativo (come <a href="https://www.freedesktop.org/wiki/Software/systemd/">systemd</a>, un process manager distribuito su piattaforma cloud, o tool come <a href="http://blog.daviddollar.org/2011/05/06/introducing-foreman.html">Foreman</a> durante lo sviluppo) per gestire <a href="./logs">gli stream in output</a>, rispondere adeguatamente a crash di processi e gestire riavvii e shutdown.</p>
+
+  </article>
+</section>
+
+<section class="concrete">
+  <nav>
+    <div id="locales"><a href="/concurrency">English (en)</a> | <a href="/ko/concurrency">한국어 (ko)</a> | <a href="/ja/concurrency">日本語 (ja)</a> | <span>Italiano (it)</span> | <a href="/pl/concurrency">Polski (pl)</a> | <a href="/zh_cn/concurrency">简体中文 (zh_cn)</a> | <a href="/de/concurrency">Deutsch (de)</a> | <a href="/es/concurrency">Español (es)</a> | <a href="/fr/concurrency">Français (fr)</a> | <a href="/tr/concurrency">Turkish (tr)</a> | <a href="/uk/concurrency">Українська (uk)</a> | <a href="/pt_br/concurrency">Brazilian Portuguese (pt_br)</a> | <a href="/ru/concurrency">Русский (ru)</a></div>
+    <div id="prev"><a href="./port-binding">&laquo; Previous</a></div>
+    <div id="next"><a href="./disposability">Next &raquo;</a></div>
+  </nav>
+</section>
+
+
+  <footer>
+  <div id="locales"><a href="/concurrency">English (en)</a> | <a href="/ko/concurrency">한국어 (ko)</a> | <a href="/ja/concurrency">日本語 (ja)</a> | <span>Italiano (it)</span> | <a href="/pl/concurrency">Polski (pl)</a> | <a href="/zh_cn/concurrency">简体中文 (zh_cn)</a> | <a href="/de/concurrency">Deutsch (de)</a> | <a href="/es/concurrency">Español (es)</a> | <a href="/fr/concurrency">Français (fr)</a> | <a href="/tr/concurrency">Turkish (tr)</a> | <a href="/uk/concurrency">Українська (uk)</a> | <a href="/pt_br/concurrency">Brazilian Portuguese (pt_br)</a> | <a href="/ru/concurrency">Русский (ru)</a></div>
+  <div>Written by Adam Wiggins</div>
+  <div>Last updated 2017</div>
+  <div><a href="https://github.com/heroku/12factor">Sourcecode</a></div>
+  <div><a href="/12factor.epub">Download ePub Book</a></div>
+  <div><a href="https://www.heroku.com/policy/privacy">Privacy Policy</a></div>
+</footer>
+</body>
+</html>

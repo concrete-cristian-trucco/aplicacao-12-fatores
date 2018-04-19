@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>The Twelve-Factor App (traduzido)</title>
+  <meta name="description" content="A methodology for building modern, scalable, maintainable software-as-a-service apps.">
+  <meta name="author" content="Adam Wiggins">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" href="images/favicon.ico">
+
+  <link rel="stylesheet" href="/css/screen.css" media="screen">
+  <link rel="stylesheet" href="/css/mobile.css" media="screen">
+
+  <script type="text/javascript" src="//use.typekit.com/rsq7tro.js"></script>
+  <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+</head>
+<body>
+  
+  <!-- Google Tag Manager -->
+  <noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-TK5QTP"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-TK5QTP');</script>
+  <!-- End Google Tag Manager -->
+  
+
+  <header>
+    <h1><a href="./" title="The Twelve-Factor App">The Twelve-Factor App</a></h1>
+  </header>
+
+  <section class="abstract" id="factor">
+  <article>
+    
+<h2 id="i_base_de_cdigo">I. Base de Código</h2>
+
+<h3 id="uma_base_de_cdigo_com_rastreamento_utilizando_controle_de_reviso_muitos_deploys">Uma base de código com rastreamento utilizando controle de revisão, muitos deploys</h3>
+
+<p>Uma aplicação 12 fatores é sempre rastreada em um sistema de controle de versão, como <a href="http://git-scm.com/">Git</a>, <a href="https://www.mercurial-scm.org/">Mercurial</a>, ou <a href="http://subversion.apache.org/">Subversion</a>. Uma cópia da base de dados do rastreamento de revisões é conhecido como <em>repositório de código</em>, normalmente abreviado como <em>repositório</em> ou <em>repo</em>.</p>
+
+<p>Uma <em>base de código</em> é um único repo (em um sistema de controle de versão centralizado como Subversion), ou uma série de repositórios que compartilham um registro raiz.</p>
+
+<p><img src="/images/codebase-deploys.png" alt="Uma base de código para vários deploys" /></p>
+
+<p>Existe sempre uma correlação um-para-um entre a base de código e a aplicação:</p>
+
+<ul>
+<li>Se existem várias bases de código, isto não é uma app – é um sistema distribuído. Cada componente do sistema é uma app, e cada uma pode individualmente ser compatível com os 12 fatores.</li>
+
+<li>Múltiplas apps compartilhando uma base de código é uma violação dos 12 fatores. A solução aqui é dividir o código compartilhado entre bibliotecas que podem ser incluídas através do <a href="/dependencies">gerenciador de dependências</a>.</li>
+</ul>
+
+<p>Existe apenas uma base de código por aplicação, mas existirão vários deploys da mesma. Um <em>deploy</em> (ou implantação) é uma instância executando a aplicação. Isto é tipicamente um local de produção, e um ou mais locais de testes. Adicionalmente, todo desenvolvedor tem uma cópia da aplicação rodando em seu ambiente local de desenvolvimento, cada um desses pode ser qualificado como um deploy.</p>
+
+<p>A base de código é a mesma através de todos os deploys, entretando diferentes versões podem estar ativas em cada deploy. Por exemplo, um desenvolvedor tem alguns registros ainda não implantados no ambiente de teste, o ambiente de teste ainda tem registros não implantados em produção. Mas todos esses ambientes compartilham a mesma base de código, tornando-os identificáveis ​​como diferentes deploys do mesmo app.</p>
+
+  </article>
+</section>
+
+<section class="concrete">
+  <nav>
+    <div id="locales"><a href="/codebase">English (en)</a> | <a href="/ko/codebase">한국어 (ko)</a> | <a href="/ja/codebase">日本語 (ja)</a> | <a href="/it/codebase">Italiano (it)</a> | <a href="/pl/codebase">Polski (pl)</a> | <a href="/zh_cn/codebase">简体中文 (zh_cn)</a> | <a href="/de/codebase">Deutsch (de)</a> | <a href="/es/codebase">Español (es)</a> | <a href="/fr/codebase">Français (fr)</a> | <a href="/tr/codebase">Turkish (tr)</a> | <a href="/uk/codebase">Українська (uk)</a> | <span>Brazilian Portuguese (pt_br)</span> | <a href="/ru/codebase">Русский (ru)</a></div>
+    <div id="prev"></div>
+    <div id="next"><a href="./dependencies">Next &raquo;</a></div>
+  </nav>
+</section>
+
+
+  <footer>
+  <div id="locales"><a href="/codebase">English (en)</a> | <a href="/ko/codebase">한국어 (ko)</a> | <a href="/ja/codebase">日本語 (ja)</a> | <a href="/it/codebase">Italiano (it)</a> | <a href="/pl/codebase">Polski (pl)</a> | <a href="/zh_cn/codebase">简体中文 (zh_cn)</a> | <a href="/de/codebase">Deutsch (de)</a> | <a href="/es/codebase">Español (es)</a> | <a href="/fr/codebase">Français (fr)</a> | <a href="/tr/codebase">Turkish (tr)</a> | <a href="/uk/codebase">Українська (uk)</a> | <span>Brazilian Portuguese (pt_br)</span> | <a href="/ru/codebase">Русский (ru)</a></div>
+  <div>Written by Adam Wiggins</div>
+  <div>Last updated 2017</div>
+  <div><a href="https://github.com/heroku/12factor">Sourcecode</a></div>
+  <div><a href="/12factor.epub">Download ePub Book</a></div>
+  <div><a href="https://www.heroku.com/policy/privacy">Privacy Policy</a></div>
+</footer>
+</body>
+</html>

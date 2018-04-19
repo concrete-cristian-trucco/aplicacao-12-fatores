@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>The Twelve-Factor App (한국어)</title>
+  <meta name="description" content="A methodology for building modern, scalable, maintainable software-as-a-service apps.">
+  <meta name="author" content="Adam Wiggins">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" href="images/favicon.ico">
+
+  <link rel="stylesheet" href="/css/screen.css" media="screen">
+  <link rel="stylesheet" href="/css/mobile.css" media="screen">
+
+  <script type="text/javascript" src="//use.typekit.com/rsq7tro.js"></script>
+  <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+</head>
+<body>
+  
+  <!-- Google Tag Manager -->
+  <noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-TK5QTP"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-TK5QTP');</script>
+  <!-- End Google Tag Manager -->
+  
+
+  <header>
+    <h1><a href="./" title="The Twelve-Factor App">The Twelve-Factor App</a></h1>
+  </header>
+
+  <section class="abstract" id="factor">
+  <article>
+    
+<h2 id="v___">V. 빌드, 릴리즈, 실행</h2>
+
+<h3 id="____">철저하게 분리된 빌드와 실행 단계</h3>
+
+<p><a href="./codebase">코드베이스</a>는 3 단계를 거쳐 (개발용이 아닌) 배포로 변환됩니다.</p>
+
+<ul>
+<li><em>빌드 단계</em>는 코드 저장소를 코드 저장소를 <em>빌드</em>라는 실행 가능한 번들로 변환시키는 단계입니다. 빌드 단계에서는 커밋된 코드 중 배포 프로세스에서 지정된 버전을 사용하며, <a href="./dependencies">종속성</a>을 가져와 바이너리와 에셋들을 컴파일합니다.</li>
+
+<li><em>릴리즈 단계</em>에서는 빌드 단계에서 만들어진 빌드와 배포의 현재 <a href="./config">설정</a>을 결합 합니다. 완성된 <em>릴리즈</em>는 빌드와 설정을 모두 포함하며 실행 환경에서 바로 실행될 수 있도록 준비됩니다.</li>
+
+<li><em>실행 단계</em>(런타임이라고도 하는)에서는 선택된 릴리즈에 대한 애플리케이션 <a href="./processes">프로세스</a>의 집합을 시작하여, 애플리케이션을 실행 환경에서 돌아가도록 합니다.</li>
+</ul>
+
+<p><img src="/images/release.png" alt="코드 베이스는 빌드가 되고, 빌드는 설정과 조합되어 릴리즈가 됩니다." /></p>
+
+<p><strong>Twelve-Factor App은 빌드, 릴리즈, 실행 단계를 엄격하게 서로 분리합니다.</strong> 예를 들어, 실행 단계에서 코드를 변경할 수는 없습니다. 변경을 실행 단계보다 앞에 있는 빌드 단계로 전달할 수 있는 방법이 없기 때문입니다.</p>
+
+<p>배포 도구는 일반적으로 릴리즈 관리 도구를 제공합니다. 특히 주목할만한 점은 이전 릴리즈로 되돌릴 수 있는 롤백 기능입니다. 예를 들어, <a href="https://github.com/capistrano/capistrano/wiki">Capistrano</a>는 배포 툴은 릴리즈를 <code>releases</code>라는 하위 디렉토리에 저장시키고, 현재 릴리즈는 현재 릴리즈 디렉토리로 심볼릭 링크로 연결합니다. 이 툴의 <code>rollback</code> 명령어는 이전 버전으로 쉽고 빠르게 이전 릴리즈로 롤백할 수 있도록 해줍니다.</p>
+
+<p>모든 릴리즈는 항상 유니크한 릴리즈 아이디를 지녀야 합니다. 예를 들어, 릴리즈의 타임 스템프(예: 2011-04-06-20:32:17)나 증가하는 번호(예: v100, v101)가 있습니다. 릴리즈는 추가만 될 수 있으며, 한번 만들어진 릴리즈는 변경될 수 없습니다. 모든 변경은 새로운 릴리즈를 만들어야 합니다.</p>
+
+<p>빌드는 새로운 코드가 배포 될 때마다 개발자에 의해 시작됩니다. 반면, 실행 단계는 서버가 재부팅되거나 충돌이 발생한 프로세스가 프로세스 매니저에 의해 재시작 되었을 때 자동으로 실행될 수 있습니다. 따라서 대응할 수 있는 개발자가 없는 한밤중에 문제가 발생하는 것을 방지하기 위해, 실행 단계는 최대한 변화가 적어야합니다. 빌드 단계는 좀 더 복잡해져도 괜찮습니다. 항상 배포를 진행하고 있는 개발자의 눈 앞에서 에러가 발생하기 때문입니다.</p>
+
+  </article>
+</section>
+
+<section class="concrete">
+  <nav>
+    <div id="locales"><a href="/ru/build-release-run">Русский (ru)</a> | <a href="/build-release-run">English (en)</a> | <a href="/ja/build-release-run">日本語 (ja)</a> | <a href="/tr/build-release-run">Turkish (tr)</a> | <span>한국어 (ko)</span> | <a href="/fr/build-release-run">Français (fr)</a> | <a href="/de/build-release-run">Deutsch (de)</a> | <a href="/pl/build-release-run">Polski (pl)</a> | <a href="/it/build-release-run">Italiano (it)</a> | <a href="/uk/build-release-run">Українська (uk)</a> | <a href="/es/build-release-run">Español (es)</a> | <a href="/zh_cn/build-release-run">简体中文 (zh_cn)</a> | <a href="/pt_br/build-release-run">Brazilian Portuguese (pt_br)</a></div>
+    <div id="prev"><a href="./backing-services">&laquo; Previous</a></div>
+    <div id="next"><a href="./processes">Next &raquo;</a></div>
+  </nav>
+</section>
+
+
+  <footer>
+  <div id="locales"><a href="/ru/build-release-run">Русский (ru)</a> | <a href="/build-release-run">English (en)</a> | <a href="/ja/build-release-run">日本語 (ja)</a> | <a href="/tr/build-release-run">Turkish (tr)</a> | <span>한국어 (ko)</span> | <a href="/fr/build-release-run">Français (fr)</a> | <a href="/de/build-release-run">Deutsch (de)</a> | <a href="/pl/build-release-run">Polski (pl)</a> | <a href="/it/build-release-run">Italiano (it)</a> | <a href="/uk/build-release-run">Українська (uk)</a> | <a href="/es/build-release-run">Español (es)</a> | <a href="/zh_cn/build-release-run">简体中文 (zh_cn)</a> | <a href="/pt_br/build-release-run">Brazilian Portuguese (pt_br)</a></div>
+  <div>Written by Adam Wiggins</div>
+  <div>Last updated 2017</div>
+  <div><a href="https://github.com/heroku/12factor">Sourcecode</a></div>
+  <div><a href="/12factor.epub">Download ePub Book</a></div>
+  <div><a href="https://www.heroku.com/policy/privacy">Privacy Policy</a></div>
+</footer>
+</body>
+</html>

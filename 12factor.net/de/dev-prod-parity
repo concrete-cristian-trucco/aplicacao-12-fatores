@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>The Twelve-Factor App Dies ist eine Übersetzung.</title>
+  <meta name="description" content="A methodology for building modern, scalable, maintainable software-as-a-service apps.">
+  <meta name="author" content="Adam Wiggins">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" href="images/favicon.ico">
+
+  <link rel="stylesheet" href="/css/screen.css" media="screen">
+  <link rel="stylesheet" href="/css/mobile.css" media="screen">
+
+  <script type="text/javascript" src="//use.typekit.com/rsq7tro.js"></script>
+  <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+</head>
+<body>
+  
+  <!-- Google Tag Manager -->
+  <noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-TK5QTP"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-TK5QTP');</script>
+  <!-- End Google Tag Manager -->
+  
+
+  <header>
+    <h1><a href="./" title="The Twelve-Factor App">The Twelve-Factor App</a></h1>
+  </header>
+
+  <section class="abstract" id="factor">
+  <article>
+    
+<h2 id="x_devprodvergleichbarkeit">X. Dev-Prod-Vergleichbarkeit</h2>
+
+<h3 id="entwicklung_staging_und_produktion_so_hnlich_wie_mglich_halten">Entwicklung, Staging und Produktion so ähnlich wie möglich halten</h3>
+
+<p>Historisch gibt es große Lücken zwischen Entwicklung (wo ein Entwickler live an einem lokalen <a href="./codebase">Deploy</a> der App Änderungen macht) und Produktion (ein laufender Deploy der App, auf den Endbenutzer zugreifen). Diese Lücken zeigen sich auf drei Gebieten:</p>
+
+<ul>
+<li><strong>Die Zeit-Lücke</strong> Ein Entwickler arbeitet an Code der Tage, Wochen oder sogar Monate braucht um in Produktion zu gehen.</li>
+
+<li><strong>Die Personal-Lücke</strong>: Entwickler schreiben Code, Operatoren deployen ihn.</li>
+
+<li><strong>Die Werkzeug-Lücke</strong>: Entwickler nutzen vielleicht einen Stack wie Nginx, SQLite und OS X - die Produktion nutzt Apache, MySQL und Linux.</li>
+</ul>
+
+<p><strong>Die Zwölf-Faktor-App ist ausgelegt auf <a href="http://avc.com/2011/02/continuous-deployment/">Continuous Deployment</a> indem sie die Lücke zwischen Entwicklung und Produktion klein hält.</strong> Mit Blick auf die oben beschriebenen drei Lücken:</p>
+
+<ul>
+<li>Die Zeit-Lücke klein halten: Ein Entwickler kann Code schreiben, der Stunden oder sogar Minuten später deployed wird.</li>
+
+<li>Die Personal-Lücke klein halten: Entwickler die Code schreiben sind intensiv am Deployment und der Überwachung des Verhaltens auf Produktion beteiligt.</li>
+
+<li>Die Werkzeug-Lücke klein halten: Entwicklung und Produktion so ähnlich wie möglich halten.</li>
+</ul>
+
+<p>Das Gesagte in einer Tabelle:</p>
+<table>
+  <tr>
+    <th />
+    <th>Traditionelle App</th>
+    <th>Zwölf-Faktor-App</th>
+  </tr>
+  <tr>
+    <th>Zeit zwischen Deployments</th>
+    <td>Wochen</td>
+    <td>Stunden</td>
+  </tr>
+  <tr>
+    <th>Code-Autoren und Code-Deployer</th>
+    <td>Andere Menschen</td>
+    <td>Dieselben Menschen</td>
+  </tr>
+  <tr>
+    <th>Entwicklungs- und Produktions-Umgebung</th>
+    <td>Unterschiedlich</td>
+    <td>So ähnlich wie möglich</td>
+  </tr>
+</table>
+<p>Im Bereich der <a href="./backing-services">unterstützenden Dienste</a> wie der Datenbank der App, dem Queue-System oder dem Cache ist die Dev-Prod-Vergleichbarkeit wichtig. Viele Sprachen bieten Bibliotheken, die den Zugriff auf die unterstützenden Dienste vereinfachen und ebenso <em>Adapter</em> für unterschiedliche Arten von Diensten.</p>
+<table>
+  <tr>
+    <th>Art</th>
+    <th>Sprache</th>
+    <th>Bibliothek</th>
+    <th>Adapter</th>
+  </tr>
+  <tr>
+    <td>Datenbank</td>
+    <td>Ruby/Rails</td>
+    <td>ActiveRecord</td>
+    <td>MySQL, PostgreSQL, SQLite</td>
+  </tr>
+  <tr>
+    <td>Queue</td>
+    <td>Python/Django</td>
+    <td>Celery</td>
+    <td>RabbitMQ, Beanstalkd, Redis</td>
+  </tr>
+  <tr>
+    <td>Cache</td>
+    <td>Ruby/Rails</td>
+    <td>ActiveSupport::Cache</td>
+    <td>Speicher, Dateisystem, Memcached</td>
+  </tr>
+</table>
+<p>Für Entwickler ist es sehr elegant, einen leichtgewichtigen unterstützenden Dienst in der lokalen Umgebung zu benutzen, während ein ernst zu nehmender und robuster unterstützender Dienst in Produktion verwendet wird. So kann man SQLite lokal und PostgreSQL in Produktion benutzen; oder zum Cachen den lokalen Speicher in Entwicklung und Memcached in Produktion.</p>
+
+<p><strong>Der Zwölf-Faktor-Entwickler widersteht dem Drang, verschiedene unterstützende Dienste in Entwicklung und Produktion zu verwenden</strong>, selbst wenn Adapter über alle Unterschiede hinweg abstrahieren. Unterschiede zwischen den unterstützenden Diensten verursachen kleinste Inkompatiblitäten, und Code, der in Entwicklung oder Staging funktioniert und Tests besteht, scheitert in Produktion. Diese Reibungskosten und die dann notwendige Dämpfung des Continuous Deployment sind sehr hoch, wenn man sie über die Lebensdauer einer App aggregiert.</p>
+
+<p>Leichtgewichtige lokale Dienste überzeugen weniger als früher. Moderne unterstützende Dienste wie Memcached, PostgreSQL und RabbitMQ sind dank moderner Paketierungs-Systeme wie <a href="http://mxcl.github.com/homebrew/">Homebrew</a> und <a href="https://help.ubuntu.com/community/AptGet/Howto">apt-get</a> nicht schwierig zu installieren und zu starten. Auch deklarative Installationssysteme wie <a href="http://www.opscode.com/chef/">Chef</a> oder <a href="http://docs.puppetlabs.com/">Puppet</a> in Kombination mit leichtgewichtigen virtuellen Umgebungen wie <a href="http://vagrantup.com/">Vagrant</a> setzen Entwickler in den Stand, lokale Umgebungen ans Laufen zu bringen, die nahe an Produktionsumgebungen herankommen. Die Installations- und Betriebskosten dieser Systeme sind gering verglichen mit dem Nutzen der Dev-Prod-Vergleichbarkeit und einem Continuous Deployment.</p>
+
+<p>Adapter für unterschiedliche unterstützende Dienste sind weiterhin von Nutzen, weil sie das Portieren auf andere unterstützende Dienste schmerzlos machen. Aber alle Deploys der App (Entwicklungsumgebungen, Staging, Produktion) sollten denselben Typ und dieselbe Version eines jeden unterstützenden Dienstes benutzen.</p>
+
+  </article>
+</section>
+
+<section class="concrete">
+  <nav>
+    <div id="locales"><a href="/dev-prod-parity">English (en)</a> | <a href="/ko/dev-prod-parity">한국어 (ko)</a> | <a href="/ja/dev-prod-parity">日本語 (ja)</a> | <a href="/it/dev-prod-parity">Italiano (it)</a> | <a href="/pl/dev-prod-parity">Polski (pl)</a> | <a href="/zh_cn/dev-prod-parity">简体中文 (zh_cn)</a> | <span>Deutsch (de)</span> | <a href="/es/dev-prod-parity">Español (es)</a> | <a href="/fr/dev-prod-parity">Français (fr)</a> | <a href="/tr/dev-prod-parity">Turkish (tr)</a> | <a href="/uk/dev-prod-parity">Українська (uk)</a> | <a href="/pt_br/dev-prod-parity">Brazilian Portuguese (pt_br)</a> | <a href="/ru/dev-prod-parity">Русский (ru)</a></div>
+    <div id="prev"><a href="./disposability">&laquo; Previous</a></div>
+    <div id="next"><a href="./logs">Next &raquo;</a></div>
+  </nav>
+</section>
+
+
+  <footer>
+  <div id="locales"><a href="/dev-prod-parity">English (en)</a> | <a href="/ko/dev-prod-parity">한국어 (ko)</a> | <a href="/ja/dev-prod-parity">日本語 (ja)</a> | <a href="/it/dev-prod-parity">Italiano (it)</a> | <a href="/pl/dev-prod-parity">Polski (pl)</a> | <a href="/zh_cn/dev-prod-parity">简体中文 (zh_cn)</a> | <span>Deutsch (de)</span> | <a href="/es/dev-prod-parity">Español (es)</a> | <a href="/fr/dev-prod-parity">Français (fr)</a> | <a href="/tr/dev-prod-parity">Turkish (tr)</a> | <a href="/uk/dev-prod-parity">Українська (uk)</a> | <a href="/pt_br/dev-prod-parity">Brazilian Portuguese (pt_br)</a> | <a href="/ru/dev-prod-parity">Русский (ru)</a></div>
+  <div>Written by Adam Wiggins</div>
+  <div>Last updated 2017</div>
+  <div><a href="https://github.com/heroku/12factor">Sourcecode</a></div>
+  <div><a href="/12factor.epub">Download ePub Book</a></div>
+  <div><a href="https://www.heroku.com/policy/privacy">Privacy Policy</a></div>
+</footer>
+</body>
+</html>

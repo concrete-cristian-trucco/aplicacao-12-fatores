@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>The Twelve-Factor App Türkçe çeviri</title>
+  <meta name="description" content="A methodology for building modern, scalable, maintainable software-as-a-service apps.">
+  <meta name="author" content="Adam Wiggins">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" href="images/favicon.ico">
+
+  <link rel="stylesheet" href="/css/screen.css" media="screen">
+  <link rel="stylesheet" href="/css/mobile.css" media="screen">
+
+  <script type="text/javascript" src="//use.typekit.com/rsq7tro.js"></script>
+  <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+</head>
+<body>
+  
+  <!-- Google Tag Manager -->
+  <noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-TK5QTP"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-TK5QTP');</script>
+  <!-- End Google Tag Manager -->
+  
+
+  <header>
+    <h1><a href="./" title="The Twelve-Factor App">The Twelve-Factor App</a></h1>
+  </header>
+
+  <section class="abstract" id="factor">
+  <article>
+    
+<h2 id="vi_sre">VI. Süreç</h2>
+
+<h3 id="uygulamay_bir_veya_daha_fazla_bamsz_sre_olarak_altrma">Uygulamayı bir veya daha fazla bağımsız süreç olarak çalıştırma</h3>
+
+<p>Uygulama bir veya birden fazla <em>süreç</em> olarak çalıştırma ortamında çalıştırılır.</p>
+
+<p>En basit senaryoda, kod bağımsız bir betiktir, çalışma ortamı, dil çalışma zamanı yüklenmiş, geliştiricilerin yerel laptopudur ve süreç komut satırı aracılığıyla başlatılır (Örneğin, <code>python my_script.py</code>). Diğeri spekturumun sonunda, çok yönlü uygulamanın ürün dağıtımı birden fazla <a href="./concurrency">süreç tipi kullanabilir, sıfır veya daha fazla çalışan süreci somutlaştırabilir</a>.</p>
+
+<p><strong>On iki faktör süreçleri durumsuz ve <a href="http://en.wikipedia.org/wiki/Shared_nothing_architecture">paylaşımsızdır</a>.</strong> Devamlılığa ihtiyaç duyan herhangi bir veri kapsamlı <a href="./backing-services">destek servisinde</a> saklanmalıdır, genel olarak bir veri tabananında.</p>
+
+<p>Süreçlerin bellek uzayı ve dosya sistemi, kısa tek işlemli önbellek olarak kullanılabilir. Örneğin, büyük bir dosya indirirken, çalıştırırken, işlem sonuçlarını veri tabanında saklarken. On iki faktör uygulaması, bellek veya önbellekteki depolanmış hiçbir şeyin gelecekteki istek veya işlerde erişilebilir olacağını hiçbir zaman varsaymaz, çalışan her bir tipin bir çok süreciyle birlikte, gelecek isteğin farklı süreç tarafından sunulma şansı yüksektir. Sadece bir süreç çalıştırıldığında bile, tekrar başlatma (kod dağıtımı, yapılandırma değişikliği veya çalışma ortamı sürecin farklı fiziksel adrese tekrar yerleştirimi tarafından tetiklenir) genellikle bütün yerel (bellek ve dosya sistemi v.b gibi) durumları temizler.</p>
+
+<p>Varlık paketleyicileri ( <a href="http://documentcloud.github.com/jammit/">Jammit</a> veya <a href="http://django-compressor.readthedocs.org/">django-compressor</a> gibi), derlenmiş varlıklar için önbellek olarak dosya sistemi kullanılır. On iki faktör uygulaması <a href="./build-release-run">derleme aşaması</a> boyunca, <a href="http://guides.rubyonrails.org/asset_pipeline.html">Rails asset pipeline</a> gibi, bu derlemeyi yapmayı tercih eder, çalışma zamanında yapmaktansa.</p>
+
+<p>Bazı web sistemleri <a href="http://en.wikipedia.org/wiki/Load_balancing_%28computing%29#Persistence">“sticky sessions”</a> dayanır, bu, kullanıcı oturum verisini uygulama sürecinin belleğinde saklar ve aynı sürece yönlendirilecek olan gelecek istekleri aynı ziyaretçiden bekler. Sticky sessions on iki faktörü ihlal eder ve asla kullanılmamalıdır veya buna güvenmemelidir. Oturum durum verisi <a href="http://memcached.org/">Memcached</a> veya <a href="http://redis.io/">Redis</a> gibi bitiş süresi öneren veri deposu için iyi bir adaydır.</p>
+
+  </article>
+</section>
+
+<section class="concrete">
+  <nav>
+    <div id="locales"><a href="/ru/processes">Русский (ru)</a> | <a href="/processes">English (en)</a> | <a href="/ja/processes">日本語 (ja)</a> | <span>Turkish (tr)</span> | <a href="/ko/processes">한국어 (ko)</a> | <a href="/fr/processes">Français (fr)</a> | <a href="/de/processes">Deutsch (de)</a> | <a href="/pl/processes">Polski (pl)</a> | <a href="/it/processes">Italiano (it)</a> | <a href="/uk/processes">Українська (uk)</a> | <a href="/es/processes">Español (es)</a> | <a href="/zh_cn/processes">简体中文 (zh_cn)</a> | <a href="/pt_br/processes">Brazilian Portuguese (pt_br)</a></div>
+    <div id="prev"><a href="./build-release-run">&laquo; Previous</a></div>
+    <div id="next"><a href="./port-binding">Next &raquo;</a></div>
+  </nav>
+</section>
+
+
+  <footer>
+  <div id="locales"><a href="/ru/processes">Русский (ru)</a> | <a href="/processes">English (en)</a> | <a href="/ja/processes">日本語 (ja)</a> | <span>Turkish (tr)</span> | <a href="/ko/processes">한국어 (ko)</a> | <a href="/fr/processes">Français (fr)</a> | <a href="/de/processes">Deutsch (de)</a> | <a href="/pl/processes">Polski (pl)</a> | <a href="/it/processes">Italiano (it)</a> | <a href="/uk/processes">Українська (uk)</a> | <a href="/es/processes">Español (es)</a> | <a href="/zh_cn/processes">简体中文 (zh_cn)</a> | <a href="/pt_br/processes">Brazilian Portuguese (pt_br)</a></div>
+  <div>Written by Adam Wiggins</div>
+  <div>Last updated 2017</div>
+  <div><a href="https://github.com/heroku/12factor">Sourcecode</a></div>
+  <div><a href="/12factor.epub">Download ePub Book</a></div>
+  <div><a href="https://www.heroku.com/policy/privacy">Privacy Policy</a></div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: aplicacao-12fatores
+spec:
+  containers:
+    - name: container-aplicacao-12fatores
+      image: concretecristiantrucco/12-factor
+      ports:
+        - containerPort: 80

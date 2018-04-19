@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>The Twelve-Factor App (Traducción de la versión original en Inglés)</title>
+  <meta name="description" content="A methodology for building modern, scalable, maintainable software-as-a-service apps.">
+  <meta name="author" content="Adam Wiggins">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" href="images/favicon.ico">
+
+  <link rel="stylesheet" href="/css/screen.css" media="screen">
+  <link rel="stylesheet" href="/css/mobile.css" media="screen">
+
+  <script type="text/javascript" src="//use.typekit.com/rsq7tro.js"></script>
+  <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+</head>
+<body>
+  
+  <!-- Google Tag Manager -->
+  <noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-TK5QTP"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-TK5QTP');</script>
+  <!-- End Google Tag Manager -->
+  
+
+  <header>
+    <h1><a href="./" title="The Twelve-Factor App">The Twelve-Factor App</a></h1>
+  </header>
+
+  <section class="abstract">
+  <article>
+<h1 id="introduccin">Introducción</h1>
+
+<p>En estos tiempos, el software se está distribuyendo como un servicio: se le denomina <em>web apps</em>, o <em>software as a service</em> (SaaS). “The twelve-factor app” es una metodología para construir aplicaciones SaaS que:</p>
+
+<ul>
+<li>Usan formatos <strong>declarativos</strong> para la automatización de la configuración, para minimizar el tiempo y el coste que supone que nuevos desarrolladores se unan al proyecto;</li>
+
+<li>Tienen un <strong>contrato claro</strong> con el sistema operativo sobre el que trabajan, ofreciendo la <strong>máxima portabilidad</strong> entre los diferentes entornos de ejecución;</li>
+
+<li>Son apropiadas para <strong>desplegarse</strong> en modernas <strong>plataformas en la nube</strong>, obviando la necesidad de servidores y administración de sistemas;</li>
+
+<li><strong>Minimizan las diferencias</strong> entre los entornos de desarrollo y producción, posibilitando un <strong>despliegue continuo</strong> para conseguir la máxima agilidad;</li>
+
+<li>Y pueden <strong>escalar</strong> sin cambios significativos para las herramientas, la arquitectura o las prácticas de desarrollo.</li>
+</ul>
+
+<p>La metodología “twelve-factor” puede ser aplicada a aplicaciones escritas en cualquier lenguaje de programación, y cualquier combinación de ‘backing services’ (bases de datos, colas, memoria cache, etc).</p>
+</article>
+  <article>
+<h1 id="contexto">Contexto</h1>
+
+<p>Los colaboradores de este documento han estado involucrados directamente en el desarrollo y despliegue de cientos de aplicaciones, y han sido testigos indirectos del desarrollo, las operaciones y el escalado de cientos de miles de aplicaciones mediante nuestro trabajo en la plataforma <a href="http://www.heroku.com/">Heroku</a>.</p>
+
+<p>Este documento sintetiza toda nuestra experiencia y observaciones en una amplia variedad de aplicaciones SaaS. Es la triangulación entre practicas ideales para el desarrollo de aplicaciones, prestando especial atención a las dinámicas del crecimiento natural de una aplicación a lo largo del tiempo, las dinámicas de colaboración entre desarrolladores que trabajan en el código base de las aplicaciones y <a href="http://blog.heroku.com/archives/2011/6/28/the_new_heroku_4_erosion_resistance_explicit_contracts/">evitando el coste de la entropía del software</a>.</p>
+
+<p>Nuestra motivación es mejorar la concienciación sobre algunos problemas sistémicos que hemos observado en el desarrollo de las aplicaciones modernas, aportar un vocabulario común que sirva para discutir sobre estos problemas, y ofrecer un conjunto de soluciones conceptualmente robustas para esos problemas acompañados de su correspondiente terminología. El formato está inspirado en los libros de Martin Fowler <em><a href="http://books.google.com/books/about/Patterns_of_enterprise_application_archi.html?id=FyWZt5DdvFkC">Patterns of Enterprise Application Architecture</a></em> y <em><a href="http://books.google.com/books/about/Refactoring.html?id=1MsETFPD3I0C">Refactoring</a></em>.</p>
+</article>
+  <article>
+<h1 id="quin_debera_leer_este_documento">¿Quién debería leer este documento?</h1>
+
+<p>Cualquier desarrollador que construya aplicaciones y las ejecute como un servicio. Ingenieros de operaciones que desplieguen y gestionen dichas aplicaciones.</p>
+</article>
+</section>
+
+<section class="concrete">
+  <article>
+<h1 id="twelve_factors">Twelve Factors</h1>
+
+<h2 id="i_cdigo_base_codebase"><a href="./codebase">I. Código base (Codebase)</a></h2>
+
+<h3 id="un_cdigo_base_sobre_el_que_hacer_el_control_de_versiones_y_multiples_despliegues">Un código base sobre el que hacer el control de versiones y multiples despliegues</h3>
+
+<h2 id="ii_dependencias"><a href="./dependencies">II. Dependencias</a></h2>
+
+<h3 id="declarar_y_aislar_explcitamente_las_dependencias">Declarar y aislar explícitamente las dependencias</h3>
+
+<h2 id="iii_configuraciones"><a href="./config">III. Configuraciones</a></h2>
+
+<h3 id="guardar_la_configuracin_en_el_entorno">Guardar la configuración en el entorno</h3>
+
+<h2 id="iv_backing_services"><a href="./backing-services">IV. Backing services</a></h2>
+
+<h3 id="tratar_a_los_backing_services_como_recursos_conectables">Tratar a los “backing services” como recursos conectables</h3>
+
+<h2 id="v_construir_desplegar_ejecutar"><a href="./build-release-run">V. Construir, desplegar, ejecutar</a></h2>
+
+<h3 id="separar_completamente_la_etapa_de_construccin_de_la_etapa_de_ejecucin">Separar completamente la etapa de construcción de la etapa de ejecución</h3>
+
+<h2 id="vi_procesos"><a href="./processes">VI. Procesos</a></h2>
+
+<h3 id="ejecutar_la_aplicacin_como_uno_o_ms_procesos_sin_estado">Ejecutar la aplicación como uno o más procesos sin estado</h3>
+
+<h2 id="vii_asignacin_de_puertos"><a href="./port-binding">VII. Asignación de puertos</a></h2>
+
+<h3 id="publicar_servicios_mediante_asignacin_de_puertos">Publicar servicios mediante asignación de puertos</h3>
+
+<h2 id="viii_concurrencia"><a href="./concurrency">VIII. Concurrencia</a></h2>
+
+<h3 id="escalar_mediante_el_modelo_de_procesos">Escalar mediante el modelo de procesos</h3>
+
+<h2 id="ix_desechabilidad"><a href="./disposability">IX. Desechabilidad</a></h2>
+
+<h3 id="hacer_el_sistema_ms_robusto_intentando_conseguir_inicios_rpidos_y_finalizaciones_seguras">Hacer el sistema más robusto intentando conseguir inicios rápidos y finalizaciones seguras</h3>
+
+<h2 id="x_paridad_en_desarrollo_y_produccin"><a href="./dev-prod-parity">X. Paridad en desarrollo y producción</a></h2>
+
+<h3 id="mantener_desarrollo_preproduccin_y_produccin_tan_parecidos_como_sea_posible">Mantener desarrollo, preproducción y producción tan parecidos como sea posible</h3>
+
+<h2 id="xi_historiales"><a href="./logs">XI. Historiales</a></h2>
+
+<h3 id="tratar_los_historiales_como_una_transmisin_de_eventos">Tratar los historiales como una transmisión de eventos</h3>
+
+<h2 id="xii_administracin_de_procesos"><a href="./admin-processes">XII. Administración de procesos</a></h2>
+
+<h3 id="ejecutar_las_tareas_de_gestinadministracin_como_procesos_que_solo_se_ejecutan_una_vez">Ejecutar las tareas de gestión/administración como procesos que solo se ejecutan una vez</h3>
+</article>
+</section>
+
+
+  <footer>
+  <div id="locales"><a href="/ru/">Русский (ru)</a> | <a href="/">English (en)</a> | <a href="/ja/">日本語 (ja)</a> | <a href="/tr/">Turkish (tr)</a> | <a href="/ko/">한국어 (ko)</a> | <a href="/fr/">Français (fr)</a> | <a href="/de/">Deutsch (de)</a> | <a href="/pl/">Polski (pl)</a> | <a href="/it/">Italiano (it)</a> | <a href="/uk/">Українська (uk)</a> | <span>Español (es)</span> | <a href="/zh_cn/">简体中文 (zh_cn)</a> | <a href="/pt_br/">Brazilian Portuguese (pt_br)</a></div>
+  <div>Written by Adam Wiggins</div>
+  <div>Last updated 2017</div>
+  <div><a href="https://github.com/heroku/12factor">Sourcecode</a></div>
+  <div><a href="/12factor.epub">Download ePub Book</a></div>
+  <div><a href="https://www.heroku.com/policy/privacy">Privacy Policy</a></div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>The Twelve-Factor App Dies ist eine Übersetzung.</title>
+  <meta name="description" content="A methodology for building modern, scalable, maintainable software-as-a-service apps.">
+  <meta name="author" content="Adam Wiggins">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" href="images/favicon.ico">
+
+  <link rel="stylesheet" href="/css/screen.css" media="screen">
+  <link rel="stylesheet" href="/css/mobile.css" media="screen">
+
+  <script type="text/javascript" src="//use.typekit.com/rsq7tro.js"></script>
+  <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+</head>
+<body>
+  
+  <!-- Google Tag Manager -->
+  <noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-TK5QTP"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-TK5QTP');</script>
+  <!-- End Google Tag Manager -->
+  
+
+  <header>
+    <h1><a href="./" title="The Twelve-Factor App">The Twelve-Factor App</a></h1>
+  </header>
+
+  <section class="abstract" id="factor">
+  <article>
+    
+<h2 id="iv_untersttzende_dienste">IV. Unterstützende Dienste</h2>
+
+<h3 id="untersttzende_dienste_als_angehngte_ressourcen_behandeln">Unterstützende Dienste als angehängte Ressourcen behandeln</h3>
+
+<p>Ein <em>unterstützender Dienst</em> ist jeder Dienst, den die App über das Netzwerk im Rahmen ihrer normalen Arbeit konsumiert. Beispiele sind Datenspeicher (wie <a href="http://dev.mysql.com/">MySQL</a> oder <a href="http://couchdb.apache.org/">CouchDB</a>), Messaging/Queueing-Systeme (wie <a href="http://www.rabbitmq.com/">RabbitMQ</a> oder <a href="http://kr.github.com/beanstalkd/">Beanstalkd</a>), SMTP-Dienste für das Senden von Mail (wie <a href="http://www.postfix.org/">Postfix</a>), und Cache-Systeme (wie <a href="http://memcached.org/">Memcached</a>).</p>
+
+<p>Unterstützende Dienste wie Datenbanken werden traditionell von denselben Systemadministratoren verwaltet, die die App deployen. Außer diesen intern verwalteten Diensten können der App auch von Dritten verwaltete Dienste zur Verfügung stehen. Dazu gehören SMTP-Dienste (wie <a href="http://postmarkapp.com/">Postmark</a>), Metrik-Sammler (wie <a href="http://newrelic.com/">New Relic</a> oder <a href="http://www.loggly.com/">Loggly</a>), Binary-Asset-Dienste (wie <a href="http://aws.amazon.com/s3/">Amazon S3</a>), und auch über eine API zugängliche Dienste (wie <a href="http://dev.twitter.com/">Twitter</a>, <a href="https://developers.google.com/maps/">Google Maps</a>, oder <a href="http://www.last.fm/api">Last.fm</a>).</p>
+
+<p><strong>Der Code einer Zwölf-Faktor-App macht keinen Unterschied zwischen lokalen Diensten und solchen von Dritten.</strong> Für die App sind sie beide unterstützende Dienste, zugreifbar über eine URL oder andere Lokatoren/Credentials, die in der <a href="./config">Konfiguration</a> gespeichert sind. Ein <a href="./codebase">Deploy</a> einer Zwölf-Faktoren-App könnte eine lokale MySQL-Datenbank, durch eine von Dritten zur Verfügung gestellten, ersetzen (wie <a href="http://aws.amazon.com/rds/">Amazon RDS</a>). Genauso ohne Codeänderung kann ein lokaler SMTP-Server durch einen von Dritten zur Verfügung gestellten SMTP-Dienst ersetzt werden. In beiden Fällen muss sich nur der Resource-Handle in der Konfiguration ändern.</p>
+
+<p>Jeder einzelne unterstützende Dienst ist eine <em>Ressource</em>. So ist zum Beispiel eine MySQL-Datenbank eine Ressource; zwei MySQL-Datenbanken (die für ein Sharding auf Applikationsebene verwendet werden) stellen zwei Ressourcen dar. Dass die Zwölf-Faktor-App diese Datenbanken als <em>angehängte Ressourcen</em> behandelt, zeigt ihre lose Kopplung, zu dem Deploy an dem sie hängen.</p>
+
+<p><img alt='Ein Produktions-Deploy der an vier unterstützenden Diensten hängt.' class='full' src='/images/attached-resources.png' /></p>
+
+<p>Ressourcen können beliebig an Deploys an- und abgehängt werden. Wenn zum Beispiel die Datenbank einer App aufgrund von Hardwareproblemen aus der Rolle fällt, könnte der App-Administrator eine neue Datenbank aus einem Backup aufsetzen. Die aktuelle Produktionsdatenbank könnte abgehängt und die neue Datenbank angehängt werden – ganz ohne Codeänderung.</p>
+
+  </article>
+</section>
+
+<section class="concrete">
+  <nav>
+    <div id="locales"><a href="/ru/backing-services">Русский (ru)</a> | <a href="/backing-services">English (en)</a> | <a href="/ja/backing-services">日本語 (ja)</a> | <a href="/tr/backing-services">Turkish (tr)</a> | <a href="/ko/backing-services">한국어 (ko)</a> | <a href="/fr/backing-services">Français (fr)</a> | <span>Deutsch (de)</span> | <a href="/pl/backing-services">Polski (pl)</a> | <a href="/it/backing-services">Italiano (it)</a> | <a href="/uk/backing-services">Українська (uk)</a> | <a href="/es/backing-services">Español (es)</a> | <a href="/zh_cn/backing-services">简体中文 (zh_cn)</a> | <a href="/pt_br/backing-services">Brazilian Portuguese (pt_br)</a></div>
+    <div id="prev"><a href="./config">&laquo; Previous</a></div>
+    <div id="next"><a href="./build-release-run">Next &raquo;</a></div>
+  </nav>
+</section>
+
+
+  <footer>
+  <div id="locales"><a href="/ru/backing-services">Русский (ru)</a> | <a href="/backing-services">English (en)</a> | <a href="/ja/backing-services">日本語 (ja)</a> | <a href="/tr/backing-services">Turkish (tr)</a> | <a href="/ko/backing-services">한국어 (ko)</a> | <a href="/fr/backing-services">Français (fr)</a> | <span>Deutsch (de)</span> | <a href="/pl/backing-services">Polski (pl)</a> | <a href="/it/backing-services">Italiano (it)</a> | <a href="/uk/backing-services">Українська (uk)</a> | <a href="/es/backing-services">Español (es)</a> | <a href="/zh_cn/backing-services">简体中文 (zh_cn)</a> | <a href="/pt_br/backing-services">Brazilian Portuguese (pt_br)</a></div>
+  <div>Written by Adam Wiggins</div>
+  <div>Last updated 2017</div>
+  <div><a href="https://github.com/heroku/12factor">Sourcecode</a></div>
+  <div><a href="/12factor.epub">Download ePub Book</a></div>
+  <div><a href="https://www.heroku.com/policy/privacy">Privacy Policy</a></div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>The Twelve-Factor App （日本語訳）</title>
+  <meta name="description" content="A methodology for building modern, scalable, maintainable software-as-a-service apps.">
+  <meta name="author" content="Adam Wiggins">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" href="images/favicon.ico">
+
+  <link rel="stylesheet" href="/css/screen.css" media="screen">
+  <link rel="stylesheet" href="/css/mobile.css" media="screen">
+
+  <script type="text/javascript" src="//use.typekit.com/rsq7tro.js"></script>
+  <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+</head>
+<body>
+  
+  <!-- Google Tag Manager -->
+  <noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-TK5QTP"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-TK5QTP');</script>
+  <!-- End Google Tag Manager -->
+  
+
+  <header>
+    <h1><a href="./" title="The Twelve-Factor App">The Twelve-Factor App</a></h1>
+  </header>
+
+  <section class="abstract" id="factor">
+  <article>
+    
+<h2 id="viii_">VIII. 並行性</h2>
+
+<h3 id="">プロセスモデルによってスケールアウトする</h3>
+
+<p>すべてのコンピュータープログラムは、一度実行されると、1つ以上のプロセスとして表される。Webアプリケーションでは様々なプロセス実行形態がとられてきた。例えば、PHPのプロセスはApacheの子プロセスとして実行され、リクエスト量に応じて起動される。Javaプロセスは反対の方法をとる。JVMが1つの巨大な親プロセスを提供し、起動時にシステムリソース（CPUやメモリ）の大きなブロックを確保し、スレッドを使って内部的に並行性を管理する。どちらの場合でも、実行されるプロセスはアプリケーションの開発者にはほとんど見えない。</p>
+
+<p><img src="/images/process-types.png" alt="スケールは実行されるプロセスの数として表現され、ワークロードの種類はプロセスタイプとして表現される。" /></p>
+
+<p><strong>Twelve-Factor Appではプロセスは第一級市民である。</strong> Twelve-Factor Appにおけるプロセスの考え方は、<a href="https://adam.herokuapp.com/past/2011/5/9/applying_the_unix_process_model_to_web_apps/">サービスのデーモンを実行するためのUnixプロセスモデル</a>から大きなヒントを得ている。このモデルを使い、個々のワークロードの種類を <em>プロセスタイプ</em> に割り当てることで、開発者はアプリケーションが多様なワークロードを扱えるように設計することができる。例えば、HTTPリクエストはWebプロセスによって処理し、時間のかかるバックグラウンドタスクはワーカープロセスによって処理することができる。</p>
+
+<p>このモデルは、ランタイムVM内のスレッドや、<a href="http://rubyeventmachine.com/">EventMachine</a>、<a href="http://twistedmatrix.com/trac/">Twisted</a>、<a href="http://nodejs.org/">Node.js</a>などの非同期イベントモデルによって、個々のプロセスがプロセス内部で多重化することを禁止するわけではない。しかし個々のVMはそれほど大きくなる（垂直にスケールする）ことができないため、アプリケーションは複数の物理マシンで動作する複数のプロセスへと拡大できなければならない。</p>
+
+<p>このプロセスモデルが真価を発揮するのは、スケールアウトが必要になったときである。<a href="./processes">シェアードナッシングで水平分割可能なTwelve-Factor Appプロセスの性質</a>は、並行性を高める操作が単純かつ確実なものであることを意味する。プロセスタイプとそれぞれのタイプのプロセス数の配列は、 <em>プロセスフォーメーション</em> と言われる。</p>
+
+<p>Twelve-Factor Appのプロセスは<a href="http://dustin.github.com/2010/02/28/running-processes.html">決してデーモン化するべきではないし</a>、PIDファイルを書き出すべきではない。その代わりに、OSのプロセスマネージャー（例：<a href="https://www.freedesktop.org/wiki/Software/systemd/">systemd</a>、クラウドプラットフォームの分散プロセスマネージャー、あるいは開発環境における<a href="http://blog.daviddollar.org/2011/05/06/introducing-foreman.html">Foreman</a>のようなツール）を頼ることで、<a href="./logs">出力ストリーム</a>を管理し、プロセスのクラッシュに対応し、ユーザーによる再起動やシャットダウンを処理すべきである。</p>
+
+  </article>
+</section>
+
+<section class="concrete">
+  <nav>
+    <div id="locales"><a href="/ru/concurrency">Русский (ru)</a> | <a href="/concurrency">English (en)</a> | <span>日本語 (ja)</span> | <a href="/tr/concurrency">Turkish (tr)</a> | <a href="/ko/concurrency">한국어 (ko)</a> | <a href="/fr/concurrency">Français (fr)</a> | <a href="/de/concurrency">Deutsch (de)</a> | <a href="/pl/concurrency">Polski (pl)</a> | <a href="/it/concurrency">Italiano (it)</a> | <a href="/uk/concurrency">Українська (uk)</a> | <a href="/es/concurrency">Español (es)</a> | <a href="/zh_cn/concurrency">简体中文 (zh_cn)</a> | <a href="/pt_br/concurrency">Brazilian Portuguese (pt_br)</a></div>
+    <div id="prev"><a href="./port-binding">&laquo; Previous</a></div>
+    <div id="next"><a href="./disposability">Next &raquo;</a></div>
+  </nav>
+</section>
+
+
+  <footer>
+  <div id="locales"><a href="/ru/concurrency">Русский (ru)</a> | <a href="/concurrency">English (en)</a> | <span>日本語 (ja)</span> | <a href="/tr/concurrency">Turkish (tr)</a> | <a href="/ko/concurrency">한국어 (ko)</a> | <a href="/fr/concurrency">Français (fr)</a> | <a href="/de/concurrency">Deutsch (de)</a> | <a href="/pl/concurrency">Polski (pl)</a> | <a href="/it/concurrency">Italiano (it)</a> | <a href="/uk/concurrency">Українська (uk)</a> | <a href="/es/concurrency">Español (es)</a> | <a href="/zh_cn/concurrency">简体中文 (zh_cn)</a> | <a href="/pt_br/concurrency">Brazilian Portuguese (pt_br)</a></div>
+  <div>Written by Adam Wiggins</div>
+  <div>Last updated 2017</div>
+  <div><a href="https://github.com/heroku/12factor">Sourcecode</a></div>
+  <div><a href="/12factor.epub">Download ePub Book</a></div>
+  <div><a href="https://www.heroku.com/policy/privacy">Privacy Policy</a></div>
+</footer>
+</body>
+</html>

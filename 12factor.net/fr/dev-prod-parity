@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>The Twelve-Factor App Ce texte est une traduction</title>
+  <meta name="description" content="A methodology for building modern, scalable, maintainable software-as-a-service apps.">
+  <meta name="author" content="Adam Wiggins">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" href="images/favicon.ico">
+
+  <link rel="stylesheet" href="/css/screen.css" media="screen">
+  <link rel="stylesheet" href="/css/mobile.css" media="screen">
+
+  <script type="text/javascript" src="//use.typekit.com/rsq7tro.js"></script>
+  <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+</head>
+<body>
+  
+  <!-- Google Tag Manager -->
+  <noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-TK5QTP"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-TK5QTP');</script>
+  <!-- End Google Tag Manager -->
+  
+
+  <header>
+    <h1><a href="./" title="The Twelve-Factor App">The Twelve-Factor App</a></h1>
+  </header>
+
+  <section class="abstract" id="factor">
+  <article>
+    
+<h2 id="x_parit_devprod">X. Parité dev/prod</h2>
+
+<h3 id="gardez_le_dveloppement_la_validation_et_la_production_aussi_proches_que_possible">Gardez le développement, la validation et la production aussi proches que possible</h3>
+
+<p>Historiquement, il y a eu un fossé conséquent entre le développement (un développeur qui fait des modifications sur un <a href="./codebase">déploiement</a> local de l’application) et la production (un déploiement de l’application accessible aux utilisateurs finaux). Ce fossé se manifeste de trois manières :</p>
+
+<ul>
+<li><strong>Le fossé temporel</strong> : un développeur peut travailler sur du code qui peut prendre des jours, des semaines ou des mois avant d’aller en production</li>
+
+<li><strong>Le fossé des personnes</strong> : les développeurs écrivent le code, et d’autres personnes le déploient.</li>
+
+<li><strong>Le fossé des outils</strong> : les développeurs peuvent utiliser une pile comme Nginx, SQLite, et OS X, alors que le déploiement de production utilise Apache, MySQL, et Linux.</li>
+</ul>
+
+<p><strong>Les applications 12 facteurs sont conçues pour le <a href="http://avc.com/2011/02/continuous-deployment/">déploiement continu (en)</a> en gardant un fossé étroit entre le développement et la production.</strong> Si l’on regarde les trois fossés décrits plus haut :</p>
+
+<ul>
+<li>Réduire le fossé temporel : un développeur peut écrire du code et le déployer quelques heures ou même juste quelques minutes plus tard.</li>
+
+<li>Réduire le fossé des personnes : les personnes qui écrivent le code sont impliquées dans son déploiement et pour surveiller son comportement en production</li>
+
+<li>Réduire le fossé des outils : réduire, autant que possible, les différences entre le développement et la production</li>
+</ul>
+
+<p>Si l’on résume cela en un tableau :</p>
+<table>
+  <tr>
+    <th />
+    <th>Application traditionnelle</th>
+    <th>Application 12 facteurs</th>
+  </tr>
+  <tr>
+    <th>Temps entre les déploiements</th>
+    <td>Semaines</td>
+    <td>heures</td>
+  </tr>
+  <tr>
+    <th>Auteurs du code et ceux qui le déploient</th>
+    <td>Des personnes différentes</td>
+    <td>Les mêmes personnes</td>
+  </tr>
+  <tr>
+    <th>L'environnement de développement et celui de production</th>
+    <td>Divergents</td>
+    <td>Aussi similaires que possible</td>
+  </tr>
+</table>
+<p><a href="./backing-services">Les services externes</a>, tels que la base de données, la file de messages, ou le cache sont des éléments importants de la parité développement/production. La plupart des langages fournissent des bibliothèques qui simplifient l’accès à ces services externes, en fournissant des adaptateurs pour différents types de services. Voici quelques exemples dans le tableau ci-dessous.</p>
+<table>
+  <tr>
+    <th>Type</th>
+    <th>Langage</th>
+    <th>Librarie</th>
+    <th>Adaptateurs</th>
+  </tr>
+  <tr>
+    <td>Base de données</td>
+    <td>Ruby/Rails</td>
+    <td>ActiveRecord</td>
+    <td>MySQL, PostgreSQL, SQLite</td>
+  </tr>
+  <tr>
+    <td>File de messages</td>
+    <td>Python/Django</td>
+    <td>Celery</td>
+    <td>RabbitMQ, Beanstalkd, Redis</td>
+  </tr>
+  <tr>
+    <td>Cache</td>
+    <td>Ruby/Rails</td>
+    <td>ActiveSupport::Cache</td>
+    <td>Mémoire, système de fichiers, Memcached</td>
+  </tr>
+</table>
+<p>Les développeurs trouvent parfois agréable d’utiliser des services externes légers dans leur environnement local, alors qu’un service externe plus sérieux et robuste est utilisé en production. Par exemple, utiliser SQLite en local, et PostgreSQL en production; ou bien, durant le développement, mettre les données en cache dans la mémoire des processus locaux, et utiliser Memcached en production.</p>
+
+<p><strong>Les développeurs des applications 12 facteurs résistent au besoin d’utiliser des services externes différents entre le développement local et la production</strong>, même lorsque les adaptateurs permettent d’abstraire en théorie beaucoup de différences entre les services externes. Les différences entre les services externes signifient que de petites incompatibilités surviennent, ce qui va faire que du code qui fonctionnait et qui passait les tests durant le développement ou la validation ne fonctionnera pas en production. Ce type d’erreurs crée de la friction en défaveur du déploiement continu. Le coût de cette friction et son impact négatif sur le déploiement continu est extrêmement élevé lorsqu’il est cumulé sur toute la vie de l’application.</p>
+
+<p>Les services locaux légers sont moins attirants aujourd’hui qu’ils ne l’étaient autrefois. Les services externes modernes tels que Memcached, PostgreSQL, et RabbitMQ ne sont pas difficiles à installer et à faire fonctionner grâce aux systèmes de paquets modernes comme <a href="http://mxcl.github.com/homebrew/">Homebrew</a> et <a href="https://help.ubuntu.com/community/AptGet/Howto">apt-get</a>. Autre possibilité, des outils de provisionnement comme <a href="http://www.opscode.com/chef/">Chef</a> et <a href="http://docs.puppetlabs.com/">Puppet</a>, combinés à des environnements virtuels légers comme <a href="http://vagrantup.com/">Vagrant</a> permettent aux développeurs de faire fonctionner des environnements locaux qui reproduisent de très près les environnements de production. Le coût d’installation et d’utilisation de ces systèmes est faible comparé aux bénéfices d’une bonne parité développement/production et du déploiement continu.</p>
+
+<p>Les adaptateurs à ces différents systèmes externes sont malgré tout utiles, car ils rendent le portage vers de nouveaux services externes relativement indolores. Mais tous les déploiements de l’application (environnement de développement, validation, production) devraient utiliser le même type et la même version de chacun de ces services externes.</p>
+
+  </article>
+</section>
+
+<section class="concrete">
+  <nav>
+    <div id="locales"><a href="/dev-prod-parity">English (en)</a> | <a href="/ko/dev-prod-parity">한국어 (ko)</a> | <a href="/ja/dev-prod-parity">日本語 (ja)</a> | <a href="/it/dev-prod-parity">Italiano (it)</a> | <a href="/pl/dev-prod-parity">Polski (pl)</a> | <a href="/zh_cn/dev-prod-parity">简体中文 (zh_cn)</a> | <a href="/de/dev-prod-parity">Deutsch (de)</a> | <a href="/es/dev-prod-parity">Español (es)</a> | <span>Français (fr)</span> | <a href="/tr/dev-prod-parity">Turkish (tr)</a> | <a href="/uk/dev-prod-parity">Українська (uk)</a> | <a href="/pt_br/dev-prod-parity">Brazilian Portuguese (pt_br)</a> | <a href="/ru/dev-prod-parity">Русский (ru)</a></div>
+    <div id="prev"><a href="./disposability">&laquo; Previous</a></div>
+    <div id="next"><a href="./logs">Next &raquo;</a></div>
+  </nav>
+</section>
+
+
+  <footer>
+  <div id="locales"><a href="/dev-prod-parity">English (en)</a> | <a href="/ko/dev-prod-parity">한국어 (ko)</a> | <a href="/ja/dev-prod-parity">日本語 (ja)</a> | <a href="/it/dev-prod-parity">Italiano (it)</a> | <a href="/pl/dev-prod-parity">Polski (pl)</a> | <a href="/zh_cn/dev-prod-parity">简体中文 (zh_cn)</a> | <a href="/de/dev-prod-parity">Deutsch (de)</a> | <a href="/es/dev-prod-parity">Español (es)</a> | <span>Français (fr)</span> | <a href="/tr/dev-prod-parity">Turkish (tr)</a> | <a href="/uk/dev-prod-parity">Українська (uk)</a> | <a href="/pt_br/dev-prod-parity">Brazilian Portuguese (pt_br)</a> | <a href="/ru/dev-prod-parity">Русский (ru)</a></div>
+  <div>Written by Adam Wiggins</div>
+  <div>Last updated 2017</div>
+  <div><a href="https://github.com/heroku/12factor">Sourcecode</a></div>
+  <div><a href="/12factor.epub">Download ePub Book</a></div>
+  <div><a href="https://www.heroku.com/policy/privacy">Privacy Policy</a></div>
+</footer>
+</body>
+</html>

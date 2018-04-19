@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>The Twelve-Factor App Türkçe çeviri</title>
+  <meta name="description" content="A methodology for building modern, scalable, maintainable software-as-a-service apps.">
+  <meta name="author" content="Adam Wiggins">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" href="images/favicon.ico">
+
+  <link rel="stylesheet" href="/css/screen.css" media="screen">
+  <link rel="stylesheet" href="/css/mobile.css" media="screen">
+
+  <script type="text/javascript" src="//use.typekit.com/rsq7tro.js"></script>
+  <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+</head>
+<body>
+  
+  <!-- Google Tag Manager -->
+  <noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-TK5QTP"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-TK5QTP');</script>
+  <!-- End Google Tag Manager -->
+  
+
+  <header>
+    <h1><a href="./" title="The Twelve-Factor App">The Twelve-Factor App</a></h1>
+  </header>
+
+  <section class="abstract" id="factor">
+  <article>
+    
+<h2 id="v_derleme_srm_altrma">V. Derleme, Sürüm, Çalıştırma</h2>
+
+<h3 id="derleme_ve_altrma_aamalarn_tam_olarak_ayrma">Derleme ve çalıştırma aşamalarını tam olarak ayırma</h3>
+
+<p>Bir <a href="./codebase">kod tabanı</a> üç aşamada dağıtıma dönüşebilir:</p>
+
+<ul>
+<li><em>Derleme aşaması</em> kod deposunun <em>derleme</em> olarak bilinen çalıştırılabilir pakette çeviren bir dönüşümdür.Dağıtım süreci tarafından belirlenen bir commit’deki kodun versiyonunu kullanırken, derleme aşaması sağlayıcı <a href="./dependencies">bağımlılıkları</a> getirir ve binary’leri derler.</li>
+
+<li><em>Sürüm aşaması</em>, derleme aşaması tarafından üretilmiş derlemeyi alır ve dağıtımı şu anki <a href="./config">yapılandırmasıyla</a> birleştirir. Son durumda oluşan <em>sürüm</em> derleme ve yapılandırmanın ikisinide içerir ve çalışma ortamındaki doğrudan çalıştırma için hazırdır.</li>
+
+<li><em>Çalıştırma evresi</em> (aynı zamanda “runtime” olarak bilinir) seçili sürümün karşılığındaki uygulamanın <a href="./processes">süreçlerini</a> bazı setlerini başlatarak, çalıştırma ortamındaki uygulamayı çalıştırır.</li>
+</ul>
+
+<p><img src="/images/release.png" alt="Kod, sürüm oluşturmak için yapılandırmayla birleşmiş derlemeye dönüşür." /></p>
+
+<p><strong>On iki faktör uygulamaları derleme,sürüm ve çalıştırma aşamaları arasında mutlak ayırmayı kullanır.</strong> Örneğin, koddaki değişiklikleri derleme aşamasına geri döndürmenin bir yolu olmadığı için çalışma zamanında kodda değişiklik yapmak imkansızdır.</p>
+
+<p>Dağıtım araçları genel olarak sürüm yönetim araçlarını önerir, en dikkat çekeni bir önceki sürüme geri dönme yeteneğidir. Örneğin, <a href="https://github.com/capistrano/capistrano/wiki">Capistrano</a> dağıtım aracı sürümleri, şu anki sürümün şimdiki sürüm dizinine bir sembolik link olduğu, <code>releases</code> adlı alt dizinde depolar. <code>rollback</code> komutu, bir önceki sürüme hızlı geri dönüşü kolaylaştırır.</p>
+
+<p>Her sürüm her zaman sürümlerin zaman damgası gibi (<code>2011-04-06-20:32:17</code> gibi) özel sürüm ID’sine veya artış numarasına (<code>v100</code> gibi) sahip olmalıdır. Sürümler yalnızca eklemeli bir defterdir ve bir kere oluşturulduğu zaman dönüştürülemez. Herhangi bir değişiklik yeni bir sürüm oluşturmalıdır.</p>
+
+<p>Derlemeler, herhangi bir zamanda yeni kod dağıtıldığında uygulama geliştiricileri tarafından başlatılır. Çalışma zamanı yürütmesi, kontras tarafından, sunucu tekrar çalıştırılması veya çökmüş süreçlerin süreç yöneticisi tarafından tekrar başlatılması gibi durumlarda otomatik olarak olabilir. Bunun sonucunda, çalıştırma evresi, gecenin bir yarısında çalışan geliştiriciler yokken uygulamanın çalışmasını engelleyen problemler uygulamanın bozulmasına yol açabildiği için, olabildiği kadar az sayıda hareketli bölüm olarak tutulmalıdır. Derleme evresinde, hatalar dağıtımı çalıştıran geliştiriciler için her zaman ön planda olduğu için daha fazla karış olabilir.</p>
+
+  </article>
+</section>
+
+<section class="concrete">
+  <nav>
+    <div id="locales"><a href="/build-release-run">English (en)</a> | <a href="/ko/build-release-run">한국어 (ko)</a> | <a href="/ja/build-release-run">日本語 (ja)</a> | <a href="/it/build-release-run">Italiano (it)</a> | <a href="/pl/build-release-run">Polski (pl)</a> | <a href="/zh_cn/build-release-run">简体中文 (zh_cn)</a> | <a href="/de/build-release-run">Deutsch (de)</a> | <a href="/es/build-release-run">Español (es)</a> | <a href="/fr/build-release-run">Français (fr)</a> | <span>Turkish (tr)</span> | <a href="/uk/build-release-run">Українська (uk)</a> | <a href="/pt_br/build-release-run">Brazilian Portuguese (pt_br)</a> | <a href="/ru/build-release-run">Русский (ru)</a></div>
+    <div id="prev"><a href="./backing-services">&laquo; Previous</a></div>
+    <div id="next"><a href="./processes">Next &raquo;</a></div>
+  </nav>
+</section>
+
+
+  <footer>
+  <div id="locales"><a href="/build-release-run">English (en)</a> | <a href="/ko/build-release-run">한국어 (ko)</a> | <a href="/ja/build-release-run">日本語 (ja)</a> | <a href="/it/build-release-run">Italiano (it)</a> | <a href="/pl/build-release-run">Polski (pl)</a> | <a href="/zh_cn/build-release-run">简体中文 (zh_cn)</a> | <a href="/de/build-release-run">Deutsch (de)</a> | <a href="/es/build-release-run">Español (es)</a> | <a href="/fr/build-release-run">Français (fr)</a> | <span>Turkish (tr)</span> | <a href="/uk/build-release-run">Українська (uk)</a> | <a href="/pt_br/build-release-run">Brazilian Portuguese (pt_br)</a> | <a href="/ru/build-release-run">Русский (ru)</a></div>
+  <div>Written by Adam Wiggins</div>
+  <div>Last updated 2017</div>
+  <div><a href="https://github.com/heroku/12factor">Sourcecode</a></div>
+  <div><a href="/12factor.epub">Download ePub Book</a></div>
+  <div><a href="https://www.heroku.com/policy/privacy">Privacy Policy</a></div>
+</footer>
+</body>
+</html>

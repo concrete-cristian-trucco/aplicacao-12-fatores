@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>The Twelve-Factor App To jest tłumaczenie.</title>
+  <meta name="description" content="A methodology for building modern, scalable, maintainable software-as-a-service apps.">
+  <meta name="author" content="Adam Wiggins">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" href="images/favicon.ico">
+
+  <link rel="stylesheet" href="/css/screen.css" media="screen">
+  <link rel="stylesheet" href="/css/mobile.css" media="screen">
+
+  <script type="text/javascript" src="//use.typekit.com/rsq7tro.js"></script>
+  <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+</head>
+<body>
+  
+  <!-- Google Tag Manager -->
+  <noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-TK5QTP"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-TK5QTP');</script>
+  <!-- End Google Tag Manager -->
+  
+
+  <header>
+    <h1><a href="./" title="The Twelve-Factor App">The Twelve-Factor App</a></h1>
+  </header>
+
+  <section class="abstract" id="factor">
+  <article>
+    
+<h2 id="vi_procesy">VI. Procesy</h2>
+
+<h3 id="uruchamiaj_aplikacj_jako_jeden_lub_wicej_bezstanowych_procesw">Uruchamiaj aplikację jako jeden lub więcej bezstanowych procesów</h3>
+
+<p>Aplikacja jest uruchamiana w środowisku wykonawczym w postaci jednego lub kilku <em>procesów</em>.</p>
+
+<p>W najprostszym przypadku kod aplikacji jest samodzielnym skryptem, środowiskiem wykonawczym jest laptop developera z wsparciem dla języka programowania, a proces jest uruchamiany za pomocą linii komend (na przykład <code>python my_script.py</code>). Innym razem wdrożenie produkcyjne mocno rozwiniętej aplikacji może wymagać wiele <a href="./concurrency">różnych rodzajów procesów</a>.</p>
+
+<p><strong>Wg zasad 12factor, procesy są bezstanowe i <a href="http://en.wikipedia.org/wiki/Shared_nothing_architecture">nie-współdzielące</a>.</strong> Jakiekolwiek dane wymagające zapisu musza być zmagazynowane w “trwałej” <a href="./backing-services">usłudze wspierającej</a>, najczęściej będącą bazą danych.</p>
+
+<p>Przestrzeń adresowa lub system plików procesu mogą być używane jako tymczasowy cache dla pojedynczych operacji. Przykładem jest pobieranie dużych plików, działanie na nich, a następnie zapisywanie wyników operacji w bazie danych. Aplikacja dwunastu aspektów nigdy nie zakłada, że jakiś fragment informacji zapisany w pamięci lub dysku będzie dostępny w przyszłości podczas jakiegokolwiek zapytania – wraz z wieloma aktywnymi procesami rośnie szansa, że przyszłe zapytanie zostanie obsłużone przez zupełnie inny proces. Nawet w przypadku pojedynczego procesu, restart (spowodowany przez deployment kodu, zmianę konfiguracji lub relokacja procesu do innej fizycznej lokalizacji wykonana przez środowisko wykonawcze) zazwyczaj usunie wszystkie dane z lokalnego stanu aplikacji (system plików, pamięć podręczna).</p>
+
+<p>Narzędzie do pakowania plików, z których korzysta aplikacja (takie jak <a href="http://documentcloud.github.com/jammit/">Jammit</a> lub <a href="http://django-compressor.readthedocs.org/">django-compressor</a>) używają systemu plików jako cache dla skompilowanych zasobów. Wg 12factor taka kompilacja powinna mieć miejsce podczas <a href="./build-release-run">etapu budowy aplikacji</a>, jak to się dzieje np. w <a href="http://guides.rubyonrails.org/asset_pipeline.html">Rails asset pipeline</a>.</p>
+
+<p>Niektóre systemy sieciowe polegają na tzw. <a href="http://en.wikipedia.org/wiki/Load_balancing_%28computing%29#Persistence">“sticky sessions”</a> – oznacza to, że sesja użytkownika jest zapisywana tymczasowo w pamięci procesu aplikacji, zakładając, że kolejne zapytania dotyczące użytkownika będą kierowane do tego samego procesu. “Sticky sessions” są złamaniem zasad aplikacji 12factor i nigdy nie powinny być używane jako źródło informacji. Dane sesji nadają się bardziej do zapisu w magazynie oferującym wygasanie danych w czasie, jak np. <a href="http://memcached.org/">Memcached</a> czy <a href="http://redis.io/">Redis</a>.</p>
+
+  </article>
+</section>
+
+<section class="concrete">
+  <nav>
+    <div id="locales"><a href="/ru/processes">Русский (ru)</a> | <a href="/processes">English (en)</a> | <a href="/ja/processes">日本語 (ja)</a> | <a href="/tr/processes">Turkish (tr)</a> | <a href="/ko/processes">한국어 (ko)</a> | <a href="/fr/processes">Français (fr)</a> | <a href="/de/processes">Deutsch (de)</a> | <span>Polski (pl)</span> | <a href="/it/processes">Italiano (it)</a> | <a href="/uk/processes">Українська (uk)</a> | <a href="/es/processes">Español (es)</a> | <a href="/zh_cn/processes">简体中文 (zh_cn)</a> | <a href="/pt_br/processes">Brazilian Portuguese (pt_br)</a></div>
+    <div id="prev"><a href="./build-release-run">&laquo; Previous</a></div>
+    <div id="next"><a href="./port-binding">Next &raquo;</a></div>
+  </nav>
+</section>
+
+
+  <footer>
+  <div id="locales"><a href="/ru/processes">Русский (ru)</a> | <a href="/processes">English (en)</a> | <a href="/ja/processes">日本語 (ja)</a> | <a href="/tr/processes">Turkish (tr)</a> | <a href="/ko/processes">한국어 (ko)</a> | <a href="/fr/processes">Français (fr)</a> | <a href="/de/processes">Deutsch (de)</a> | <span>Polski (pl)</span> | <a href="/it/processes">Italiano (it)</a> | <a href="/uk/processes">Українська (uk)</a> | <a href="/es/processes">Español (es)</a> | <a href="/zh_cn/processes">简体中文 (zh_cn)</a> | <a href="/pt_br/processes">Brazilian Portuguese (pt_br)</a></div>
+  <div>Written by Adam Wiggins</div>
+  <div>Last updated 2017</div>
+  <div><a href="https://github.com/heroku/12factor">Sourcecode</a></div>
+  <div><a href="/12factor.epub">Download ePub Book</a></div>
+  <div><a href="https://www.heroku.com/policy/privacy">Privacy Policy</a></div>
+</footer>
+</body>
+</html>

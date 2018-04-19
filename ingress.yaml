@@ -1,0 +1,13 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+ name: aplicacao-12fatores
+spec:
+ rules:
+   - host: aplicacao-12fatores
+     http:
+       paths:
+         - path: /
+           backend:
+             serviceName: aplicacao-12fatores
+             servicePort: 80

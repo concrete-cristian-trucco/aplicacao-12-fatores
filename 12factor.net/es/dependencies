@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>The Twelve-Factor App (Traducción de la versión original en Inglés)</title>
+  <meta name="description" content="A methodology for building modern, scalable, maintainable software-as-a-service apps.">
+  <meta name="author" content="Adam Wiggins">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" href="images/favicon.ico">
+
+  <link rel="stylesheet" href="/css/screen.css" media="screen">
+  <link rel="stylesheet" href="/css/mobile.css" media="screen">
+
+  <script type="text/javascript" src="//use.typekit.com/rsq7tro.js"></script>
+  <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+</head>
+<body>
+  
+  <!-- Google Tag Manager -->
+  <noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-TK5QTP"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-TK5QTP');</script>
+  <!-- End Google Tag Manager -->
+  
+
+  <header>
+    <h1><a href="./" title="The Twelve-Factor App">The Twelve-Factor App</a></h1>
+  </header>
+
+  <section class="abstract" id="factor">
+  <article>
+    
+<h2 id="ii_dependencias">II. Dependencias</h2>
+
+<h3 id="declarar_y_aislar_explcitamente_las_dependencias">Declarar y aislar explícitamente las dependencias</h3>
+
+<p>La mayoría de los lenguajes de programación tienen un sistema de gestión de paquetes para distribuir sus librerías, como <a href="http://www.cpan.org/">CPAN</a> en Perl o <a href="http://rubygems.org/">Rubygems</a> en Ruby. Las librerías instaladas a través de estos sistemas se pueden instalar en el sistema (también conocido como “site packages”) o limitarse al directorio que contiene la aplicación (también conocido como “vendoring” o “bundling”).</p>
+
+<p><strong>Una aplicación “twelve-factor” no depende nunca de la existencia explícita de paquetes instalados en el sistema.</strong> Declara todas sus dependencias, completamente y explícitamente, mediante un manifiesto de <em>declaración de dependencias</em>. Además, usa herramientas de <em>aislamiento de dependencias</em> durante la ejecución para asegurar que las dependencias, implícitamente, no afectan al resto del sistema. La especificación de dependencias completa y explícita se aplica de la misma manera tanto en producción como en desarrollo.</p>
+
+<p>Por ejemplo, la <a href="https://bundler.io/">Bundler</a> de Ruby tiene el formato de su manifiesto <code>Gemfile</code> para declarar sus dependencias y <code>bundle exec</code> para aislar sus dependencias. En Python existen dos herramientas independientes para estas tareas – <a href="http://www.pip-installer.org/en/latest/">Pip</a> se usa para la declaración de dependencias y <a href="http://www.virtualenv.org/en/latest/">Virtualenv</a> para el aislamiento. Incluso C tiene <a href="http://www.gnu.org/s/autoconf/">Autoconf</a> para la declaración de sus dependencias, y el enlace estático proporciona aislamiento de sus dependencias. No importa qué conjunto de herramientas se use, la declaración y el aislamiento de dependencias se deben usar siempre juntas, usar solo una o la otra no es suficiente para satisfacer las condiciones de “twelve-factor”.</p>
+
+<p>Uno de los beneficios de la declaración explícita de dependencias es que simplifica la configuración para los nuevos desarrolladores de la aplicación. Cualquier desarrollador que se incorpore al equipo debe poder probar el código base de la aplicación en su máquina de desarrollo. Tan solo debe tener instalados el entorno de ejecución del lenguaje y el gestor de dependencias como prerequisitos. Lo cual permitirá configurar todo lo necesario para ejecutar el código de la aplicación con un <em>mandato para construir</em>. Por ejemplo, el mandato para construir en Ruby/Bundler es <code>bundle install</code>, mientras que en Clojure/<a href="https://github.com/technomancy/leiningen#readme">Leiningen</a> es <code>lein deps</code>.</p>
+
+<p>Las aplicaciones “Twelve-factor” tampoco dependen de la existencia de ninguna herramienta en el sistema. Por ejemplo, ejecutar mandatos como <code>ImageMagick</code> o <code>curl</code>. Aunque estas herramientas pueden existir en muchos, o incluso en la mayoría de los sistemas, no existen garantías de que vayan a existir en todos los sistemas donde la aplicación pueda ser ejecutada en un futuro, ni de que las versiones futuras de un sistema vayan a ser compatibles con la aplicación. Si la aplicación necesita ejecutar una herramienta del sistema, dicha herramienta debería estar incluida dentro de la aplicación.</p>
+
+  </article>
+</section>
+
+<section class="concrete">
+  <nav>
+    <div id="locales"><a href="/ru/dependencies">Русский (ru)</a> | <a href="/dependencies">English (en)</a> | <a href="/ja/dependencies">日本語 (ja)</a> | <a href="/tr/dependencies">Turkish (tr)</a> | <a href="/ko/dependencies">한국어 (ko)</a> | <a href="/fr/dependencies">Français (fr)</a> | <a href="/de/dependencies">Deutsch (de)</a> | <a href="/pl/dependencies">Polski (pl)</a> | <a href="/it/dependencies">Italiano (it)</a> | <a href="/uk/dependencies">Українська (uk)</a> | <span>Español (es)</span> | <a href="/zh_cn/dependencies">简体中文 (zh_cn)</a> | <a href="/pt_br/dependencies">Brazilian Portuguese (pt_br)</a></div>
+    <div id="prev"><a href="./codebase">&laquo; Previous</a></div>
+    <div id="next"><a href="./config">Next &raquo;</a></div>
+  </nav>
+</section>
+
+
+  <footer>
+  <div id="locales"><a href="/ru/dependencies">Русский (ru)</a> | <a href="/dependencies">English (en)</a> | <a href="/ja/dependencies">日本語 (ja)</a> | <a href="/tr/dependencies">Turkish (tr)</a> | <a href="/ko/dependencies">한국어 (ko)</a> | <a href="/fr/dependencies">Français (fr)</a> | <a href="/de/dependencies">Deutsch (de)</a> | <a href="/pl/dependencies">Polski (pl)</a> | <a href="/it/dependencies">Italiano (it)</a> | <a href="/uk/dependencies">Українська (uk)</a> | <span>Español (es)</span> | <a href="/zh_cn/dependencies">简体中文 (zh_cn)</a> | <a href="/pt_br/dependencies">Brazilian Portuguese (pt_br)</a></div>
+  <div>Written by Adam Wiggins</div>
+  <div>Last updated 2017</div>
+  <div><a href="https://github.com/heroku/12factor">Sourcecode</a></div>
+  <div><a href="/12factor.epub">Download ePub Book</a></div>
+  <div><a href="https://www.heroku.com/policy/privacy">Privacy Policy</a></div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>The Twelve-Factor App (Переклад українською)</title>
+  <meta name="description" content="A methodology for building modern, scalable, maintainable software-as-a-service apps.">
+  <meta name="author" content="Adam Wiggins">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" href="images/favicon.ico">
+
+  <link rel="stylesheet" href="/css/screen.css" media="screen">
+  <link rel="stylesheet" href="/css/mobile.css" media="screen">
+
+  <script type="text/javascript" src="//use.typekit.com/rsq7tro.js"></script>
+  <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+</head>
+<body>
+  
+  <!-- Google Tag Manager -->
+  <noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-TK5QTP"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-TK5QTP');</script>
+  <!-- End Google Tag Manager -->
+  
+
+  <header>
+    <h1><a href="./" title="The Twelve-Factor App">The Twelve-Factor App</a></h1>
+  </header>
+
+  <section class="abstract" id="factor">
+  <article>
+    
+<h2 id="ix_">IX. Утилізовуваність</h2>
+
+<h3 id="________">Підвищуйте надійність за допомогою швидкого запуску і коректного вимкнення</h3>
+
+<p><strong><a href="./processes">Процеси</a> застосунку дванадцати факторів є <em>утилізовуваними</em>, тобто вони можуть бути запущені або зупинені в будь-який момент.</strong> Це сприяє гнучкому масштабуванню, швидкому розгортанню <a href="./codebase">коду</a> або змінам <a href="./config">конфігурації</a> і надійності production-розгортання.</p>
+
+<p>Слід намагатися <strong>мінімізувати час запуску процесів</strong>. В ідеалі час між моментом виконання команди запуску процесу і моментом, коли процес готовий приймати запити чи задачі, має тривати лише пару секунд. Короткий час запуску забезпечує більшу гнучкість для <a href="./build-release-run">релізу</a> і масштабування. Крім того, це підвищує стійкість, оскільки менеджер процесів може легко переміщувати процеси на нові фізичні машини у разі необхідності.</p>
+
+<p>Процеси мають <strong>коректно завершувати свою роботу, коли вони отримують <a href="http://en.wikipedia.org/wiki/SIGTERM">SIGTERM</a></strong> сигнал від диспетчеру процесів. Для веб-процесу коректне завершення роботи досягається завдяки припиненню прослуховування порту, до якого він прив’язаний (що означає відмову від отримання будь-яких нових запитів), завершенню обробки будь-яких поточних запитів та зупинці самого процесу. В цій моделі передбачається, що HTTP-запити короткі (не більше ніж кілька секунд), а у разі довгих запитів (long polling) клієнт має намагатися відновити з’єднання у разі його втрати.</p>
+
+<p>Для процесу, що виконує фонові задачі (worker), коректне завершення роботи досягається за рахунок повернення поточного завдання назад у чергу задач. Наприклад, в <a href="http://www.rabbitmq.com/">RabbitMQ</a> робочий процес може надіслати команду <a href="http://www.rabbitmq.com/amqp-0-9-1-quickref.html#basic.nack"><code>NACK</code></a>; в <a href="http://kr.github.com/beanstalkd/">Beanstalkd</a> завдання повертається в чергу автоматично щоразу, коли процес втрачає з’єднання. Системи, що використовують блокування, такі як <a href="https://github.com/collectiveidea/delayed_job#readme">Delayed Job</a>, мають бути повідомлені, щоб звільнити блокування задачі. В цій моделі передбачається, що всі задачі є <a href="http://en.wikipedia.org/wiki/Reentrant_%28subroutine%29">повторно вхідними</a>, що зазвичай досягається шляхом обертання результатів їхньої роботи в транзакції або шляхом використання <a href="http://en.wikipedia.org/wiki/Idempotence">ідемпотентних</a> операцій.</p>
+
+<p>Процеси також мають бути <strong>стійкі до раптової зупинки</strong> в разі відмови апаратних засобів, на яких вони запущені. Хоча це менш ймовірна подія, ніж коректне завершення роботи за допомогою сигналу <code>SIGTERM</code>, вона все ж таки може статися. Рекомендованим підходом є використання надійних черг завдань, таких як Beanstalkd, які повертають завдання в чергу задач, коли клієнти втрачають з’єднання або від’єднуються по тайм-ауту. У будь-якому випадку, застосунок дванадцяти факторів має проектуватися таким чином, щоб обробляти несподівані та некоректні вимкнення. Прикладом вдалої реалізації <a href="http://lwn.net/Articles/191059/">архітектури “тільки аварійного вимкнення” (Crash-only design)</a> є <a href="http://docs.couchdb.org/en/latest/intro/overview.html">СouchDB</a>.</p>
+
+  </article>
+</section>
+
+<section class="concrete">
+  <nav>
+    <div id="locales"><a href="/disposability">English (en)</a> | <a href="/ko/disposability">한국어 (ko)</a> | <a href="/ja/disposability">日本語 (ja)</a> | <a href="/it/disposability">Italiano (it)</a> | <a href="/pl/disposability">Polski (pl)</a> | <a href="/zh_cn/disposability">简体中文 (zh_cn)</a> | <a href="/de/disposability">Deutsch (de)</a> | <a href="/es/disposability">Español (es)</a> | <a href="/fr/disposability">Français (fr)</a> | <a href="/tr/disposability">Turkish (tr)</a> | <span>Українська (uk)</span> | <a href="/pt_br/disposability">Brazilian Portuguese (pt_br)</a> | <a href="/ru/disposability">Русский (ru)</a></div>
+    <div id="prev"><a href="./concurrency">&laquo; Previous</a></div>
+    <div id="next"><a href="./dev-prod-parity">Next &raquo;</a></div>
+  </nav>
+</section>
+
+
+  <footer>
+  <div id="locales"><a href="/disposability">English (en)</a> | <a href="/ko/disposability">한국어 (ko)</a> | <a href="/ja/disposability">日本語 (ja)</a> | <a href="/it/disposability">Italiano (it)</a> | <a href="/pl/disposability">Polski (pl)</a> | <a href="/zh_cn/disposability">简体中文 (zh_cn)</a> | <a href="/de/disposability">Deutsch (de)</a> | <a href="/es/disposability">Español (es)</a> | <a href="/fr/disposability">Français (fr)</a> | <a href="/tr/disposability">Turkish (tr)</a> | <span>Українська (uk)</span> | <a href="/pt_br/disposability">Brazilian Portuguese (pt_br)</a> | <a href="/ru/disposability">Русский (ru)</a></div>
+  <div>Written by Adam Wiggins</div>
+  <div>Last updated 2017</div>
+  <div><a href="https://github.com/heroku/12factor">Sourcecode</a></div>
+  <div><a href="/12factor.epub">Download ePub Book</a></div>
+  <div><a href="https://www.heroku.com/policy/privacy">Privacy Policy</a></div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>The Twelve-Factor App (Traducción de la versión original en Inglés)</title>
+  <meta name="description" content="A methodology for building modern, scalable, maintainable software-as-a-service apps.">
+  <meta name="author" content="Adam Wiggins">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" href="images/favicon.ico">
+
+  <link rel="stylesheet" href="/css/screen.css" media="screen">
+  <link rel="stylesheet" href="/css/mobile.css" media="screen">
+
+  <script type="text/javascript" src="//use.typekit.com/rsq7tro.js"></script>
+  <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+</head>
+<body>
+  
+  <!-- Google Tag Manager -->
+  <noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-TK5QTP"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-TK5QTP');</script>
+  <!-- End Google Tag Manager -->
+  
+
+  <header>
+    <h1><a href="./" title="The Twelve-Factor App">The Twelve-Factor App</a></h1>
+  </header>
+
+  <section class="abstract" id="factor">
+  <article>
+    
+<h2 id="x_igualdad_entre_desarrollo_y_produccin">X. Igualdad entre desarrollo y producción</h2>
+
+<h3 id="mantener_desarrollo_preproduccin_y_produccin_tan_parecidos_como_sea_posible">Mantener desarrollo, preproducción y producción tan parecidos como sea posible</h3>
+
+<p>Históricamente, han existido dos tipos de entorno muy diferenciados: desarrollo (donde un desarrollador puede editar en vivo en un <a href="./codebase">despliegue</a> local de la aplicación) y producción (un despliegue en el que la aplicación está en ejecución disponible para que lo usen los usuarios). Estas diferencias se pueden clasificar en tres tipos:</p>
+
+<ul>
+<li><strong>Diferencias de tiempo</strong>: Un desarrollador puede estar trabajando en un código durante días, semanas o incluso meses antes de que llegue a producción.</li>
+
+<li><strong>Diferencias de personal</strong>: Los desarrolladores escriben el código y los ingenieros de operaciones lo despliegan.</li>
+
+<li><strong>Diferencias de herramientas</strong>: Los desarrolladores pueden usar una pila como Nginx, SQLite y OS X, mientras que en producción se usa Apache, MySQL y Linux.</li>
+</ul>
+
+<p>** Las aplicaciones “twelve-factor” están diseñadas para hacer <a href="http://avc.com/2011/02/continuous-deployment/">despliegues continuos</a> que reducen las diferencias entre los entornos de desarrollo y producción.** Teniendo en cuenta las tres diferencias descritas anteriormente:</p>
+
+<ul>
+<li>Reducir las diferencias de tiempo: Un desarrollador puede escribir código y tenerlo desplegado en tan solo unas horas, o incluso, minutos más tarde.</li>
+
+<li>Reducir las diferencias de personal: Los desarrolladores que escriben el código están muy involucrados en el despliegue y observan su comportamiento en producción.</li>
+
+<li>Reducir las diferencias de herramientas: tratar de hacer que desarrollo y producción sean tan parecidos como sea posible.</li>
+</ul>
+
+<p>Resumiendo lo anterior en una tabla:</p>
+<table>
+  <tr>
+    <th />
+    <th>Aplicaciones tradicionales</th>
+    <th>Aplicaciones "twelve-factor"</th>
+  </tr>
+  <tr>
+    <th>Tiempo entre despliegues</th>
+    <td>Semanas</td>
+    <td>Horas</td>
+  </tr>
+  <tr>
+    <th>Desarrolladores vs Ingenieros de operaciones</th>
+    <td>Diferentes personas</td>
+    <td>Mismas personas</td>
+  </tr>
+  <tr>
+    <th>Entorno de desarrollo vs entorno de producción</th>
+    <td>Divergentes</td>
+    <td>Lo más parecidos posibles</td>
+  </tr>
+</table>
+<p>Los <a href="./backing-services">“backing services”</a>, como la base de datos de la aplicación, el sistema de colas, o la caché, es donde la igualdad en los entornos de desarrollo y producción es importante. Muchos lenguajes ofrecen librerías en las que se simplifica el acceso a los servicios de respaldo, incluidos <em>adaptadores</em> para diferentes tipos de servicios. Se pueden observar algunos ejemplos en la siguiente tabla.</p>
+<table>
+  <tr>
+    <th>Tipo</th>
+    <th>Lenguaje</th>
+    <th>Librería</th>
+    <th>Adaptador</th>
+  </tr>
+  <tr>
+    <td>Base de datos</td>
+    <td>Ruby/Rails</td>
+    <td>ActiveRecord</td>
+    <td>MySQL, PostgreSQL, SQLite</td>
+  </tr>
+  <tr>
+    <td>Colas</td>
+    <td>Python/Django</td>
+    <td>Celery</td>
+    <td>RabbitMQ, Beanstalkd, Redis</td>
+  </tr>
+  <tr>
+    <td>Caché</td>
+    <td>Ruby/Rails</td>
+    <td>ActiveSupport::Cache</td>
+    <td>Memoria, sistema de ficheros, Memcached</td>
+  </tr>
+</table>
+<p>Los desarrolladores, a veces, caen en la tentación de usar “backing services” ligeros en sus entornos de desarrollo, mientras que en producción se usan los más serios y robustos. Por ejemplo, se usa SQLite en desarrollo y PostgreSQL en producción; o memoria local para la caché en desarrollo y Memcached en producción.</p>
+
+<p><strong>Un desarrollador “twelve-factor” no cae en la tentación de usar diferentes “backing services” en desarrollo y producción</strong>, incluso cuando los adaptadores teóricamente abstractos están lejos de cualquier diferencia en “backing services”. Las diferencias entre los servicios de respaldo tienen que ver con las pequeñas incompatibilidades que surgen de la nada, causando que el código que funciona y pasa los tests en desarrollo o en preproducción, falle en producción. Este tipo de errores provocan conflictos que desincentivan la filosofía del despliegue continuo. El coste de estos conflictos y el enfriamiento subsiguiente del despliegue continuo es extremadamente alto cuando se hace balance del total de tiempo de vida de una aplicación.</p>
+
+<p>Los servicios ligeros locales son menos atractivos que antes. Los “backing services” modernos como Memcached, PostgreSQL, y RabbitMQ no son difíciles de instalar y ejecutar gracias a los sistemas de gestión de paquetes modernos, como <a href="http://mxcl.github.com/homebrew/">Homebrew</a> y <a href="https://help.ubuntu.com/community/AptGet/Howto">apt-get</a>. Al mismo tiempo, las herramientas de gestión de la configuración como <a href="http://www.opscode.com/chef/">Chef</a> y <a href="http://docs.puppetlabs.com/">Puppet</a> combinadas con entornos virtuales ligeros como <a href="https://www.docker.com/">Docker</a> o <a href="http://vagrantup.com/">Vagrant</a> permiten a los desarrolladores ejecutar entornos locales que son muy parecidos a los entornos de producción. El coste de instalar y usar estos sistemas es bajo comparado con el beneficio que se puede obtener de la paridad entre desarrollo y producción y del despliegue continuo.</p>
+
+<p>Los adaptadores de los “backing services” todavía son de gran utilidad, porque hacen que cambiar de unos a otros sea un trámite relativamente poco doloroso. No obstante, todos los despliegues de una aplicación (en entornos de desarrollo, preproducción y producción) deberían usar el mismo tipo y versión de cada uno de los “backing services”.</p>
+
+  </article>
+</section>
+
+<section class="concrete">
+  <nav>
+    <div id="locales"><a href="/dev-prod-parity">English (en)</a> | <a href="/ko/dev-prod-parity">한국어 (ko)</a> | <a href="/ja/dev-prod-parity">日本語 (ja)</a> | <a href="/it/dev-prod-parity">Italiano (it)</a> | <a href="/pl/dev-prod-parity">Polski (pl)</a> | <a href="/zh_cn/dev-prod-parity">简体中文 (zh_cn)</a> | <a href="/de/dev-prod-parity">Deutsch (de)</a> | <span>Español (es)</span> | <a href="/fr/dev-prod-parity">Français (fr)</a> | <a href="/tr/dev-prod-parity">Turkish (tr)</a> | <a href="/uk/dev-prod-parity">Українська (uk)</a> | <a href="/pt_br/dev-prod-parity">Brazilian Portuguese (pt_br)</a> | <a href="/ru/dev-prod-parity">Русский (ru)</a></div>
+    <div id="prev"><a href="./disposability">&laquo; Previous</a></div>
+    <div id="next"><a href="./logs">Next &raquo;</a></div>
+  </nav>
+</section>
+
+
+  <footer>
+  <div id="locales"><a href="/dev-prod-parity">English (en)</a> | <a href="/ko/dev-prod-parity">한국어 (ko)</a> | <a href="/ja/dev-prod-parity">日本語 (ja)</a> | <a href="/it/dev-prod-parity">Italiano (it)</a> | <a href="/pl/dev-prod-parity">Polski (pl)</a> | <a href="/zh_cn/dev-prod-parity">简体中文 (zh_cn)</a> | <a href="/de/dev-prod-parity">Deutsch (de)</a> | <span>Español (es)</span> | <a href="/fr/dev-prod-parity">Français (fr)</a> | <a href="/tr/dev-prod-parity">Turkish (tr)</a> | <a href="/uk/dev-prod-parity">Українська (uk)</a> | <a href="/pt_br/dev-prod-parity">Brazilian Portuguese (pt_br)</a> | <a href="/ru/dev-prod-parity">Русский (ru)</a></div>
+  <div>Written by Adam Wiggins</div>
+  <div>Last updated 2017</div>
+  <div><a href="https://github.com/heroku/12factor">Sourcecode</a></div>
+  <div><a href="/12factor.epub">Download ePub Book</a></div>
+  <div><a href="https://www.heroku.com/policy/privacy">Privacy Policy</a></div>
+</footer>
+</body>
+</html>

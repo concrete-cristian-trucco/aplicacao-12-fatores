@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>The Twelve-Factor App （简体中文）</title>
+  <meta name="description" content="A methodology for building modern, scalable, maintainable software-as-a-service apps.">
+  <meta name="author" content="Adam Wiggins">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" href="images/favicon.ico">
+
+  <link rel="stylesheet" href="/css/screen.css" media="screen">
+  <link rel="stylesheet" href="/css/mobile.css" media="screen">
+
+  <script type="text/javascript" src="//use.typekit.com/rsq7tro.js"></script>
+  <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+</head>
+<body>
+  
+  <!-- Google Tag Manager -->
+  <noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-TK5QTP"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-TK5QTP');</script>
+  <!-- End Google Tag Manager -->
+  
+
+  <header>
+    <h1><a href="./" title="The Twelve-Factor App">The Twelve-Factor App</a></h1>
+  </header>
+
+  <section class="abstract" id="factor">
+  <article>
+    
+<h2 id="xi_">XI. 日志</h2>
+
+<h3 id="">把日志当作事件流</h3>
+
+<p><em>日志</em> 使得应用程序运行的动作变得透明。在基于服务器的环境中，日志通常被写在硬盘的一个文件里，但这只是一种输出格式。</p>
+
+<p>日志应该是 <a href="https://adam.herokuapp.com/past/2011/4/1/logs_are_streams_not_files/">事件流</a> 的汇总，将所有运行中进程和后端服务的输出流按照时间顺序收集起来。尽管在回溯问题时可能需要看很多行，日志最原始的格式确实是一个事件一行。日志没有确定开始和结束，但随着应用在运行会持续的增加。</p>
+
+<p><strong>12-factor应用本身从不考虑存储自己的输出流。</strong> 不应该试图去写或者管理日志文件。相反，每一个运行的进程都会直接的标准输出（<code>stdout</code>）事件流。开发环境中，开发人员可以通过这些数据流，实时在终端看到应用的活动。</p>
+
+<p>在预发布或线上部署中，每个进程的输出流由运行环境截获，并将其他输出流整理在一起，然后一并发送给一个或多个最终的处理程序，用于查看或是长期存档。这些存档路径对于应用来说不可见也不可配置，而是完全交给程序的运行环境管理。类似 <a href="https://github.com/heroku/logplex">Logplex</a> 和 <a href="https://github.com/fluent/fluentd">Fluentd</a> 的开源工具可以达到这个目的。</p>
+
+<p>这些事件流可以输出至文件，或者在终端实时观察。最重要的，输出流可以发送到 <a href="http://www.splunk.com/">Splunk</a> 这样的日志索引及分析系统，或 <a href="http://hive.apache.org/">Hadoop/Hive</a> 这样的通用数据存储系统。这些系统为查看应用的历史活动提供了强大而灵活的功能，包括：</p>
+
+<ul>
+<li>找出过去一段时间特殊的事件。</li>
+
+<li>图形化一个大规模的趋势，比如每分钟的请求量。</li>
+
+<li>根据用户定义的条件实时触发警报，比如每分钟的报错超过某个警戒线。</li>
+</ul>
+
+  </article>
+</section>
+
+<section class="concrete">
+  <nav>
+    <div id="locales"><a href="/logs">English (en)</a> | <a href="/ko/logs">한국어 (ko)</a> | <a href="/ja/logs">日本語 (ja)</a> | <a href="/it/logs">Italiano (it)</a> | <a href="/pl/logs">Polski (pl)</a> | <span>简体中文 (zh_cn)</span> | <a href="/de/logs">Deutsch (de)</a> | <a href="/es/logs">Español (es)</a> | <a href="/fr/logs">Français (fr)</a> | <a href="/tr/logs">Turkish (tr)</a> | <a href="/uk/logs">Українська (uk)</a> | <a href="/pt_br/logs">Brazilian Portuguese (pt_br)</a> | <a href="/ru/logs">Русский (ru)</a></div>
+    <div id="prev"><a href="./dev-prod-parity">&laquo; Previous</a></div>
+    <div id="next"><a href="./admin-processes">Next &raquo;</a></div>
+  </nav>
+</section>
+
+
+  <footer>
+  <div id="locales"><a href="/logs">English (en)</a> | <a href="/ko/logs">한국어 (ko)</a> | <a href="/ja/logs">日本語 (ja)</a> | <a href="/it/logs">Italiano (it)</a> | <a href="/pl/logs">Polski (pl)</a> | <span>简体中文 (zh_cn)</span> | <a href="/de/logs">Deutsch (de)</a> | <a href="/es/logs">Español (es)</a> | <a href="/fr/logs">Français (fr)</a> | <a href="/tr/logs">Turkish (tr)</a> | <a href="/uk/logs">Українська (uk)</a> | <a href="/pt_br/logs">Brazilian Portuguese (pt_br)</a> | <a href="/ru/logs">Русский (ru)</a></div>
+  <div>Written by Adam Wiggins</div>
+  <div>Last updated 2017</div>
+  <div><a href="https://github.com/heroku/12factor">Sourcecode</a></div>
+  <div><a href="/12factor.epub">Download ePub Book</a></div>
+  <div><a href="https://www.heroku.com/policy/privacy">Privacy Policy</a></div>
+</footer>
+</body>
+</html>

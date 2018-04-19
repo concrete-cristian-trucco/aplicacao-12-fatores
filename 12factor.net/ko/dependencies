@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>The Twelve-Factor App (한국어)</title>
+  <meta name="description" content="A methodology for building modern, scalable, maintainable software-as-a-service apps.">
+  <meta name="author" content="Adam Wiggins">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" href="images/favicon.ico">
+
+  <link rel="stylesheet" href="/css/screen.css" media="screen">
+  <link rel="stylesheet" href="/css/mobile.css" media="screen">
+
+  <script type="text/javascript" src="//use.typekit.com/rsq7tro.js"></script>
+  <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+</head>
+<body>
+  
+  <!-- Google Tag Manager -->
+  <noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-TK5QTP"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-TK5QTP');</script>
+  <!-- End Google Tag Manager -->
+  
+
+  <header>
+    <h1><a href="./" title="The Twelve-Factor App">The Twelve-Factor App</a></h1>
+  </header>
+
+  <section class="abstract" id="factor">
+  <article>
+    
+<h2 id="ii_">II. 종속성</h2>
+
+<h3 id="___">명시적으로 선언되고 분리된 종속성</h3>
+
+<p>대부분의 프로그래밍 언어는 라이브러리 배포를 위한 패키징 시스템을 제공하고 있습니다. Perl의 <a href="http://www.cpan.org/">CPAN</a> 이나 Ruby의 <a href="http://rubygems.org/">Rubygems</a>가 그 예입니다. 라이브러리는 패키징 시스템을 통해 시스템 전체(site pakages)나 애플리케이션을 포함한 디렉토리(vendoring 혹은 bundling)에 설치될 수 있습니다.</p>
+
+<p><strong>Twelve-Factor App은 전체 시스템에 특정 패키지가 암묵적으로 존재하는 것에 절대 의존하지 않습니다.</strong> <em>종속선 선언</em> mainifest를 이용하여 모든 종속성을 완전하고 엄격하게 선언합니다. 더나아가, <em>종속성 분리</em> 툴을 사용하여 실행되는 동안 둘러싼 시스템으로 암묵적인 종속성 “유출”이 발생하지 않는 것을 보장합니다. 이런 완전하고 명시적인 종속성의 명시는 개발과 서비스 모두에게 동일하게 적용됩니다.</p>
+
+<p>예를 들어, 루비에서 사용되는 <a href="https://bundler.io/">Bundler</a>는 종속성 선언을 위해 <code>Gemfile</code> manifest 포맷을 지원하며, 종속성 분리를 위해 <code>bundle exec</code>를 지원합니다. 파이썬에는 이를 지원하기 위한 2가지 도구가 있습니다. <a href="http://www.pip-installer.org/en/latest/">Pip</a>은 종속성 선언을 위해 사용되며, <a href="http://www.virtualenv.org/en/latest/">Virtualenv</a>는 종속성 분리를 위해 사용됩니다. 심지어 C언어에도 종속성 분리를 위해 <a href="http://www.gnu.org/s/autoconf/">Autoconf</a>가 있으며, static link를 활용해 종속성 분리도 가능합니다. 어떤 툴체인을 사용하든, 종속성 선언과 분리는 항상 같이 사용되어야 합니다. 하나만 사용하는 것은 Twelve-Factor에 만족하는 데 불충분합니다.</p>
+
+<p>명시적인 종속성 선언의 장점 중 하나는 애플리케이션 개발에 새로 참가하게 된 개발자가 설치를 간단하게 할 수 있다는 점입니다. 새로 참가한 개발자는 애플리케이션의 코드베이스를 개발 머신에 체크아웃 하고, 언어의 런타임과 종속성 매니저만 미리 설치하면 됩니다. 개발자는 정해져있는 <em>빌드 명령어</em>만 입력하면 응용 프로그램의 코드를 실행하는 데 필요한 모든 것을 설치할 수 있습니다. 예를 들어, Ruby의 빌드 명령어는 <code>bundle install</code>이며, Clojure/<a href="https://github.com/technomancy/leiningen#readme">Leiningen</a>에서는 <code>lein deps</code>입니다.</p>
+
+<p>Twelve-Factor App은 어떠한 시스템 도구에도 암시적으로 의존하지 않습니다. 예를 들어, ImageMagick이나 <code>curl</code>을 사용하는 경우가 있습니다. 이러한 툴들은 대부분의 시스템에 존재하지만, 모든 시스템에 존재하는 것이 보장되는 것은 아닙니다. 미래의 시스템에서는 존재하지 않을 수 있으며, 호환되는 버전이 있으라는 보장도 없습니다. 애플리케이션에게 시스템 도구가 필요하다면, 그 도구를 애플리케이션과 통합해야 합니다.</p>
+
+  </article>
+</section>
+
+<section class="concrete">
+  <nav>
+    <div id="locales"><a href="/ru/dependencies">Русский (ru)</a> | <a href="/dependencies">English (en)</a> | <a href="/ja/dependencies">日本語 (ja)</a> | <a href="/tr/dependencies">Turkish (tr)</a> | <span>한국어 (ko)</span> | <a href="/fr/dependencies">Français (fr)</a> | <a href="/de/dependencies">Deutsch (de)</a> | <a href="/pl/dependencies">Polski (pl)</a> | <a href="/it/dependencies">Italiano (it)</a> | <a href="/uk/dependencies">Українська (uk)</a> | <a href="/es/dependencies">Español (es)</a> | <a href="/zh_cn/dependencies">简体中文 (zh_cn)</a> | <a href="/pt_br/dependencies">Brazilian Portuguese (pt_br)</a></div>
+    <div id="prev"><a href="./codebase">&laquo; Previous</a></div>
+    <div id="next"><a href="./config">Next &raquo;</a></div>
+  </nav>
+</section>
+
+
+  <footer>
+  <div id="locales"><a href="/ru/dependencies">Русский (ru)</a> | <a href="/dependencies">English (en)</a> | <a href="/ja/dependencies">日本語 (ja)</a> | <a href="/tr/dependencies">Turkish (tr)</a> | <span>한국어 (ko)</span> | <a href="/fr/dependencies">Français (fr)</a> | <a href="/de/dependencies">Deutsch (de)</a> | <a href="/pl/dependencies">Polski (pl)</a> | <a href="/it/dependencies">Italiano (it)</a> | <a href="/uk/dependencies">Українська (uk)</a> | <a href="/es/dependencies">Español (es)</a> | <a href="/zh_cn/dependencies">简体中文 (zh_cn)</a> | <a href="/pt_br/dependencies">Brazilian Portuguese (pt_br)</a></div>
+  <div>Written by Adam Wiggins</div>
+  <div>Last updated 2017</div>
+  <div><a href="https://github.com/heroku/12factor">Sourcecode</a></div>
+  <div><a href="/12factor.epub">Download ePub Book</a></div>
+  <div><a href="https://www.heroku.com/policy/privacy">Privacy Policy</a></div>
+</footer>
+</body>
+</html>

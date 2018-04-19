@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>The Twelve-Factor App Türkçe çeviri</title>
+  <meta name="description" content="A methodology for building modern, scalable, maintainable software-as-a-service apps.">
+  <meta name="author" content="Adam Wiggins">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" href="images/favicon.ico">
+
+  <link rel="stylesheet" href="/css/screen.css" media="screen">
+  <link rel="stylesheet" href="/css/mobile.css" media="screen">
+
+  <script type="text/javascript" src="//use.typekit.com/rsq7tro.js"></script>
+  <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+</head>
+<body>
+  
+  <!-- Google Tag Manager -->
+  <noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-TK5QTP"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-TK5QTP');</script>
+  <!-- End Google Tag Manager -->
+  
+
+  <header>
+    <h1><a href="./" title="The Twelve-Factor App">The Twelve-Factor App</a></h1>
+  </header>
+
+  <section class="abstract" id="factor">
+  <article>
+    
+<h2 id="vii_port_balama">VII. Port Bağlama</h2>
+
+<h3 id="port_balama_yolu_zerinden_dar_aktarma">Port bağlama yolu üzerinden dışarı aktarma</h3>
+
+<p>Web uygulamaları bazı zamanlar web sunucu taşıyıcıları içinde çalıştırılırlar. Örneğin, PHP uygulamaları modül olarak <a href="http://httpd.apache.org/">Apache HTTPD</a> içinde veya Java uygulamaları <a href="http://tomcat.apache.org/">Tomcat</a> içinde çalıştırılabilirler.</p>
+
+<p><strong>On iki faktör uygulama tamamen bağımsız</strong> ve web dönüştürme servisi oluşturmak için çalışma ortamı içindeki web sunucunun çalışma zamanlı enjeksiyonuna dayanmaz. Bu web uygulaması port bağlama tarafından HTTP’yi servis olarak dışa aktarır ve o porta gelen istekleri dinler.</p>
+
+<p>Yerel geliştirme ortamında, geliştiriciler <code>http://localhost:5000/</code> gibi servis URL’ini, onların duygulamaları tarafından dışa aktarılan servise erişmek için ziyaret ederler. Dağıtımda, yönlendirme katmanı dışa bakan makine adından port bağımlı web süreçlerine gelen yönlendirme isteklerini ele alır.</p>
+
+<p>Bu tipik olarak, uygulamaya web sunucusu kütüphanesi eklemek için bağımlılık tanımlaması kullanılarak geliştirilmiştir, Python için <a href="http://www.tornadoweb.org/">Tornado</a>, Ruby için <a href="http://code.macournoyer.com/thin/">Thin</a> veya Java ve diğer JVM-tabanlı diller için <a href="http://jetty.codehaus.org/jetty/">Jetty</a>. Bu uygulamanın kodu içinde <em>kullanıcı alanında</em> gerçekleşir. Çalışma ortamıyla olan anlaşma isteklere hizmet veren bir porta bağlıdır.</p>
+
+<p>HTTP port bağlama ile dışarı aktarılabilen tek servis değildir. Nerdeyse herhangi bir sunucu yazılım tipi port için süreç bağlama aracılığıyla çalışır ve gelen istekleri bekler. Örnekler <a href="http://www.ejabberd.im/">ejabberd</a> (<a href="http://xmpp.org/">XMPP</a> ile haberleşir) ve <a href="http://redis.io/">Redis</a> (<a href="http://redis.io/topics/protocol">Redis protocol</a> ile haberleşir) içerir.</p>
+
+<p>Port bağlama yaklaşımı bir uygulamanın,tüketici uygulama için yapılandırmadaki kaynak olanağı gibi destek uygulamasına URL sağlayarak diğer bir uygulamanın <a href="./backing-services">destek servisi</a> olabileceği anlamına geldiğini de unutmayın.</p>
+
+  </article>
+</section>
+
+<section class="concrete">
+  <nav>
+    <div id="locales"><a href="/port-binding">English (en)</a> | <a href="/ko/port-binding">한국어 (ko)</a> | <a href="/ja/port-binding">日本語 (ja)</a> | <a href="/it/port-binding">Italiano (it)</a> | <a href="/pl/port-binding">Polski (pl)</a> | <a href="/zh_cn/port-binding">简体中文 (zh_cn)</a> | <a href="/de/port-binding">Deutsch (de)</a> | <a href="/es/port-binding">Español (es)</a> | <a href="/fr/port-binding">Français (fr)</a> | <span>Turkish (tr)</span> | <a href="/uk/port-binding">Українська (uk)</a> | <a href="/pt_br/port-binding">Brazilian Portuguese (pt_br)</a> | <a href="/ru/port-binding">Русский (ru)</a></div>
+    <div id="prev"><a href="./processes">&laquo; Previous</a></div>
+    <div id="next"><a href="./concurrency">Next &raquo;</a></div>
+  </nav>
+</section>
+
+
+  <footer>
+  <div id="locales"><a href="/port-binding">English (en)</a> | <a href="/ko/port-binding">한국어 (ko)</a> | <a href="/ja/port-binding">日本語 (ja)</a> | <a href="/it/port-binding">Italiano (it)</a> | <a href="/pl/port-binding">Polski (pl)</a> | <a href="/zh_cn/port-binding">简体中文 (zh_cn)</a> | <a href="/de/port-binding">Deutsch (de)</a> | <a href="/es/port-binding">Español (es)</a> | <a href="/fr/port-binding">Français (fr)</a> | <span>Turkish (tr)</span> | <a href="/uk/port-binding">Українська (uk)</a> | <a href="/pt_br/port-binding">Brazilian Portuguese (pt_br)</a> | <a href="/ru/port-binding">Русский (ru)</a></div>
+  <div>Written by Adam Wiggins</div>
+  <div>Last updated 2017</div>
+  <div><a href="https://github.com/heroku/12factor">Sourcecode</a></div>
+  <div><a href="/12factor.epub">Download ePub Book</a></div>
+  <div><a href="https://www.heroku.com/policy/privacy">Privacy Policy</a></div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>The Twelve-Factor App Ce texte est une traduction</title>
+  <meta name="description" content="A methodology for building modern, scalable, maintainable software-as-a-service apps.">
+  <meta name="author" content="Adam Wiggins">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" href="images/favicon.ico">
+
+  <link rel="stylesheet" href="/css/screen.css" media="screen">
+  <link rel="stylesheet" href="/css/mobile.css" media="screen">
+
+  <script type="text/javascript" src="//use.typekit.com/rsq7tro.js"></script>
+  <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+</head>
+<body>
+  
+  <!-- Google Tag Manager -->
+  <noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-TK5QTP"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-TK5QTP');</script>
+  <!-- End Google Tag Manager -->
+  
+
+  <header>
+    <h1><a href="./" title="The Twelve-Factor App">The Twelve-Factor App</a></h1>
+  </header>
+
+  <section class="abstract" id="factor">
+  <article>
+    
+<h2 id="ii_dpendances">II. Dépendances</h2>
+
+<h3 id="dclarez_explicitement_et_isolez_les_dpendances">Déclarez explicitement et isolez les dépendances</h3>
+
+<p>La plupart des langages de programmation offrent des systèmes pour créer des paquets à partir de bibliothèques afin de les distribuer, tel que <a href="http://www.cpan.org/">CPAN</a> pour Perl ou <a href="http://rubygems.org/">Rubygems</a> pour Ruby. Les bibliothèques installées à travers un système de packaging peuvent être installées à travers tout le système, ou bien limitées au répertoire contenant l’application (que l’on appelle les “vendor” ou “bundles”).</p>
+
+<p><strong>Une application 12 facteurs ne dépend jamais de l’existence implicite de packages au niveau du système</strong>. Elle déclare toutes ses dépendances, complètement et exactement, à travers un manifeste de <em>déclaration de dépendances</em>. De plus, elle utilise un outil d’isolation des dépendances durant l’exécution afin d’assurer qu’aucune dépendance implicite ne s’introduise depuis le système environnant. Les spécifications complètes et explicites sont appliquées uniformément en développement comme en production.</p>
+
+<p>Par exemple, <a href="https://bundler.io/">Bundler</a> pour Ruby fournit le format de manifeste <code>Gemfile</code> pour la déclaration des dépendances, ainsi que la commande <code>bundle exec</code> pour l’isolation des dépendances. En python, il y a deux outils séparés pour ces étapes – <a href="http://www.pip-installer.org/en/latest/">Pip</a> est utilisé pour la déclaration et <a href="http://www.virtualenv.org/en/latest/">Virtualenv</a> pour l’isolation. Même le C dispose d’<a href="http://www.gnu.org/s/autoconf/">Autoconf</a> pour les déclarations de dépendances, et la liaison statique peut fournir l’isolation des dépendances. Peu importe la chaîne d’outils, la déclaration et l’isolation des dépendances doivent toujours être utilisées ensemble – seulement l’un ou l’autre ne suffit pas à satisfaire les 12 facteurs.</p>
+
+<p>Un des bénéfices de la déclaration explicite des dépendances est que cela simplifie la mise en place pour les développeurs qui découvrent l’application. Les nouveaux développeurs peuvent jeter un œil à la base de code de l’application sur leur machine de développement, en ayant besoin uniquement d’avoir de quoi exécuter le langage ainsi que le gestionnaire de dépendances installé en pré-requis. Ils pourront mettre en place tout ce qui est nécessaire pour faire fonctionner le code de l’application de manière déterministe grâce à une <em>commande d’assemblage</em> (commande de build). Par exemple, la commande d’assemblage pour Ruby/Bundler est <code>bundle install</code>, alors que pour Clojure/<a href="https://github.com/technomancy/leiningen#readme">Leiningen</a> c’est <code>lein deps</code>.</p>
+
+<p>Les applications 12 facteurs ne s’appuient pas sur l’existence implicite d’outils système, par exemple ImageMagick ou <code>curl</code>. Bien que ces outils puissent exister sur beaucoup voire la plupart des systèmes d’exploitation, il n’y a pas de garantie qu’ils existeront sur tous les systèmes où l’application sera exécutée à l’avenir, ou si la version disponible sur un système futur sera compatible avec l’application. Si l’application dépend d’un outil système, cet outil doit être distribué avec l’application.</p>
+
+  </article>
+</section>
+
+<section class="concrete">
+  <nav>
+    <div id="locales"><a href="/ru/dependencies">Русский (ru)</a> | <a href="/dependencies">English (en)</a> | <a href="/ja/dependencies">日本語 (ja)</a> | <a href="/tr/dependencies">Turkish (tr)</a> | <a href="/ko/dependencies">한국어 (ko)</a> | <span>Français (fr)</span> | <a href="/de/dependencies">Deutsch (de)</a> | <a href="/pl/dependencies">Polski (pl)</a> | <a href="/it/dependencies">Italiano (it)</a> | <a href="/uk/dependencies">Українська (uk)</a> | <a href="/es/dependencies">Español (es)</a> | <a href="/zh_cn/dependencies">简体中文 (zh_cn)</a> | <a href="/pt_br/dependencies">Brazilian Portuguese (pt_br)</a></div>
+    <div id="prev"><a href="./codebase">&laquo; Previous</a></div>
+    <div id="next"><a href="./config">Next &raquo;</a></div>
+  </nav>
+</section>
+
+
+  <footer>
+  <div id="locales"><a href="/ru/dependencies">Русский (ru)</a> | <a href="/dependencies">English (en)</a> | <a href="/ja/dependencies">日本語 (ja)</a> | <a href="/tr/dependencies">Turkish (tr)</a> | <a href="/ko/dependencies">한국어 (ko)</a> | <span>Français (fr)</span> | <a href="/de/dependencies">Deutsch (de)</a> | <a href="/pl/dependencies">Polski (pl)</a> | <a href="/it/dependencies">Italiano (it)</a> | <a href="/uk/dependencies">Українська (uk)</a> | <a href="/es/dependencies">Español (es)</a> | <a href="/zh_cn/dependencies">简体中文 (zh_cn)</a> | <a href="/pt_br/dependencies">Brazilian Portuguese (pt_br)</a></div>
+  <div>Written by Adam Wiggins</div>
+  <div>Last updated 2017</div>
+  <div><a href="https://github.com/heroku/12factor">Sourcecode</a></div>
+  <div><a href="/12factor.epub">Download ePub Book</a></div>
+  <div><a href="https://www.heroku.com/policy/privacy">Privacy Policy</a></div>
+</footer>
+</body>
+</html>

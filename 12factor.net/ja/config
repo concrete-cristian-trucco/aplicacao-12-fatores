@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>The Twelve-Factor App （日本語訳）</title>
+  <meta name="description" content="A methodology for building modern, scalable, maintainable software-as-a-service apps.">
+  <meta name="author" content="Adam Wiggins">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" href="images/favicon.ico">
+
+  <link rel="stylesheet" href="/css/screen.css" media="screen">
+  <link rel="stylesheet" href="/css/mobile.css" media="screen">
+
+  <script type="text/javascript" src="//use.typekit.com/rsq7tro.js"></script>
+  <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+</head>
+<body>
+  
+  <!-- Google Tag Manager -->
+  <noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-TK5QTP"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-TK5QTP');</script>
+  <!-- End Google Tag Manager -->
+  
+
+  <header>
+    <h1><a href="./" title="The Twelve-Factor App">The Twelve-Factor App</a></h1>
+  </header>
+
+  <section class="abstract" id="factor">
+  <article>
+    
+<h2 id="iii_">III. 設定</h2>
+
+<h3 id="">設定を環境変数に格納する</h3>
+
+<p>アプリケーションの <em>設定</em> は、<a href="./codebase">デプロイ</a>（ステージング、本番、開発環境など）の間で異なり得る唯一のものである。設定には以下のものが含まれる。</p>
+
+<ul>
+<li>データベース、Memcached、他の<a href="./backing-services">バックエンドサービス</a>などのリソースへのハンドル</li>
+
+<li>Amazon S3やTwitterなどの外部サービスの認証情報</li>
+
+<li>デプロイされたホストの正規化されたホスト名など、デプロイごとの値</li>
+</ul>
+
+<p>アプリケーションは時に設定を定数としてコード内に格納する。これはTwelve-Factorに違反している。Twelve-Factorは <strong>設定をコードから厳密に分離すること</strong> を要求する。設定はデプロイごとに大きく異なるが、コードはそうではない。</p>
+
+<p>アプリケーションがすべての設定をコードの外部に正しく分離できているかどうかの簡単なテストは、認証情報を漏洩させることなく、コードベースを今すぐにでもオープンソースにすることができるかどうかである。</p>
+
+<p>なお、この“設定”の定義には、アプリケーション内部の設定は <strong>含まない</strong> ことに注意する。内部の設定とは、Railsにおける<code>config/routes.rb</code>や、<a href="http://spring.io/">Spring</a>において<a href="http://docs.spring.io/spring/docs/current/spring-framework-reference/html/beans.html">コードモジュールがどう接続されるか</a>などの設定を指す。この種の設定はデプロイの間で変わらないため、コードの内部で行うべきである。</p>
+
+<p>設定に対するもう1つのアプローチは、バージョン管理システムにチェックインされない設定ファイルを使う方法である。例として、Railsにおける<code>config/database.yml</code>がある。この方法は、リポジトリにチェックインされる定数を使うことに比べると非常に大きな進歩であるが、まだ弱点がある。設定ファイルが誤ってリポジトリにチェックインされやすいことと、設定ファイルが異なる場所に異なるフォーマットで散乱し、すべての設定を一つの場所で見たり管理したりすることが難しくなりがちであることである。その上、これらのフォーマットは言語やフレームワークに固有のものになりがちである。</p>
+
+<p><strong>Twelve-Factor Appは設定を <em>環境変数</em> に格納する。</strong> 環境変数は、コードを変更することなくデプロイごとに簡単に変更できる。設定ファイルとは異なり、誤ってリポジトリにチェックインされる可能性はほとんどない。また、独自形式の設定ファイルやJava System Propertiesなど他の設定の仕組みとは異なり、環境変数は言語やOSに依存しない標準である。</p>
+
+<p>設定管理のもう1つの側面はグルーピングである。アプリケーションは設定を名前付きのグループ（しばしば“環境”と呼ばれる）にまとめることがある。グループは、Railsにおける<code>development</code>、<code>test</code>、<code>production</code>環境のように、デプロイの名前を取って名付けられる。この方法はうまくスケールしない。アプリケーションのデプロイが増えるにつれて、新しい環境名（<code>staging</code>や<code>qa</code>）が必要になる。さらにプロジェクトが拡大すると、開発者は<code>joes-staging</code>のような自分用の環境を追加する。結果として設定が組み合わせ的に爆発し、アプリケーションのデプロイの管理が非常に不安定になる。</p>
+
+<p>Twelve-Factor Appの場合、環境変数は粒度の細かい管理であり、それぞれの環境変数は互いに直交している。環境変数は“環境”としてまとめられることはないが、代わりにデプロイごとに独立して管理される。これは、アプリケーションのライフサイクルに渡って、アプリケーションが多くのデプロイへと自然に拡大していくにつれて、スムーズにスケールアップするモデルである。</p>
+
+  </article>
+</section>
+
+<section class="concrete">
+  <nav>
+    <div id="locales"><a href="/ru/config">Русский (ru)</a> | <a href="/config">English (en)</a> | <span>日本語 (ja)</span> | <a href="/tr/config">Turkish (tr)</a> | <a href="/ko/config">한국어 (ko)</a> | <a href="/fr/config">Français (fr)</a> | <a href="/de/config">Deutsch (de)</a> | <a href="/pl/config">Polski (pl)</a> | <a href="/it/config">Italiano (it)</a> | <a href="/uk/config">Українська (uk)</a> | <a href="/es/config">Español (es)</a> | <a href="/zh_cn/config">简体中文 (zh_cn)</a> | <a href="/pt_br/config">Brazilian Portuguese (pt_br)</a></div>
+    <div id="prev"><a href="./dependencies">&laquo; Previous</a></div>
+    <div id="next"><a href="./backing-services">Next &raquo;</a></div>
+  </nav>
+</section>
+
+
+  <footer>
+  <div id="locales"><a href="/ru/config">Русский (ru)</a> | <a href="/config">English (en)</a> | <span>日本語 (ja)</span> | <a href="/tr/config">Turkish (tr)</a> | <a href="/ko/config">한국어 (ko)</a> | <a href="/fr/config">Français (fr)</a> | <a href="/de/config">Deutsch (de)</a> | <a href="/pl/config">Polski (pl)</a> | <a href="/it/config">Italiano (it)</a> | <a href="/uk/config">Українська (uk)</a> | <a href="/es/config">Español (es)</a> | <a href="/zh_cn/config">简体中文 (zh_cn)</a> | <a href="/pt_br/config">Brazilian Portuguese (pt_br)</a></div>
+  <div>Written by Adam Wiggins</div>
+  <div>Last updated 2017</div>
+  <div><a href="https://github.com/heroku/12factor">Sourcecode</a></div>
+  <div><a href="/12factor.epub">Download ePub Book</a></div>
+  <div><a href="https://www.heroku.com/policy/privacy">Privacy Policy</a></div>
+</footer>
+</body>
+</html>

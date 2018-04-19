@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>The Twelve-Factor App Dies ist eine Übersetzung.</title>
+  <meta name="description" content="A methodology for building modern, scalable, maintainable software-as-a-service apps.">
+  <meta name="author" content="Adam Wiggins">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" href="images/favicon.ico">
+
+  <link rel="stylesheet" href="/css/screen.css" media="screen">
+  <link rel="stylesheet" href="/css/mobile.css" media="screen">
+
+  <script type="text/javascript" src="//use.typekit.com/rsq7tro.js"></script>
+  <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+</head>
+<body>
+  
+  <!-- Google Tag Manager -->
+  <noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-TK5QTP"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-TK5QTP');</script>
+  <!-- End Google Tag Manager -->
+  
+
+  <header>
+    <h1><a href="./" title="The Twelve-Factor App">The Twelve-Factor App</a></h1>
+  </header>
+
+  <section class="abstract" id="factor">
+  <article>
+    
+<h2 id="iii_konfiguration">III. Konfiguration</h2>
+
+<h3 id="die_konfiguration_in_umgebungsvariablen_ablegen">Die Konfiguration in Umgebungsvariablen ablegen</h3>
+
+<p>Die <em>Konfiguration</em> einer App ist alles, was sich wahrscheinlich zwischen den <a href="./codebase">Deploys</a> ändern wird (Staging, Produktion, Entwicklungsumgebungen, usw.). Dies umfasst:</p>
+
+<ul>
+<li>Resource-Handles für Datenbanken, Memcached und andere <a href="./backing-services">unterstützende Dienste</a></li>
+
+<li>Credentials für externe Dienste wie Amazon S3 oder Twitter</li>
+
+<li>Direkt vom Deploy abhängige Werte wie der kanonische Hostname für den Deploy</li>
+</ul>
+
+<p>Manchmal speichern Apps die Konfiguration als Konstanten im Code. Dies ist eine Verletzung der zwölf Faktoren. Sie fordern <strong>strikte Trennung der Konfiguration vom Code</strong>. Die Konfiguration ändert sich deutlich von Deploy zu Deploy, ganz im Gegensatz zu Code.</p>
+
+<p>Ein Lackmustest, ob eine App die Konfiguration vollständig ausgelagert hat, ist, wenn die Codebase jederzeit als Open Source veröffentlicht werden könnte, ohne Credentials preiszugeben.</p>
+
+<p>Es sei darauf hingewiesen, dass diese Definition von “Konfiguration” die interne Anwendungskonfiguration <strong>nicht einschließt</strong>, wie <code>config/routes.rb</code> in Rails oder wie Code-Module <a href="http://docs.spring.io/spring/docs/current/spring-framework-reference/html/beans.html">mit Spring verdrahtet sind</a>. Diese Art von Konfiguration ändert sich nicht von Deploy zu Deploy und gehört daher zum Code.</p>
+
+<p>Als Konfiguration könnte man auch Dateien verwenden, die nicht ins Versionsmanagement eingecheckt sind wie <code>config/database.yml</code> in Rails. Dies ist eine deutliche Verbesserung gegenüber der Verwendung von Konstanten, die ins Versionsmanagement eingecheckt sind, hat aber Schwächen. Es ist relativ einfach, versehentlich eine Konfigurationsdatei ins Repo einzuchecken. Zusätzlich gibt es Tendenzen, Konfigurationsdateien an verschiedenen Orten und in verschiedenen Formaten zu streuen. Das macht es schwer die Konfiguration von einem Punkt aus zu managen. Desweiteren sind diese Formate oft sprach- oder plattformspezifisch.</p>
+
+<p><strong>Die Zwölf-Faktor-App speichert die Konfiguration in <em>Umgebungsvariablen</em></strong> (kurz auch <em>env vars</em> oder <em>env</em>). Umgebungsvariablen von Deploy zu Deploy zu ändern ist einfach; im Gegensatz zu Konfigurationsdateien ist es unwahrscheinlich, dass sie versehentlich ins Code Repository eingecheckt werden und im Gegensatz zu speziellen Konfigurationsdateien oder anderen Konfigurationsmechanismen wie den Java Properties sind sie Sprach- und Betriebssystemunabhängig.</p>
+
+<p>Ein anderer Aspekt des Konfigurationsmanagements ist die Gruppierung. Manchmal sammeln Apps die Konfiguration in benamten Gruppen (oft “Umgebungen” genannt), benannt nach bestimmten Deploys wie zum Beispiel die Umgebungen <code>development</code>, <code>test</code> und <code>production</code> in Rails. Diese Methode skaliert nicht sauber: Je mehr Deploys einer App es gibt, desto mehr Umgebungsnamen werden benötigt, wie zum Beispiel <code>staging</code> oder <code>qa</code>. Wenn das Projekt noch weiter wächst, könnten Entwickler ihre eigenen speziellen Umgebungen wie <code>joes-staging</code> hinzufügen. Am Ende explodiert die Konfiguration kombinatorisch und die Verwaltung der Deploys wird fehleranfällig.</p>
+
+<p>In einer Zwölf-Faktor-App sind Umgebungsvariablen greifbare Kontrollschrauben und vollständig orthogonal zueinander. Sie werden nie als “Umgebungen” zusammengefasst, sondern können für jeden Deploy unabhängig verwaltet werden. Dieses Modell skaliert reibungslos aufwärts, wenn die App sich natürlicherweise über ihre Lebenszeit hinweg auf mehr Deploys ausdehnt.</p>
+
+  </article>
+</section>
+
+<section class="concrete">
+  <nav>
+    <div id="locales"><a href="/ru/config">Русский (ru)</a> | <a href="/config">English (en)</a> | <a href="/ja/config">日本語 (ja)</a> | <a href="/tr/config">Turkish (tr)</a> | <a href="/ko/config">한국어 (ko)</a> | <a href="/fr/config">Français (fr)</a> | <span>Deutsch (de)</span> | <a href="/pl/config">Polski (pl)</a> | <a href="/it/config">Italiano (it)</a> | <a href="/uk/config">Українська (uk)</a> | <a href="/es/config">Español (es)</a> | <a href="/zh_cn/config">简体中文 (zh_cn)</a> | <a href="/pt_br/config">Brazilian Portuguese (pt_br)</a></div>
+    <div id="prev"><a href="./dependencies">&laquo; Previous</a></div>
+    <div id="next"><a href="./backing-services">Next &raquo;</a></div>
+  </nav>
+</section>
+
+
+  <footer>
+  <div id="locales"><a href="/ru/config">Русский (ru)</a> | <a href="/config">English (en)</a> | <a href="/ja/config">日本語 (ja)</a> | <a href="/tr/config">Turkish (tr)</a> | <a href="/ko/config">한국어 (ko)</a> | <a href="/fr/config">Français (fr)</a> | <span>Deutsch (de)</span> | <a href="/pl/config">Polski (pl)</a> | <a href="/it/config">Italiano (it)</a> | <a href="/uk/config">Українська (uk)</a> | <a href="/es/config">Español (es)</a> | <a href="/zh_cn/config">简体中文 (zh_cn)</a> | <a href="/pt_br/config">Brazilian Portuguese (pt_br)</a></div>
+  <div>Written by Adam Wiggins</div>
+  <div>Last updated 2017</div>
+  <div><a href="https://github.com/heroku/12factor">Sourcecode</a></div>
+  <div><a href="/12factor.epub">Download ePub Book</a></div>
+  <div><a href="https://www.heroku.com/policy/privacy">Privacy Policy</a></div>
+</footer>
+</body>
+</html>

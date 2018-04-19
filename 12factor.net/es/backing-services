@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>The Twelve-Factor App (Traducción de la versión original en Inglés)</title>
+  <meta name="description" content="A methodology for building modern, scalable, maintainable software-as-a-service apps.">
+  <meta name="author" content="Adam Wiggins">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" href="images/favicon.ico">
+
+  <link rel="stylesheet" href="/css/screen.css" media="screen">
+  <link rel="stylesheet" href="/css/mobile.css" media="screen">
+
+  <script type="text/javascript" src="//use.typekit.com/rsq7tro.js"></script>
+  <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+</head>
+<body>
+  
+  <!-- Google Tag Manager -->
+  <noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-TK5QTP"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-TK5QTP');</script>
+  <!-- End Google Tag Manager -->
+  
+
+  <header>
+    <h1><a href="./" title="The Twelve-Factor App">The Twelve-Factor App</a></h1>
+  </header>
+
+  <section class="abstract" id="factor">
+  <article>
+    
+<h2 id="iv_backing_services">IV. Backing services</h2>
+
+<h3 id="tratar_a_los_backing_services_como_recursos_conectables">Tratar a los “backing services” como recursos conectables</h3>
+
+<p>Un <em>backing service</em> es cualquier recurso que la aplicación puede consumir a través de la red como parte de su funcionamiento habitual. Entre otros ejemplos, podemos encontrar bases de datos (como <a href="http://dev.mysql.com/">MySQL</a> o <a href="http://couchdb.apache.org/">CouchDB</a>), los sistemas de mensajería y de colas (como <a href="http://www.rabbitmq.com/">RabbitMQ</a> o <a href="http://kr.github.com/beanstalkd/">Beanstalkd</a>), los servicios SMTP de email (como <a href="http://www.postfix.org/">Postfix</a>), y los sistemas de cache (como <a href="http://memcached.org/">Memcached</a>).</p>
+
+<p>Tradicionalmente, los “backing services” (como las bases de datos) han sido gestionadas por los mismos administradores de sistemas que despliegan la aplicacion en producción. Además de esos servicios gestionados localmente, las aplicaciones también pueden usar servicios proporcionados y gestionados por terceros, como por ejemplo los servicios SMTP (<a href="http://postmarkapp.com/">Postmark</a>), los servicios de recopilación de métricas (como <a href="http://newrelic.com/">New Relic</a> o <a href="http://www.loggly.com/">Loggly</a>), los servicios de activos binarios (como <a href="http://aws.amazon.com/s3/">Amazon S3</a>), e incluso servicios que se consumen accediendo a ellos mediante un API (como <a href="http://dev.twitter.com/">Twitter</a>, <a href="https://developers.google.com/maps/">Google Maps</a>, o <a href="http://www.last.fm/api">Last.fm</a>).</p>
+
+<p><strong>El código de una aplicación “twelve-factor” no hace distinciones entre servicios locales y de terceros.</strong> Para la aplicación, ambos son recursos conectados, accedidos mediante una URL u otro localizador o credencial almacenado en la <a href="./config">config</a>. Un <a href="./codebase">despliegue</a> de una aplicación “twelve-factor” debería ser capaz de reemplazar una base de datos local MySQL por una gestionada por un tercero (como <a href="http://aws.amazon.com/rds/">Amazon RDS</a>) sin ningún cambio en el código de la aplicación. Igualmente, un servidor SMTP local se podría cambiar por un servicio de terceros (como Postmark) sin modificaciones en el código. En ambos casos, solo el manejador del recurso necesita cambiar en la configuración.</p>
+
+<p>Cada “backing service” distinto es un <em>recurso</em>. Por ejemplo, una base de datos MySQL es un recurso; dos bases de datos MySQL (usadas para “sharding” en la capa de aplicación) les convierte en dos recursos distintos. Una aplicación “twelve factor” trata esas bases de datos como <em>recursos conectados</em>, lo que demuestra su bajo acoplamiento al despliegue al que se unen.</p>
+
+<p><img alt='Un despliegue en producción conectado a cuatro backing services.' class='full' src='/images/attached-resources.png' /></p>
+
+<p>Los recursos se pueden conectar y desconectar a voluntad. Por ejemplo, si la base de datos funciona mal debido a un problema en el hardware, el administrador de la aplicación puede cambiar a un nuevo servidor de bases de datos que haya sido restaurado de un backup reciente. La base de datos actual de producción se puede desconectar, y conectar una nueva base de datos sin tener que cambiar nada en el código.</p>
+
+  </article>
+</section>
+
+<section class="concrete">
+  <nav>
+    <div id="locales"><a href="/backing-services">English (en)</a> | <a href="/ko/backing-services">한국어 (ko)</a> | <a href="/ja/backing-services">日本語 (ja)</a> | <a href="/it/backing-services">Italiano (it)</a> | <a href="/pl/backing-services">Polski (pl)</a> | <a href="/zh_cn/backing-services">简体中文 (zh_cn)</a> | <a href="/de/backing-services">Deutsch (de)</a> | <span>Español (es)</span> | <a href="/fr/backing-services">Français (fr)</a> | <a href="/tr/backing-services">Turkish (tr)</a> | <a href="/uk/backing-services">Українська (uk)</a> | <a href="/pt_br/backing-services">Brazilian Portuguese (pt_br)</a> | <a href="/ru/backing-services">Русский (ru)</a></div>
+    <div id="prev"><a href="./config">&laquo; Previous</a></div>
+    <div id="next"><a href="./build-release-run">Next &raquo;</a></div>
+  </nav>
+</section>
+
+
+  <footer>
+  <div id="locales"><a href="/backing-services">English (en)</a> | <a href="/ko/backing-services">한국어 (ko)</a> | <a href="/ja/backing-services">日本語 (ja)</a> | <a href="/it/backing-services">Italiano (it)</a> | <a href="/pl/backing-services">Polski (pl)</a> | <a href="/zh_cn/backing-services">简体中文 (zh_cn)</a> | <a href="/de/backing-services">Deutsch (de)</a> | <span>Español (es)</span> | <a href="/fr/backing-services">Français (fr)</a> | <a href="/tr/backing-services">Turkish (tr)</a> | <a href="/uk/backing-services">Українська (uk)</a> | <a href="/pt_br/backing-services">Brazilian Portuguese (pt_br)</a> | <a href="/ru/backing-services">Русский (ru)</a></div>
+  <div>Written by Adam Wiggins</div>
+  <div>Last updated 2017</div>
+  <div><a href="https://github.com/heroku/12factor">Sourcecode</a></div>
+  <div><a href="/12factor.epub">Download ePub Book</a></div>
+  <div><a href="https://www.heroku.com/policy/privacy">Privacy Policy</a></div>
+</footer>
+</body>
+</html>

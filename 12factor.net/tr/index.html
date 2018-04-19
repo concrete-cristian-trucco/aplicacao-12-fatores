@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>The Twelve-Factor App Türkçe çeviri</title>
+  <meta name="description" content="A methodology for building modern, scalable, maintainable software-as-a-service apps.">
+  <meta name="author" content="Adam Wiggins">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" href="images/favicon.ico">
+
+  <link rel="stylesheet" href="/css/screen.css" media="screen">
+  <link rel="stylesheet" href="/css/mobile.css" media="screen">
+
+  <script type="text/javascript" src="//use.typekit.com/rsq7tro.js"></script>
+  <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+</head>
+<body>
+  
+  <!-- Google Tag Manager -->
+  <noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-TK5QTP"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-TK5QTP');</script>
+  <!-- End Google Tag Manager -->
+  
+
+  <header>
+    <h1><a href="./" title="The Twelve-Factor App">The Twelve-Factor App</a></h1>
+  </header>
+
+  <section class="abstract">
+  <article>
+<h1 id="giri">Giriş</h1>
+
+<p>Modern çağda yazılımlar yaygın olarak servis olarak sunulur;<em>web uygulamaları</em> ya da <em>yazılım hizmetleri</em>. On iki faktörlü uygulama, aşağıdaki gibi bir yazılım hizmeti oluşturmak için bir yöntemdir:</p>
+
+<ul>
+<li>Projeye katılan yeni geliştiriciler için zaman ve maliyeti en aza indirmek için ayar otomasyonu için <strong>bildirim</strong> biçimleri kullanılır;</li>
+
+<li>Çalışma ortamları arasında maksimum taşınabilirlik sunan temel işletim sistemi ile <strong>şifresiz sözleşmesi</strong> vardır</li>
+
+<li>Sunucu ve sistem yönetimine olan ihtiyacı ortadan kaldıran modern <strong>bulut platformlarına kurulum</strong> için uygundur;</li>
+
+<li>İşlem, mimari veya geliştirme uygulamalarında önemli değişiklikler olmaksızın <strong>ölçek büyültülebilir</strong>.</li>
+</ul>
+
+<p>On iki faktör uygulaması herhangi bir programlama dili ile yazılmış uygulamalara uygulanabilir ve destek servislerinin herhangi bir kombinasyonu kullanılabilir (Veritabanı, kuyruk, önbellek vb.).</p>
+</article>
+  <article>
+<h1 id="arkaplan">Arkaplan</h1>
+
+<p>Bu belgeye katkıda bulunan kişiler, yüzlerce uygulamanın geliştirilmesi ve dağıtılmasında doğrudan yer almış, ve dolaylı olarak <a href='http://www.heroku.com/' target='_blank'>Heroku</a> platformundaki üzerinde çalıştığımız yüz binlerce uygulamanın geliştirilmesi, çalıştırılması ve ölçeklendirilmesine tanık olmuştur.</p>
+
+<p>Bu belge, çok çeşitli yazılım servislerinin, yabancı ortamdaki deneyim ve gözlemlerini birleştirir. Bu uygulama geliştirimindeki uygun, ideal uygulamalarda bir üçgenleştirme vardır; uygulamanın zamanla olan doğal gelişmesinin, büyümesinin temel etmenlerine dikkat etmek, uygulamanın kod tabanında çalışan yazılımcıların arasındaki işbirliğinin önemli noktaları ve <a href='http://blog.heroku.com/archives/2011/6/28/the_new_heroku_4_erosion_resistance_explicit_contracts/' target='_blank'>yazılım erozyonunun getirdiği ücretten kaçmak</a>.</p>
+
+<p>Bizim motivasyonumuz, modern uygulama geliştirmesinde gördüğümüz bazı sistemik problemlerin farkındalığını arttırmak, terimlerle birlikte geniş kavramsal çözüm setleri sağlamak ve bu problemleri tartışmak için ortak bir kelime sunmakdır. Martin Fowler’ın kitabları <em><a href='https://books.google.com/books/about/about/Patterns_of_enterprise_application_archi.html?id=FyWZt5DdvFkC' target='_blank'>Patterns of Enterprise Application Architecture</a></em> ve <em><a href='https://books.google.com/books/about/Refactoring.html?id=1MsETFPD3I0C' target='_blank'>Refactoring&#39;den</a></em> ilham alınmıştır.</p>
+</article>
+  <article>
+<h1 id="bu_belgeyi_kim_okumal">Bu belgeyi kim okumalı?</h1>
+
+<p>Herhangi bir çalışan uygulama geliştirenler. Bu tür uygulamaları dağıtan ve yöneten Ops mühendisleri.</p>
+</article>
+</section>
+
+<section class="concrete">
+  <article>
+<h1 id="on_iki_faktr">On İki Faktör</h1>
+
+<h2 id="i_kod_taban"><a href="./codebase">I. Kod Tabanı</a></h2>
+
+<h3 id="bir_ok_datm_kod_taban_gzden_geirme_kontrolnde_izleme">Bir çok dağıtım kod tabanı gözden geçirme kontrolünde izleme</h3>
+
+<h2 id="ii_bamlklar"><a href="./dependencies">II. Bağımlıklar</a></h2>
+
+<h3 id="bamlklar_ak_bir_ekilde_aklama_ve_ayrma">Bağımlıkları açık bir şekilde açıklama ve ayırma</h3>
+
+<h2 id="iii_yaplandrma"><a href="./config">III. Yapılandırma</a></h2>
+
+<h3 id="ortamda_yaplandrma_depolama">Ortamda yapılandırma depolama</h3>
+
+<h2 id="iv_destek_servisi"><a href="./backing-services">IV. Destek servisi</a></h2>
+
+<h3 id="destek_servislerine_ekli_kaynak_olarak_davranma">Destek servislerine ekli kaynak olarak davranma</h3>
+
+<h2 id="v_derleme_srm_altrma"><a href="./build-release-run">V. Derleme, Sürüm, Çalıştırma</a></h2>
+
+<h3 id="derleme_ve_altrma_aamalarn_tam_olarak_ayrma">Derleme ve çalıştırma aşamalarını tam olarak ayırma</h3>
+
+<h2 id="vi_sre"><a href="./processes">VI. Süreç</a></h2>
+
+<h3 id="uygulamay_bir_veya_daha_fazla_bamsz_sre_olarak_altrma">Uygulamayı bir veya daha fazla bağımsız süreç olarak çalıştırma</h3>
+
+<h2 id="vii_port_balama"><a href="./port-binding">VII. Port Bağlama</a></h2>
+
+<h3 id="port_balama_yolu_zerinden_dar_aktarma">Port bağlama yolu üzerinden dışarı aktarma</h3>
+
+<h2 id="viii_e_zamanllk"><a href="./concurrency">VIII. Eş Zamanlılık</a></h2>
+
+<h3 id="sre_modeli_yardmyla_datklatrma">Süreç modeli yardımıyla dağıtıklaştırma</h3>
+
+<h2 id="ix_kullanma_hazr_olma_durumu"><a href="./disposability">IX. Kullanıma Hazır Olma Durumu</a></h2>
+
+<h3 id="hzl_balang_ve_otomatik_zararsz_kapama_ile_salaml_st_dzeye_karma">Hızlı başlangıç ve otomatik zararsız kapama ile sağlamlığı üst düzeye çıkarma</h3>
+
+<h2 id="xgelitirmeretim_eitlii"><a href="./dev-prod-parity">X.Geliştirme/Üretim Eşitliği</a></h2>
+
+<h3 id="geliim_evreleme_ve_retimi_olabildike_benzer_tutma">Gelişim, evreleme ve üretimi olabildikçe benzer tutma</h3>
+
+<h2 id="xi_gnlkler"><a href="./logs">XI. Günlükler</a></h2>
+
+<h3 id="gnlklere_olay_ak_gibi_davranma">Günlüklere olay akışı gibi davranma</h3>
+
+<h2 id="xii_ynetici_sreci"><a href="./admin-processes">XII. Yönetici Süreci</a></h2>
+
+<h3 id="yneticiynetim_grevlerini_tek_seferlik_ilem_olarak_altrma">Yönetici/yönetim görevlerini tek seferlik işlem olarak çalıştırma</h3>
+</article>
+</section>
+
+
+  <footer>
+  <div id="locales"><a href="/ru/">Русский (ru)</a> | <a href="/">English (en)</a> | <a href="/ja/">日本語 (ja)</a> | <span>Turkish (tr)</span> | <a href="/ko/">한국어 (ko)</a> | <a href="/fr/">Français (fr)</a> | <a href="/de/">Deutsch (de)</a> | <a href="/pl/">Polski (pl)</a> | <a href="/it/">Italiano (it)</a> | <a href="/uk/">Українська (uk)</a> | <a href="/es/">Español (es)</a> | <a href="/zh_cn/">简体中文 (zh_cn)</a> | <a href="/pt_br/">Brazilian Portuguese (pt_br)</a></div>
+  <div>Written by Adam Wiggins</div>
+  <div>Last updated 2017</div>
+  <div><a href="https://github.com/heroku/12factor">Sourcecode</a></div>
+  <div><a href="/12factor.epub">Download ePub Book</a></div>
+  <div><a href="https://www.heroku.com/policy/privacy">Privacy Policy</a></div>
+</footer>
+</body>
+</html>

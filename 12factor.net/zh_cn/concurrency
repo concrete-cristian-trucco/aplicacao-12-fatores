@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>The Twelve-Factor App （简体中文）</title>
+  <meta name="description" content="A methodology for building modern, scalable, maintainable software-as-a-service apps.">
+  <meta name="author" content="Adam Wiggins">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" href="images/favicon.ico">
+
+  <link rel="stylesheet" href="/css/screen.css" media="screen">
+  <link rel="stylesheet" href="/css/mobile.css" media="screen">
+
+  <script type="text/javascript" src="//use.typekit.com/rsq7tro.js"></script>
+  <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+</head>
+<body>
+  
+  <!-- Google Tag Manager -->
+  <noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-TK5QTP"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-TK5QTP');</script>
+  <!-- End Google Tag Manager -->
+  
+
+  <header>
+    <h1><a href="./" title="The Twelve-Factor App">The Twelve-Factor App</a></h1>
+  </header>
+
+  <section class="abstract" id="factor">
+  <article>
+    
+<h2 id="viii_">VIII. 并发</h2>
+
+<h3 id="">通过进程模型进行扩展</h3>
+
+<p>任何计算机程序，一旦启动，就会生成一个或多个进程。互联网应用采用多种进程运行方式。例如，PHP 进程作为 Apache 的子进程存在，随请求按需启动。Java 进程则采取了相反的方式，在程序启动之初 JVM 就提供了一个超级进程储备了大量的系统资源(CPU 和内存)，并通过多线程实现内部的并发管理。上述 2 个例子中，进程是开发人员可以操作的最小单位。</p>
+
+<p><img src="/images/process-types.png" alt="扩展表现为运行中的进程，工作多样性表现为进程类型。" /></p>
+
+<p><strong>在 12-factor 应用中，进程是一等公民。</strong>12-Factor 应用的进程主要借鉴于 <a href="https://adam.herokuapp.com/past/2011/5/9/applying_the_unix_process_model_to_web_apps/">unix 守护进程模型</a> 。开发人员可以运用这个模型去设计应用架构，将不同的工作分配给不同的 <em>进程类型</em> 。例如，HTTP 请求可以交给 web 进程来处理，而常驻的后台工作则交由 worker 进程负责。</p>
+
+<p>这并不包括个别较为特殊的进程，例如通过虚拟机的线程处理并发的内部运算，或是使用诸如 <a href="http://rubyeventmachine.com/">EventMachine</a>, <a href="http://twistedmatrix.com/trac/">Twisted</a>, <a href="http://nodejs.org/">Node.js</a> 的异步/事件触发模型。但一台独立的虚拟机的扩展有瓶颈（垂直扩展），所以应用程序必须可以在多台物理机器间跨进程工作。</p>
+
+<p>上述进程模型会在系统急需扩展时大放异彩。 <a href="./processes">12-Factor 应用的进程所具备的无共享，水平分区的特性</a> 意味着添加并发会变得简单而稳妥。这些进程的类型以及每个类型中进程的数量就被称作 <em>进程构成</em> 。</p>
+
+<p>12-Factor 应用的进程 <a href="http://dustin.github.com/2010/02/28/running-processes.html">不需要守护进程</a> 或是写入 PID 文件。相反的，应该借助操作系统的进程管理器(例如 <a href="https://www.freedesktop.org/wiki/Software/systemd/">systemd</a> ，分布式的进程管理云平台，或是类似 <a href="http://blog.daviddollar.org/2011/05/06/introducing-foreman.html">Foreman</a> 的工具)，来管理 <a href="/logs">输出流</a> ，响应崩溃的进程，以及处理用户触发的重启和关闭超级进程的请求。</p>
+
+  </article>
+</section>
+
+<section class="concrete">
+  <nav>
+    <div id="locales"><a href="/ru/concurrency">Русский (ru)</a> | <a href="/concurrency">English (en)</a> | <a href="/ja/concurrency">日本語 (ja)</a> | <a href="/tr/concurrency">Turkish (tr)</a> | <a href="/ko/concurrency">한국어 (ko)</a> | <a href="/fr/concurrency">Français (fr)</a> | <a href="/de/concurrency">Deutsch (de)</a> | <a href="/pl/concurrency">Polski (pl)</a> | <a href="/it/concurrency">Italiano (it)</a> | <a href="/uk/concurrency">Українська (uk)</a> | <a href="/es/concurrency">Español (es)</a> | <span>简体中文 (zh_cn)</span> | <a href="/pt_br/concurrency">Brazilian Portuguese (pt_br)</a></div>
+    <div id="prev"><a href="./port-binding">&laquo; Previous</a></div>
+    <div id="next"><a href="./disposability">Next &raquo;</a></div>
+  </nav>
+</section>
+
+
+  <footer>
+  <div id="locales"><a href="/ru/concurrency">Русский (ru)</a> | <a href="/concurrency">English (en)</a> | <a href="/ja/concurrency">日本語 (ja)</a> | <a href="/tr/concurrency">Turkish (tr)</a> | <a href="/ko/concurrency">한국어 (ko)</a> | <a href="/fr/concurrency">Français (fr)</a> | <a href="/de/concurrency">Deutsch (de)</a> | <a href="/pl/concurrency">Polski (pl)</a> | <a href="/it/concurrency">Italiano (it)</a> | <a href="/uk/concurrency">Українська (uk)</a> | <a href="/es/concurrency">Español (es)</a> | <span>简体中文 (zh_cn)</span> | <a href="/pt_br/concurrency">Brazilian Portuguese (pt_br)</a></div>
+  <div>Written by Adam Wiggins</div>
+  <div>Last updated 2017</div>
+  <div><a href="https://github.com/heroku/12factor">Sourcecode</a></div>
+  <div><a href="/12factor.epub">Download ePub Book</a></div>
+  <div><a href="https://www.heroku.com/policy/privacy">Privacy Policy</a></div>
+</footer>
+</body>
+</html>

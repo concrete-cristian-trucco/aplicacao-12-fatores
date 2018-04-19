@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>The Twelve-Factor App （简体中文）</title>
+  <meta name="description" content="A methodology for building modern, scalable, maintainable software-as-a-service apps.">
+  <meta name="author" content="Adam Wiggins">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" href="images/favicon.ico">
+
+  <link rel="stylesheet" href="/css/screen.css" media="screen">
+  <link rel="stylesheet" href="/css/mobile.css" media="screen">
+
+  <script type="text/javascript" src="//use.typekit.com/rsq7tro.js"></script>
+  <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+</head>
+<body>
+  
+  <!-- Google Tag Manager -->
+  <noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-TK5QTP"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-TK5QTP');</script>
+  <!-- End Google Tag Manager -->
+  
+
+  <header>
+    <h1><a href="./" title="The Twelve-Factor App">The Twelve-Factor App</a></h1>
+  </header>
+
+  <section class="abstract" id="factor">
+  <article>
+    
+<h2 id="xii_">XII. 管理进程</h2>
+
+<h3 id="">后台管理任务当作一次性进程运行</h3>
+
+<p><a href="./concurrency">进程构成</a>（process formation）是指用来处理应用的常规业务（比如处理 web 请求）的一组进程。与此不同，开发人员经常希望执行一些管理或维护应用的一次性任务，例如：</p>
+
+<ul>
+<li>运行数据移植（Django 中的 <code>manage.py migrate</code>, Rails 中的 <code>rake db:migrate</code>）。</li>
+
+<li>运行一个控制台（也被称为 <a href="http://en.wikipedia.org/wiki/Read-eval-print_loop">REPL</a> shell），来执行一些代码或是针对线上数据库做一些检查。大多数语言都通过解释器提供了一个 REPL 工具（<code>python</code> 或 <code>perl</code>） ，或是其他命令（Ruby 使用 <code>irb</code>, Rails 使用 <code>rails console</code>）。</li>
+
+<li>运行一些提交到代码仓库的一次性脚本。</li>
+</ul>
+
+<p>一次性管理进程应该和正常的 <a href="./processes">常驻进程</a> 使用同样的环境。这些管理进程和任何其他的进程一样使用相同的 <a href="./codebase">代码</a> 和 <a href="./config">配置</a> ，基于某个 <a href="./build-release-run">发布版本</a> 运行。后台管理代码应该随其他应用程序代码一起发布，从而避免同步问题。</p>
+
+<p>所有进程类型应该使用同样的 <a href="./dependencies">依赖隔离</a> 技术。例如，如果Ruby的web进程使用了命令 <code>bundle exec thin start</code> ，那么数据库移植应使用 <code>bundle exec rake db:migrate</code> 。同样的，如果一个 Python 程序使用了 Virtualenv，则需要在运行 Tornado Web 服务器和任何 <code>manage.py</code> 管理进程时引入 <code>bin/python</code> 。</p>
+
+<p>12-factor 尤其青睐那些提供了 REPL shell 的语言，因为那会让运行一次性脚本变得简单。在本地部署中，开发人员直接在命令行使用 shell 命令调用一次性管理进程。在线上部署中，开发人员依旧可以使用ssh或是运行环境提供的其他机制来运行这样的进程。</p>
+
+  </article>
+</section>
+
+<section class="concrete">
+  <nav>
+    <div id="locales"><a href="/ru/admin-processes">Русский (ru)</a> | <a href="/admin-processes">English (en)</a> | <a href="/ja/admin-processes">日本語 (ja)</a> | <a href="/tr/admin-processes">Turkish (tr)</a> | <a href="/ko/admin-processes">한국어 (ko)</a> | <a href="/fr/admin-processes">Français (fr)</a> | <a href="/de/admin-processes">Deutsch (de)</a> | <a href="/pl/admin-processes">Polski (pl)</a> | <a href="/it/admin-processes">Italiano (it)</a> | <a href="/uk/admin-processes">Українська (uk)</a> | <a href="/es/admin-processes">Español (es)</a> | <span>简体中文 (zh_cn)</span> | <a href="/pt_br/admin-processes">Brazilian Portuguese (pt_br)</a></div>
+    <div id="prev"><a href="./logs">&laquo; Previous</a></div>
+    <div id="next"></div>
+  </nav>
+</section>
+
+
+  <footer>
+  <div id="locales"><a href="/ru/admin-processes">Русский (ru)</a> | <a href="/admin-processes">English (en)</a> | <a href="/ja/admin-processes">日本語 (ja)</a> | <a href="/tr/admin-processes">Turkish (tr)</a> | <a href="/ko/admin-processes">한국어 (ko)</a> | <a href="/fr/admin-processes">Français (fr)</a> | <a href="/de/admin-processes">Deutsch (de)</a> | <a href="/pl/admin-processes">Polski (pl)</a> | <a href="/it/admin-processes">Italiano (it)</a> | <a href="/uk/admin-processes">Українська (uk)</a> | <a href="/es/admin-processes">Español (es)</a> | <span>简体中文 (zh_cn)</span> | <a href="/pt_br/admin-processes">Brazilian Portuguese (pt_br)</a></div>
+  <div>Written by Adam Wiggins</div>
+  <div>Last updated 2017</div>
+  <div><a href="https://github.com/heroku/12factor">Sourcecode</a></div>
+  <div><a href="/12factor.epub">Download ePub Book</a></div>
+  <div><a href="https://www.heroku.com/policy/privacy">Privacy Policy</a></div>
+</footer>
+</body>
+</html>

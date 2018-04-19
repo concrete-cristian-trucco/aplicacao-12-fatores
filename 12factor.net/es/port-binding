@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>The Twelve-Factor App (Traducción de la versión original en Inglés)</title>
+  <meta name="description" content="A methodology for building modern, scalable, maintainable software-as-a-service apps.">
+  <meta name="author" content="Adam Wiggins">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" href="images/favicon.ico">
+
+  <link rel="stylesheet" href="/css/screen.css" media="screen">
+  <link rel="stylesheet" href="/css/mobile.css" media="screen">
+
+  <script type="text/javascript" src="//use.typekit.com/rsq7tro.js"></script>
+  <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+</head>
+<body>
+  
+  <!-- Google Tag Manager -->
+  <noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-TK5QTP"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-TK5QTP');</script>
+  <!-- End Google Tag Manager -->
+  
+
+  <header>
+    <h1><a href="./" title="The Twelve-Factor App">The Twelve-Factor App</a></h1>
+  </header>
+
+  <section class="abstract" id="factor">
+  <article>
+    
+<h2 id="vii_asignacin_de_puertos">VII. Asignación de puertos</h2>
+
+<h3 id="publicar_servicios_mediante_asignacin_de_puertos">Publicar servicios mediante asignación de puertos</h3>
+
+<p>Las aplicaciones web se ejecutan a menudo mediante contenedores web. Por ejemplo, las aplicaciones de PHP se suelen ejecutar como módulos del <a href="http://httpd.apache.org/">HTTPD de Apache</a>, y las aplicaciones Java en <a href="http://tomcat.apache.org/">Tomcat</a>.</p>
+
+<p><strong>Las aplicaciones “twelve factor” son completamente auto-contenidas</strong> y no dependen de un servidor web en ejecución para crear un servicio web público. Una aplicación web <strong>usa HTTP como un servicio al que se le asigna un puerto</strong>, y escucha las peticiones que recibe por dicho puerto.</p>
+
+<p>En los entornos de desarrollo, los desarrolladores usan una URL del servicio (por ejemplo <code>http://localhost:5000/</code>), para acceder al servicio que ofrece la aplicación. En la fase de despliegue, existe una capa de enrutamiento que se encarga de que las peticiones que llegan a una dirección pública se redirijan hacia el proceso web que tiene asignado su puerto correspondiente.</p>
+
+<p>Esto se implementa, normalmente, usando una <a href="./dependencies">declaración de dependencias</a> donde se incluyen librerías de las aplicaciones web, como <a href="http://www.tornadoweb.org/">Tornado</a> para Python, <a href="http://code.macournoyer.com/thin/">Thin</a> para Ruby, o <a href="http://www.eclipse.org/jetty/">Jetty</a> para Java y otros lenguajes basados en la Máquina Virtual de Java (JVM). Esto ocurre totalmente en el <em>entorno del usuario</em>, es decir, dentro del código de la aplicación. El contrato con el entorno de ejecución obliga al puerto a servir las peticiones.</p>
+
+<p>HTTP no es el único servicio que usa asignación de puertos. La verdad, es que cualquier servicio puede ejecutarse mediante un proceso al que se le asigna un puerto y queda a la espera de peticiones. Entre otros ejemplos podemos encontrar <a href="http://www.ejabberd.im/">ejabberd</a> (que usa <a href="http://xmpp.org/">XMPP</a>), y <a href="http://redis.io/">Redis</a> (que usa <a href="http://redis.io/topics/protocol">el protocolo Redis</a>).</p>
+
+<p>También es cierto que la aproximación de asignación de puertos ofrece la posibilidad de que una aplicación pueda llegar a ser un <a href="./backing-services">“backing service”</a> para otra aplicación, usando la URL de la aplicación correspondiente como un recurso declarado en la <a href="./config">configuración</a> de la aplicación que consume este “backing service”.</p>
+
+  </article>
+</section>
+
+<section class="concrete">
+  <nav>
+    <div id="locales"><a href="/port-binding">English (en)</a> | <a href="/ko/port-binding">한국어 (ko)</a> | <a href="/ja/port-binding">日本語 (ja)</a> | <a href="/it/port-binding">Italiano (it)</a> | <a href="/pl/port-binding">Polski (pl)</a> | <a href="/zh_cn/port-binding">简体中文 (zh_cn)</a> | <a href="/de/port-binding">Deutsch (de)</a> | <span>Español (es)</span> | <a href="/fr/port-binding">Français (fr)</a> | <a href="/tr/port-binding">Turkish (tr)</a> | <a href="/uk/port-binding">Українська (uk)</a> | <a href="/pt_br/port-binding">Brazilian Portuguese (pt_br)</a> | <a href="/ru/port-binding">Русский (ru)</a></div>
+    <div id="prev"><a href="./processes">&laquo; Previous</a></div>
+    <div id="next"><a href="./concurrency">Next &raquo;</a></div>
+  </nav>
+</section>
+
+
+  <footer>
+  <div id="locales"><a href="/port-binding">English (en)</a> | <a href="/ko/port-binding">한국어 (ko)</a> | <a href="/ja/port-binding">日本語 (ja)</a> | <a href="/it/port-binding">Italiano (it)</a> | <a href="/pl/port-binding">Polski (pl)</a> | <a href="/zh_cn/port-binding">简体中文 (zh_cn)</a> | <a href="/de/port-binding">Deutsch (de)</a> | <span>Español (es)</span> | <a href="/fr/port-binding">Français (fr)</a> | <a href="/tr/port-binding">Turkish (tr)</a> | <a href="/uk/port-binding">Українська (uk)</a> | <a href="/pt_br/port-binding">Brazilian Portuguese (pt_br)</a> | <a href="/ru/port-binding">Русский (ru)</a></div>
+  <div>Written by Adam Wiggins</div>
+  <div>Last updated 2017</div>
+  <div><a href="https://github.com/heroku/12factor">Sourcecode</a></div>
+  <div><a href="/12factor.epub">Download ePub Book</a></div>
+  <div><a href="https://www.heroku.com/policy/privacy">Privacy Policy</a></div>
+</footer>
+</body>
+</html>

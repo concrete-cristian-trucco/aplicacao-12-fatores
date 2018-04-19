@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>The Twelve-Factor App （日本語訳）</title>
+  <meta name="description" content="A methodology for building modern, scalable, maintainable software-as-a-service apps.">
+  <meta name="author" content="Adam Wiggins">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" href="images/favicon.ico">
+
+  <link rel="stylesheet" href="/css/screen.css" media="screen">
+  <link rel="stylesheet" href="/css/mobile.css" media="screen">
+
+  <script type="text/javascript" src="//use.typekit.com/rsq7tro.js"></script>
+  <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+</head>
+<body>
+  
+  <!-- Google Tag Manager -->
+  <noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-TK5QTP"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-TK5QTP');</script>
+  <!-- End Google Tag Manager -->
+  
+
+  <header>
+    <h1><a href="./" title="The Twelve-Factor App">The Twelve-Factor App</a></h1>
+  </header>
+
+  <section class="abstract" id="factor">
+  <article>
+    
+<h2 id="ix_">IX. 廃棄容易性</h2>
+
+<h3 id="">高速な起動とグレースフルシャットダウンで堅牢性を最大化する</h3>
+
+<p><strong>Twelve-Factor Appの <a href="./processes">プロセス</a> は <em>廃棄容易</em> である、すなわち即座に起動・終了することができる。</strong> この性質が、素早く柔軟なスケールと、<a href="./codebase">コード</a> や <a href="./config">設定</a> に対する変更の素早いデプロイを容易にし、本番デプロイの堅牢性を高める。</p>
+
+<p>プロセスは、 <strong>起動時間を最小化する</strong> よう努力するべきである。理想的には、1つのプロセスは、起動コマンドが実行されてから数秒間でリクエストやジョブを受け取れるようになるべきである。起動時間が短いと、<a href="./build-release-run">リリース</a>作業やスケールアップのアジリティが高くなる。さらに、プロセスマネージャーが必要に応じてプロセスを新しい物理マシンに簡単に移動できるようになるため、堅牢性も高くなる。</p>
+
+<p>プロセスは、プロセスマネージャーから <strong><a href="http://en.wikipedia.org/wiki/SIGTERM">SIGTERM</a>シグナルを受け取ったときに、グレースフルにシャットダウンする。</strong> Webプロセスの場合、グレースフルシャットダウンは、サービスポートのリッスンを中止し（従って新しいリクエストを拒み）、処理中のリクエストが終了するまで待ち、シャットダウンすることで実現される。このモデルでは暗黙的にHTTPリクエストが短い（せいぜい数秒）ことを仮定している。ロングポーリングの場合、クライアントはコネクションが失われたときに途切れなく再接続を試みるべきである。</p>
+
+<p>ワーカープロセスの場合、グレースフルシャットダウンは、処理中のジョブをワーカーキューに戻すことで実現される。例えば、<a href="http://www.rabbitmq.com/">RabbitMQ</a>ではワーカーは<a href="http://www.rabbitmq.com/amqp-0-9-1-quickref.html#basic.nack"><code>NACK</code></a>を送ることができる。<a href="http://kr.github.com/beanstalkd/">Beanstalkd</a>では、ワーカーの接続が失われるとジョブは自動的にキューに戻る。<a href="https://github.com/collectiveidea/delayed_job#readme">Delayed Job</a>などのロックをベースにしたシステムでは、ジョブレコードのロックを確実に解放する必要がある。このモデルでは、暗黙的にすべてのジョブが<a href="http://en.wikipedia.org/wiki/Reentrant_%28subroutine%29">再入可能</a>であることを仮定している。再入可能性は一般的に、結果をトランザクションで包んだり、処理を<a href="http://en.wikipedia.org/wiki/Idempotence">べき等</a>にすることで実現される。</p>
+
+<p>また、下層のハードウェアの障害に関して言えば、プロセスは <strong>突然の死に対して堅牢</strong> であるべきである。このような事態が起こることは、<code>SIGTERM</code>によるグレースフルシャットダウンに比べればずっと少ないが、それでも起こりうる。この対策として推奨される方法は、Beanstalkdなどの堅牢なキューイングバックエンドを使い、クライアントの接続が切断されたり、タイムアウトしたときにジョブをキューに戻せるようにすることである。どちらにしても、Twelve-Factor Appは予期しないグレースフルでない停止をうまく処理できるよう設計される。<a href="http://lwn.net/Articles/191059/">「クラッシュオンリー」設計</a>はこのコンセプトをその<a href="http://docs.couchdb.org/en/latest/intro/overview.html">論理的帰結</a>に導く。</p>
+
+  </article>
+</section>
+
+<section class="concrete">
+  <nav>
+    <div id="locales"><a href="/ru/disposability">Русский (ru)</a> | <a href="/disposability">English (en)</a> | <span>日本語 (ja)</span> | <a href="/tr/disposability">Turkish (tr)</a> | <a href="/ko/disposability">한국어 (ko)</a> | <a href="/fr/disposability">Français (fr)</a> | <a href="/de/disposability">Deutsch (de)</a> | <a href="/pl/disposability">Polski (pl)</a> | <a href="/it/disposability">Italiano (it)</a> | <a href="/uk/disposability">Українська (uk)</a> | <a href="/es/disposability">Español (es)</a> | <a href="/zh_cn/disposability">简体中文 (zh_cn)</a> | <a href="/pt_br/disposability">Brazilian Portuguese (pt_br)</a></div>
+    <div id="prev"><a href="./concurrency">&laquo; Previous</a></div>
+    <div id="next"><a href="./dev-prod-parity">Next &raquo;</a></div>
+  </nav>
+</section>
+
+
+  <footer>
+  <div id="locales"><a href="/ru/disposability">Русский (ru)</a> | <a href="/disposability">English (en)</a> | <span>日本語 (ja)</span> | <a href="/tr/disposability">Turkish (tr)</a> | <a href="/ko/disposability">한국어 (ko)</a> | <a href="/fr/disposability">Français (fr)</a> | <a href="/de/disposability">Deutsch (de)</a> | <a href="/pl/disposability">Polski (pl)</a> | <a href="/it/disposability">Italiano (it)</a> | <a href="/uk/disposability">Українська (uk)</a> | <a href="/es/disposability">Español (es)</a> | <a href="/zh_cn/disposability">简体中文 (zh_cn)</a> | <a href="/pt_br/disposability">Brazilian Portuguese (pt_br)</a></div>
+  <div>Written by Adam Wiggins</div>
+  <div>Last updated 2017</div>
+  <div><a href="https://github.com/heroku/12factor">Sourcecode</a></div>
+  <div><a href="/12factor.epub">Download ePub Book</a></div>
+  <div><a href="https://www.heroku.com/policy/privacy">Privacy Policy</a></div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>The Twelve-Factor App Türkçe çeviri</title>
+  <meta name="description" content="A methodology for building modern, scalable, maintainable software-as-a-service apps.">
+  <meta name="author" content="Adam Wiggins">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" href="images/favicon.ico">
+
+  <link rel="stylesheet" href="/css/screen.css" media="screen">
+  <link rel="stylesheet" href="/css/mobile.css" media="screen">
+
+  <script type="text/javascript" src="//use.typekit.com/rsq7tro.js"></script>
+  <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+</head>
+<body>
+  
+  <!-- Google Tag Manager -->
+  <noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-TK5QTP"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-TK5QTP');</script>
+  <!-- End Google Tag Manager -->
+  
+
+  <header>
+    <h1><a href="./" title="The Twelve-Factor App">The Twelve-Factor App</a></h1>
+  </header>
+
+  <section class="abstract" id="factor">
+  <article>
+    
+<h2 id="xii_ynetici_sreci">XII. Yönetici Süreci</h2>
+
+<h3 id="yneticiynetim_grevlerini_tek_seferlik_ilem_olarak_altrma">Yönetici/yönetim görevlerini tek seferlik işlem olarak çalıştırma</h3>
+
+<p><a href="./concurrency">Süreç oluşumu</a> uygulama çalışırken uygulamanın sıradan işlerini (web isteklerini idare etmek gibi) yapmakta kullanılan süreçlerin bir dizisidir. Ayrı olarak, geliştiriciler çoğunlukla uygulamanın bir kereye mahsus yönetimsel veya bakım görevlerini yapmayı dileyecekler, şunun gibi:</p>
+
+<ul>
+<li>Veri tabanı göçü çalıştırmak (Django’da <code>manage.py migrate</code>, Rails’de <code>rake db:migrate</code>).</li>
+
+<li>Konsolu (<a href="http://en.wikipedia.org/wiki/Read-eval-print_loop">REPL</a> kabuğu olarakta bilinir), rastgele kodu çalıştırmak veya canlı veritabanına karşılık uygulamanın modellerini denetlemek için çalıştırmak. Çoğu dil hiç bir arguman olmadan (<code>python</code> veya <code>perl</code>), yorumlayıcı veya bazı durumlarda ayrı komutlarla (Ruby için <code>irb</code>, Rails için <code>rails console</code>) çalıştırarak bir REPL sağlar.</li>
+
+<li>Uygulamanın deposuna commit’lenmiş betikleri çalıştırmak (<code>php scripts/fix_bad_records.php</code>).</li>
+</ul>
+
+<p>Bir kerelik yönetici süreçleri uygulamanın sıradan <a href="./processes">uzun çalışan süreçleri</a> gibi aynı ortamlarda çalışmalıdır. Onlar herhangi bir sürecin çalıştığı gibi <a href="./build-release-run">sürüme</a> karşı aynı <a href="./codebase">kod tabanı</a> ve <a href="./config">yapılandırmayı</a> kullanarak çalışır. Yönetici uygulama kodunu senkronizasyon sorunundan kaçınmak için yüklemelidir.</p>
+
+<p>Aynı <a href="./dependencies">bağımlılık yalıtımı</a> teknikleri bütün süreç yönetiminde kullanılmalıdır. Örneğin, eğer Ruby web süreçleri <code>bundle exec thin start</code> komutunu kullanıyorsa, veri tabanı göçü <code>bundle exec rake db:migrate</code> komutu kullanmalıdır. Aynı durumda, Virtualenv kullanan bir Python programı, Tornado web sunucusu ve herhangi bir <code>manage.py</code> yönetici süreçlerinin ikisini de çalıştırabilmek için <code>bin/python</code> kullanmalıdır.</p>
+
+<p>On iki faktör, REPL kabuğunu kural dışı sağlayan ve tek seferlik betikleri çalıştırmayı kolaylaştıran dilleri fazlasıyla destekler. Yerel dağıtımda, geliştiriciler uygulamanın kontrol dizinindeki açık kabuk komutuyla tek seferlik yönetici süreçlerini çalıştırır. Ürün dağıtımında, geliştiriciler bu gibi bir süreci çalıştırmak için ssh veya dağıtımın çalışma ortamı tarafından sağlanan diğer uzak komut çalıştırma mekanizmasını kullanabilir.</p>
+
+  </article>
+</section>
+
+<section class="concrete">
+  <nav>
+    <div id="locales"><a href="/ru/admin-processes">Русский (ru)</a> | <a href="/admin-processes">English (en)</a> | <a href="/ja/admin-processes">日本語 (ja)</a> | <span>Turkish (tr)</span> | <a href="/ko/admin-processes">한국어 (ko)</a> | <a href="/fr/admin-processes">Français (fr)</a> | <a href="/de/admin-processes">Deutsch (de)</a> | <a href="/pl/admin-processes">Polski (pl)</a> | <a href="/it/admin-processes">Italiano (it)</a> | <a href="/uk/admin-processes">Українська (uk)</a> | <a href="/es/admin-processes">Español (es)</a> | <a href="/zh_cn/admin-processes">简体中文 (zh_cn)</a> | <a href="/pt_br/admin-processes">Brazilian Portuguese (pt_br)</a></div>
+    <div id="prev"><a href="./logs">&laquo; Previous</a></div>
+    <div id="next"></div>
+  </nav>
+</section>
+
+
+  <footer>
+  <div id="locales"><a href="/ru/admin-processes">Русский (ru)</a> | <a href="/admin-processes">English (en)</a> | <a href="/ja/admin-processes">日本語 (ja)</a> | <span>Turkish (tr)</span> | <a href="/ko/admin-processes">한국어 (ko)</a> | <a href="/fr/admin-processes">Français (fr)</a> | <a href="/de/admin-processes">Deutsch (de)</a> | <a href="/pl/admin-processes">Polski (pl)</a> | <a href="/it/admin-processes">Italiano (it)</a> | <a href="/uk/admin-processes">Українська (uk)</a> | <a href="/es/admin-processes">Español (es)</a> | <a href="/zh_cn/admin-processes">简体中文 (zh_cn)</a> | <a href="/pt_br/admin-processes">Brazilian Portuguese (pt_br)</a></div>
+  <div>Written by Adam Wiggins</div>
+  <div>Last updated 2017</div>
+  <div><a href="https://github.com/heroku/12factor">Sourcecode</a></div>
+  <div><a href="/12factor.epub">Download ePub Book</a></div>
+  <div><a href="https://www.heroku.com/policy/privacy">Privacy Policy</a></div>
+</footer>
+</body>
+</html>

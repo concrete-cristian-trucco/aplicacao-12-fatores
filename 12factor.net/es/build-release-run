@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>The Twelve-Factor App (Traducción de la versión original en Inglés)</title>
+  <meta name="description" content="A methodology for building modern, scalable, maintainable software-as-a-service apps.">
+  <meta name="author" content="Adam Wiggins">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" href="images/favicon.ico">
+
+  <link rel="stylesheet" href="/css/screen.css" media="screen">
+  <link rel="stylesheet" href="/css/mobile.css" media="screen">
+
+  <script type="text/javascript" src="//use.typekit.com/rsq7tro.js"></script>
+  <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+</head>
+<body>
+  
+  <!-- Google Tag Manager -->
+  <noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-TK5QTP"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-TK5QTP');</script>
+  <!-- End Google Tag Manager -->
+  
+
+  <header>
+    <h1><a href="./" title="The Twelve-Factor App">The Twelve-Factor App</a></h1>
+  </header>
+
+  <section class="abstract" id="factor">
+  <article>
+    
+<h2 id="v_construir_distribuir_ejecutar">V. Construir, distribuir, ejecutar</h2>
+
+<h3 id="separar_completamente_la_etapa_de_construccin_de_la_etapa_de_ejecucin">Separar completamente la etapa de construcción de la etapa de ejecución</h3>
+
+<p>El <a href="./codebase">código base</a> se transforma en un despliegue (que no es de desarrollo) al completar las siguientes tres etapas:</p>
+
+<ul>
+<li>La <em>etapa de construcción</em> es una transformación que convierte un repositorio de código en un paquete ejecutable llamado <em>construcción</em> (una “build”). En la etapa de construcción se traen todas las <a href="./dependencies">dependencias</a> y se compilan los binarios y las herramientas usando una versión concreta del código correspondiente a un commit especificado por el proceso de despliegue.</li>
+
+<li>En la <em>fase de distribución</em> se usa la construcción creada en la fase de construcción y se combina con la <a href="./config">configuración</a> del despliegue actual. Por tanto, la <em>distribución</em> resultante contiene tanto la construcción como la configuración y está lista para ejecutarse inmediatamente en el entorno de ejecución.</li>
+
+<li>La <em>fase de ejecución</em> (también conocida como “runtime”) ejecuta la aplicación en el entorno de ejecución, lanzando un conjunto de <a href="./processes">procesos</a> de una distribución concreta de la aplicación.</li>
+</ul>
+
+<p><img src="/images/release.png" alt="El código se convierte en una construcción, que se combina con la configuración para crear una distribución." /></p>
+
+<p><strong>Las aplicaciones “twelve-factor” hacen una separación completa de las fases de construcción, de distribución y de ejecución.</strong> Por ejemplo, es imposible hacer cambios en el código en la fase de ejecución, porque no hay una manera de propagar dichos cambios a la fase de construcción.</p>
+
+<p>Las herramientas de despliegue ofrecen, normalmente, herramientas de gestión de distribuciones (releases). La capacidad de volver a una versión anterior es especialmente útil. Por ejemplo, la herramienta de despliegues <a href="https://github.com/capistrano/capistrano/wiki">Capistrano</a> almacena distribuciones en un subdirectorio llamado <code>releases</code>, donde la distribución actual es un enlace simbólico al directorio de la distribución actual. Su mandato <code>rollback</code> hace fácil y rápidamente el trabajo de volver a la versión anterior.</p>
+
+<p>Cada distribución debería tener siempre un identificador único de distribución, como por ejemplo una marca de tiempo (timestamp) de la distribución (<code>2011-04-06-20:32:17</code>) o un número incremental (como <code>v100</code>). Las distribuciones son como un libro de contabilidad, al que solo se le pueden agregar registros y no pueden ser modificados una vez son creados. Cualquier cambio debe crear una nueva distribución.</p>
+
+<p>Cada vez que un desarrollador despliega código nuevo se crea una construcción nueva de la aplicación. La fase de ejecución, en cambio, puede suceder automáticamente, por ejemplo, cuando se reinicia un servidor, o cuando un proceso termina inesperadamente siendo reiniciado por el gestor de procesos. Por tanto, la fase de ejecución debería mantenerse lo más estática posible, ya que evita que una aplicación en ejecución pueda causar una interrupción inesperada, en mitad de la noche, cuando no hay desarrolladores a mano. La fase de construcción puede ser más compleja, ya que los errores siempre están en la mente de un desarrollador que dirige un despliegue.</p>
+
+  </article>
+</section>
+
+<section class="concrete">
+  <nav>
+    <div id="locales"><a href="/ru/build-release-run">Русский (ru)</a> | <a href="/build-release-run">English (en)</a> | <a href="/ja/build-release-run">日本語 (ja)</a> | <a href="/tr/build-release-run">Turkish (tr)</a> | <a href="/ko/build-release-run">한국어 (ko)</a> | <a href="/fr/build-release-run">Français (fr)</a> | <a href="/de/build-release-run">Deutsch (de)</a> | <a href="/pl/build-release-run">Polski (pl)</a> | <a href="/it/build-release-run">Italiano (it)</a> | <a href="/uk/build-release-run">Українська (uk)</a> | <span>Español (es)</span> | <a href="/zh_cn/build-release-run">简体中文 (zh_cn)</a> | <a href="/pt_br/build-release-run">Brazilian Portuguese (pt_br)</a></div>
+    <div id="prev"><a href="./backing-services">&laquo; Previous</a></div>
+    <div id="next"><a href="./processes">Next &raquo;</a></div>
+  </nav>
+</section>
+
+
+  <footer>
+  <div id="locales"><a href="/ru/build-release-run">Русский (ru)</a> | <a href="/build-release-run">English (en)</a> | <a href="/ja/build-release-run">日本語 (ja)</a> | <a href="/tr/build-release-run">Turkish (tr)</a> | <a href="/ko/build-release-run">한국어 (ko)</a> | <a href="/fr/build-release-run">Français (fr)</a> | <a href="/de/build-release-run">Deutsch (de)</a> | <a href="/pl/build-release-run">Polski (pl)</a> | <a href="/it/build-release-run">Italiano (it)</a> | <a href="/uk/build-release-run">Українська (uk)</a> | <span>Español (es)</span> | <a href="/zh_cn/build-release-run">简体中文 (zh_cn)</a> | <a href="/pt_br/build-release-run">Brazilian Portuguese (pt_br)</a></div>
+  <div>Written by Adam Wiggins</div>
+  <div>Last updated 2017</div>
+  <div><a href="https://github.com/heroku/12factor">Sourcecode</a></div>
+  <div><a href="/12factor.epub">Download ePub Book</a></div>
+  <div><a href="https://www.heroku.com/policy/privacy">Privacy Policy</a></div>
+</footer>
+</body>
+</html>

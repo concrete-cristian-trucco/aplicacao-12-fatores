@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>The Twelve-Factor App （简体中文）</title>
+  <meta name="description" content="A methodology for building modern, scalable, maintainable software-as-a-service apps.">
+  <meta name="author" content="Adam Wiggins">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" href="images/favicon.ico">
+
+  <link rel="stylesheet" href="/css/screen.css" media="screen">
+  <link rel="stylesheet" href="/css/mobile.css" media="screen">
+
+  <script type="text/javascript" src="//use.typekit.com/rsq7tro.js"></script>
+  <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+</head>
+<body>
+  
+  <!-- Google Tag Manager -->
+  <noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-TK5QTP"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-TK5QTP');</script>
+  <!-- End Google Tag Manager -->
+  
+
+  <header>
+    <h1><a href="./" title="The Twelve-Factor App">The Twelve-Factor App</a></h1>
+  </header>
+
+  <section class="abstract" id="factor">
+  <article>
+    
+<h2 id="vii_">VII. 端口绑定</h2>
+
+<h3 id="port_binding">通过端口绑定(<em>Port binding</em>)来提供服务</h3>
+
+<p>互联网应用有时会运行于服务器的容器之中。例如 PHP 经常作为 <a href="http://httpd.apache.org/">Apache HTTPD</a> 的一个模块来运行，正如 Java 运行于 <a href="http://tomcat.apache.org/">Tomcat</a> 。</p>
+
+<p><strong>12-Factor 应用完全自我加载</strong> 而不依赖于任何网络服务器就可以创建一个面向网络的服务。互联网应用 <strong>通过端口绑定来提供服务</strong> ，并监听发送至该端口的请求。</p>
+
+<p>本地环境中，开发人员通过类似<code>http://localhost:5000/</code>的地址来访问服务。在线上环境中，请求统一发送至公共域名而后路由至绑定了端口的网络进程。</p>
+
+<p>通常的实现思路是，将网络服务器类库通过 <a href="./dependencies">依赖声明</a> 载入应用。例如，Python 的 <a href="http://www.tornadoweb.org/">Tornado</a>, Ruby 的<a href="http://code.macournoyer.com/thin/">Thin</a> , Java 以及其他基于 JVM 语言的 <a href="http://www.eclipse.org/jetty/">Jetty</a>。完全由 <em>用户端</em> ，确切的说应该是应用的代码，发起请求。和运行环境约定好绑定的端口即可处理这些请求。</p>
+
+<p>HTTP 并不是唯一一个可以由端口绑定提供的服务。其实几乎所有服务器软件都可以通过进程绑定端口来等待请求。例如，使用 <a href="http://xmpp.org/">XMPP</a> 的 <a href="http://www.ejabberd.im/">ejabberd</a> ， 以及使用 <a href="http://redis.io/topics/protocol">Redis 协议</a> 的 <a href="http://redis.io/">Redis</a> 。</p>
+
+<p>还要指出的是，端口绑定这种方式也意味着一个应用可以成为另外一个应用的 <a href="/backing-services">后端服务</a> ，调用方将服务方提供的相应 URL 当作资源存入 <a href="/config">配置</a> 以备将来调用。</p>
+
+  </article>
+</section>
+
+<section class="concrete">
+  <nav>
+    <div id="locales"><a href="/port-binding">English (en)</a> | <a href="/ko/port-binding">한국어 (ko)</a> | <a href="/ja/port-binding">日本語 (ja)</a> | <a href="/it/port-binding">Italiano (it)</a> | <a href="/pl/port-binding">Polski (pl)</a> | <span>简体中文 (zh_cn)</span> | <a href="/de/port-binding">Deutsch (de)</a> | <a href="/es/port-binding">Español (es)</a> | <a href="/fr/port-binding">Français (fr)</a> | <a href="/tr/port-binding">Turkish (tr)</a> | <a href="/uk/port-binding">Українська (uk)</a> | <a href="/pt_br/port-binding">Brazilian Portuguese (pt_br)</a> | <a href="/ru/port-binding">Русский (ru)</a></div>
+    <div id="prev"><a href="./processes">&laquo; Previous</a></div>
+    <div id="next"><a href="./concurrency">Next &raquo;</a></div>
+  </nav>
+</section>
+
+
+  <footer>
+  <div id="locales"><a href="/port-binding">English (en)</a> | <a href="/ko/port-binding">한국어 (ko)</a> | <a href="/ja/port-binding">日本語 (ja)</a> | <a href="/it/port-binding">Italiano (it)</a> | <a href="/pl/port-binding">Polski (pl)</a> | <span>简体中文 (zh_cn)</span> | <a href="/de/port-binding">Deutsch (de)</a> | <a href="/es/port-binding">Español (es)</a> | <a href="/fr/port-binding">Français (fr)</a> | <a href="/tr/port-binding">Turkish (tr)</a> | <a href="/uk/port-binding">Українська (uk)</a> | <a href="/pt_br/port-binding">Brazilian Portuguese (pt_br)</a> | <a href="/ru/port-binding">Русский (ru)</a></div>
+  <div>Written by Adam Wiggins</div>
+  <div>Last updated 2017</div>
+  <div><a href="https://github.com/heroku/12factor">Sourcecode</a></div>
+  <div><a href="/12factor.epub">Download ePub Book</a></div>
+  <div><a href="https://www.heroku.com/policy/privacy">Privacy Policy</a></div>
+</footer>
+</body>
+</html>

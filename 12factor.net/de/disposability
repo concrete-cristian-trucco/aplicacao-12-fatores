@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>The Twelve-Factor App Dies ist eine Übersetzung.</title>
+  <meta name="description" content="A methodology for building modern, scalable, maintainable software-as-a-service apps.">
+  <meta name="author" content="Adam Wiggins">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" href="images/favicon.ico">
+
+  <link rel="stylesheet" href="/css/screen.css" media="screen">
+  <link rel="stylesheet" href="/css/mobile.css" media="screen">
+
+  <script type="text/javascript" src="//use.typekit.com/rsq7tro.js"></script>
+  <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+</head>
+<body>
+  
+  <!-- Google Tag Manager -->
+  <noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-TK5QTP"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-TK5QTP');</script>
+  <!-- End Google Tag Manager -->
+  
+
+  <header>
+    <h1><a href="./" title="The Twelve-Factor App">The Twelve-Factor App</a></h1>
+  </header>
+
+  <section class="abstract" id="factor">
+  <article>
+    
+<h2 id="ix_einweggebrauch">IX. Einweggebrauch</h2>
+
+<h3 id="robuster_mit_schnellem_start_und_problemlosen_stopp">Robuster mit schnellem Start und problemlosen Stopp</h3>
+
+<p><strong>Die Prozesse einer Zwölf-Faktor-App können <em>weggeworfen</em> werden, sie können also schnell gestartet und gestoppt werden.</strong> Dies erleichtert schnelles elastisches Skalieren, schnelles Deployment von <a href="./codebase">Code</a> oder <a href="./config">Konfigurationsänderungen</a> und macht Produktionsdeployments robuster.</p>
+
+<p>Prozesse sollten <strong>möglichst geringe Startup-Zeiten</strong> haben. Idealerweise braucht ein Prozess wenige Sekunden vom Startkommando bis der Prozess läuft und Requests oder Jobs entgegennehmen kann. Eine kurze Startup-Zeit gibt dem <a href="./build-release-run">Release-Prozess</a> und der Skalierung mehr Agilität; sie hilft der Robustheit, weil ein Prozessmanager bei Bedarf einfacher Prozesse auf neue physikalische Maschinen verschieben kann.</p>
+
+<p>Prozesse <strong>fahren ohne Schwierigkeiten herunter, wenn sie ein <a href="http://en.wikipedia.org/wiki/SIGTERM">SIGTERM-Signal</a></strong> vom Prozessmanager bekommen. Für einen Web-Prozess kann ein problemloses Herunterfahren erreicht werden, indem er aufhört an seinem Service-Port zu lauschen (und damit alle neuen Requests ablehnt), die laufenden Requests zuende bearbeitet und sich dann beendet. Diesem Modell eigen ist, dass HTTP-Requests kurz sind (höchstens ein paar Sekunden) oder im Falle von Long-Polling, der Client sich nahtlos neu verbindet, wenn die Verbindung verloren geht.</p>
+
+<p>Für einen Worker-Prozess wird ein problemloser Stopp erreicht, indem er seinen laufenden Job an die Workqueue zurück gibt. Zum Beispiel kann bei <a href="http://www.rabbitmq.com/">RabbitMQ</a> ein Worker einen <a href="http://www.rabbitmq.com/amqp-0-9-1-quickref.html#basic.nack"><code>NACK</code></a>; bei <a href="http://kr.github.com/beanstalkd/">Beanstalkd</a> wird der Job automatisch an die Queue zurückgegeben, wenn ein Worker die Verbindung beendet. Lock-basierte Systeme wie <a href="https://github.com/collectiveidea/delayed_job#readme">Delayed Job</a> sollten sicherstellen, dass ihr Lock im Job-Record freigegeben wird. Diesem Modell eigen ist, dass alle Jobs <a href="http://en.wikipedia.org/wiki/Reentrant_%28subroutine%29">reentrant</a> sind, was üblicherweise erreicht wird indem man die Ergebnisse in eine Transaktion einpackt oder den Vorgang <a href="https://de.wikipedia.org/wiki/Idempotenz">idempotent</a> gestaltet.</p>
+
+<p>Prozesse sollte auch <strong>robust gegen plötzlichen Tod</strong> sein - falls die zugrundeliegende Hardware versagt. Auch wenn dies viel seltener ist als ein reguläres Herunterfahren mit <code>SIGTERM</code>, so kommt es dennoch vor. Wir empfehlen ein robustes Queue-Backend wie Beanstalkd, das Jobs an die Queue zurückgibt falls Clients die Verbindung beenden oder nicht mehr antworten. Wie auch immer ist eine Zwölf-Faktor-App darauf ausgelegt mit unerwarteten, irregulären Stopps umgehen zu können. <a href="http://lwn.net/Articles/191059/">Crash-only design</a> führt dieses Konzept zu seinem <a href="http://docs.couchdb.org/en/latest/intro/overview.html">logischen Schluss</a>.</p>
+
+  </article>
+</section>
+
+<section class="concrete">
+  <nav>
+    <div id="locales"><a href="/disposability">English (en)</a> | <a href="/ko/disposability">한국어 (ko)</a> | <a href="/ja/disposability">日本語 (ja)</a> | <a href="/it/disposability">Italiano (it)</a> | <a href="/pl/disposability">Polski (pl)</a> | <a href="/zh_cn/disposability">简体中文 (zh_cn)</a> | <span>Deutsch (de)</span> | <a href="/es/disposability">Español (es)</a> | <a href="/fr/disposability">Français (fr)</a> | <a href="/tr/disposability">Turkish (tr)</a> | <a href="/uk/disposability">Українська (uk)</a> | <a href="/pt_br/disposability">Brazilian Portuguese (pt_br)</a> | <a href="/ru/disposability">Русский (ru)</a></div>
+    <div id="prev"><a href="./concurrency">&laquo; Previous</a></div>
+    <div id="next"><a href="./dev-prod-parity">Next &raquo;</a></div>
+  </nav>
+</section>
+
+
+  <footer>
+  <div id="locales"><a href="/disposability">English (en)</a> | <a href="/ko/disposability">한국어 (ko)</a> | <a href="/ja/disposability">日本語 (ja)</a> | <a href="/it/disposability">Italiano (it)</a> | <a href="/pl/disposability">Polski (pl)</a> | <a href="/zh_cn/disposability">简体中文 (zh_cn)</a> | <span>Deutsch (de)</span> | <a href="/es/disposability">Español (es)</a> | <a href="/fr/disposability">Français (fr)</a> | <a href="/tr/disposability">Turkish (tr)</a> | <a href="/uk/disposability">Українська (uk)</a> | <a href="/pt_br/disposability">Brazilian Portuguese (pt_br)</a> | <a href="/ru/disposability">Русский (ru)</a></div>
+  <div>Written by Adam Wiggins</div>
+  <div>Last updated 2017</div>
+  <div><a href="https://github.com/heroku/12factor">Sourcecode</a></div>
+  <div><a href="/12factor.epub">Download ePub Book</a></div>
+  <div><a href="https://www.heroku.com/policy/privacy">Privacy Policy</a></div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>The Twelve-Factor App (Русский перевод)</title>
+  <meta name="description" content="A methodology for building modern, scalable, maintainable software-as-a-service apps.">
+  <meta name="author" content="Adam Wiggins">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" href="images/favicon.ico">
+
+  <link rel="stylesheet" href="/css/screen.css" media="screen">
+  <link rel="stylesheet" href="/css/mobile.css" media="screen">
+
+  <script type="text/javascript" src="//use.typekit.com/rsq7tro.js"></script>
+  <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+</head>
+<body>
+  
+  <!-- Google Tag Manager -->
+  <noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-TK5QTP"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-TK5QTP');</script>
+  <!-- End Google Tag Manager -->
+  
+
+  <header>
+    <h1><a href="./" title="The Twelve-Factor App">The Twelve-Factor App</a></h1>
+  </header>
+
+  <section class="abstract">
+  <article>
+<h1 id="">Введение</h1>
+
+<p>В наши дни программное обеспечение обычно распространяется в виде сервисов, называемых <em>веб-приложения</em> (web apps) или <em>software-as-a-service</em> (SaaS). Приложение двенадцати факторов — это методология для создания SaaS-приложений, которые:</p>
+
+<ul>
+<li>Используют <strong>декларативный</strong> формат для описания процесса установки и настройки, что сводит к минимуму затраты времени и ресурсов для новых разработчиков, подключённых к проекту;</li>
+
+<li>Имеют <strong>соглашение</strong> с операционной системой, предполагающее <strong>максимальную переносимость</strong> между средами выполнения;</li>
+
+<li>Подходят для <strong>развёртывания</strong> на современных <strong>облачных платформах</strong>, устраняя необходимость в серверах и системном администрировании;</li>
+
+<li><strong>Сводят к минимуму расхождения</strong> между средой разработки и средой выполнения, что позволяет использовать <strong>непрерывное развёртывание</strong> (continuous deployment) для максимальной гибкости;</li>
+
+<li>И могут <strong>масштабироваться</strong> без существенных изменений в инструментах, архитектуре и практике разработки.</li>
+</ul>
+
+<p>Методология двенадцати факторов может быть применена для приложений, написанных на любом языке программирования и использующих любые комбинации сторонних служб (backing services) (базы данных, очереди сообщений, кэш-памяти, и т.д.).</p>
+</article>
+  <article>
+<h1 id="">Предпосылки</h1>
+
+<p>Участники, внёсшие вклад в этот документ, были непосредственно вовлечены в разработку и развёртывание сотен приложений и косвенно были свидетелями разработки, выполнения и масштабирования сотен тысяч приложений во время нашей работы над платформой <a href="http://www.heroku.com/">Heroku</a>.</p>
+
+<p>В этом документе обобщается весь наш опыт использования и наблюдения за самыми разнообразными SaaS-приложениями в дикой природе. Документ является объединением трёх идеальных подходов к разработке приложений: уделение особого внимания динамике органического роста приложения с течением времени, динамике сотрудничества разработчиков, работающих над кодовой базой приложения, и <a href="http://blog.heroku.com/archives/2011/6/28/the_new_heroku_4_erosion_resistance_explicit_contracts/">устранение последствий эрозии программного обеспечения</a>.</p>
+
+<p>Наша мотивация заключается в повышении осведомлённости о некоторых системных проблемах, которые мы встретили в практике разработки современных приложений, а также для того, чтобы предоставить общие основные понятия для обсуждения этих проблем и предложить набор общих концептуальных решений этих проблем с сопутствующей терминологией. Формат навеян книгами Мартина Фаулера (Martin Fowler) <em><a href="http://books.google.com/books/about/Patterns_of_enterprise_application_archi.html?id=FyWZt5DdvFkC">Patterns of Enterprise Application Architecture</a></em> и <em><a href="http://books.google.com/books/about/Refactoring.html?id=1MsETFPD3I0C">Refactoring</a></em>.</p>
+</article>
+  <article>
+<h1 id="____">Кому следует читать этот документ?</h1>
+
+<p>Разработчикам, которые создают SaaS-приложения. Ops инженерам, выполняющим развёртывание и управление такими приложениями.</p>
+</article>
+</section>
+
+<section class="concrete">
+  <article>
+<h1 id="_">Двенадцать факторов</h1>
+
+<h2 id="i__"><a href="./codebase">I. Кодовая база</a></h2>
+
+<h3 id="__________">Одна кодовая база, отслеживаемая в системе контроля версий, – множество развёртываний</h3>
+
+<h2 id="ii_"><a href="./dependencies">II. Зависимости</a></h2>
+
+<h3 id="____">Явно объявляйте и изолируйте зависимости</h3>
+
+<h2 id="iii_"><a href="./config">III. Конфигурация</a></h2>
+
+<h3 id="_____2">Сохраняйте конфигурацию в среде выполнения</h3>
+
+<h2 id="iv___backing_services"><a href="./backing-services">IV. Сторонние службы (Backing Services)</a></h2>
+
+<h3 id="___backing_services__">Считайте сторонние службы (backing services) подключаемыми ресурсами</h3>
+
+<h2 id="v___"><a href="./build-release-run">V. Сборка, релиз, выполнение</a></h2>
+
+<h3 id="_____">Строго разделяйте стадии сборки и выполнения</h3>
+
+<h2 id="vi_"><a href="./processes">VI. Процессы</a></h2>
+
+<h3 id="___________stateless">Запускайте приложение как один или несколько процессов не сохраняющих внутреннее состояние (stateless)</h3>
+
+<h2 id="vii___port_binding"><a href="./port-binding">VII. Привязка портов (Port binding)</a></h2>
+
+<h3 id="_____3">Экспортируйте сервисы через привязку портов</h3>
+
+<h2 id="viii_"><a href="./concurrency">VIII. Параллелизм</a></h2>
+
+<h3 id="_____4">Масштабируйте приложение с помощью процессов</h3>
+
+<h2 id="ix__disposability"><a href="./disposability">IX. Утилизируемость (Disposability)</a></h2>
+
+<h3 id="_________">Максимизируйте надёжность с помощью быстрого запуска и корректного завершения работы</h3>
+
+<h2 id="x___"><a href="./dev-prod-parity">X. Паритет разработки/работы приложения</a></h2>
+
+<h3 id="_____staging____production__">Держите окружения разработки, промежуточного развёртывания (staging) и рабочего развёртывания (production) максимально похожими</h3>
+
+<h2 id="xi__logs"><a href="./logs">XI. Журналирование (Logs)</a></h2>
+
+<h3 id="_____5">Рассматривайте журнал как поток событий</h3>
+
+<h2 id="xii__"><a href="./admin-processes">XII. Задачи администрирования</a></h2>
+
+<h3 id="______">Выполняйте задачи администрирования/управления с помощью разовых процессов</h3>
+</article>
+</section>
+
+
+  <footer>
+  <div id="locales"><a href="/">English (en)</a> | <a href="/ko/">한국어 (ko)</a> | <a href="/ja/">日本語 (ja)</a> | <a href="/it/">Italiano (it)</a> | <a href="/pl/">Polski (pl)</a> | <a href="/zh_cn/">简体中文 (zh_cn)</a> | <a href="/de/">Deutsch (de)</a> | <a href="/es/">Español (es)</a> | <a href="/fr/">Français (fr)</a> | <a href="/tr/">Turkish (tr)</a> | <a href="/uk/">Українська (uk)</a> | <a href="/pt_br/">Brazilian Portuguese (pt_br)</a> | <span>Русский (ru)</span></div>
+  <div>Written by Adam Wiggins</div>
+  <div>Last updated 2017</div>
+  <div><a href="https://github.com/heroku/12factor">Sourcecode</a></div>
+  <div><a href="/12factor.epub">Download ePub Book</a></div>
+  <div><a href="https://www.heroku.com/policy/privacy">Privacy Policy</a></div>
+</footer>
+</body>
+</html>

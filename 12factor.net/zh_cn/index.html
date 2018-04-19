@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>The Twelve-Factor App （简体中文）</title>
+  <meta name="description" content="A methodology for building modern, scalable, maintainable software-as-a-service apps.">
+  <meta name="author" content="Adam Wiggins">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" href="images/favicon.ico">
+
+  <link rel="stylesheet" href="/css/screen.css" media="screen">
+  <link rel="stylesheet" href="/css/mobile.css" media="screen">
+
+  <script type="text/javascript" src="//use.typekit.com/rsq7tro.js"></script>
+  <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+</head>
+<body>
+  
+  <!-- Google Tag Manager -->
+  <noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-TK5QTP"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-TK5QTP');</script>
+  <!-- End Google Tag Manager -->
+  
+
+  <header>
+    <h1><a href="./" title="The Twelve-Factor App">The Twelve-Factor App</a></h1>
+  </header>
+
+  <section class="abstract">
+  <article>
+<h1 id="">简介</h1>
+
+<p>如今，软件通常会作为一种服务来交付，它们被称为网络应用程序，或软件即服务（SaaS）。12-Factor 为构建如下的 SaaS 应用提供了方法论：</p>
+
+<ul>
+<li>使用<strong>标准化</strong>流程自动配置，从而使新的开发者花费最少的学习成本加入这个项目。</li>
+
+<li>和操作系统之间尽可能的<strong>划清界限</strong>，在各个系统中提供<strong>最大的可移植性</strong>。</li>
+
+<li>适合<strong>部署</strong>在现代的<strong>云计算平台</strong>，从而在服务器和系统管理方面节省资源。</li>
+
+<li>将开发环境和生产环境的<strong>差异降至最低</strong>，并使用<strong>持续交付</strong>实施敏捷开发。</li>
+
+<li>可以在工具、架构和开发流程不发生明显变化的前提下实现<strong>扩展</strong>。</li>
+</ul>
+
+<p>这套理论适用于任意语言和后端服务（数据库、消息队列、缓存等）开发的应用程序。</p>
+</article>
+  <article>
+<h1 id="">背景</h1>
+
+<p>本文的贡献者者参与过数以百计的应用程序的开发和部署，并通过 <a href="http://www.heroku.com/">Heroku</a> 平台间接见证了数十万应用程序的开发，运作以及扩展的过程。</p>
+
+<p>本文综合了我们关于 SaaS 应用几乎所有的经验和智慧，是开发此类应用的理想实践标准，并特别关注于应用程序如何保持良性成长，开发者之间如何进行有效的代码协作，以及如何 <a href="http://blog.heroku.com/archives/2011/6/28/the_new_heroku_4_erosion_resistance_explicit_contracts/">避免软件污染</a> 。</p>
+
+<p>我们的初衷是分享在现代软件开发过程中发现的一些系统性问题，并加深对这些问题的认识。我们提供了讨论这些问题时所需的共享词汇，同时使用相关术语给出一套针对这些问题的广义解决方案。本文格式的灵感来自于 Martin Fowler 的书籍： <em><a href="http://books.google.com/books/about/Patterns_of_enterprise_application_archi.html?id=FyWZt5DdvFkC">Patterns of Enterprise Application Architecture</a></em> ， <em><a href="http://books.google.com/books/about/Refactoring.html?id=1MsETFPD3I0C">Refactoring</a></em> 。</p>
+</article>
+  <article>
+<h1 id="">读者应该是哪些人？</h1>
+
+<p>任何 SaaS 应用的开发人员。部署和管理此类应用的运维工程师。</p>
+</article>
+</section>
+
+<section class="concrete">
+  <article>
+<h1 id="12factors">12-factors</h1>
+
+<h2 id="i_"><a href="./codebase">I. 基准代码</a></h2>
+
+<h3 id="">一份基准代码，多份部署</h3>
+
+<h2 id="ii_"><a href="./dependencies">II. 依赖</a></h2>
+
+<h3 id="_2">显式声明依赖关系</h3>
+
+<h2 id="iii_"><a href="./config">III. 配置</a></h2>
+
+<h3 id="_3">在环境中存储配置</h3>
+
+<h2 id="iv_"><a href="./backing-services">IV. 后端服务</a></h2>
+
+<h3 id="_4">把后端服务当作附加资源</h3>
+
+<h2 id="v_"><a href="./build-release-run">V. 构建，发布，运行</a></h2>
+
+<h3 id="_5">严格分离构建和运行</h3>
+
+<h2 id="vi_"><a href="./processes">VI. 进程</a></h2>
+
+<h3 id="_6">以一个或多个无状态进程运行应用</h3>
+
+<h2 id="vii_"><a href="./port-binding">VII. 端口绑定</a></h2>
+
+<h3 id="_7">通过端口绑定提供服务</h3>
+
+<h2 id="viii_"><a href="./concurrency">VIII. 并发</a></h2>
+
+<h3 id="_8">通过进程模型进行扩展</h3>
+
+<h2 id="ix_"><a href="./disposability">IX. 易处理</a></h2>
+
+<h3 id="_9">快速启动和优雅终止可最大化健壮性</h3>
+
+<h2 id="x_"><a href="./dev-prod-parity">X. 开发环境与线上环境等价</a></h2>
+
+<h3 id="_10">尽可能的保持开发，预发布，线上环境相同</h3>
+
+<h2 id="xi_"><a href="./logs">XI. 日志</a></h2>
+
+<h3 id="_11">把日志当作事件流</h3>
+
+<h2 id="xii_"><a href="./admin-processes">XII. 管理进程</a></h2>
+
+<h3 id="_12">后台管理任务当作一次性进程运行</h3>
+</article>
+</section>
+
+
+  <footer>
+  <div id="locales"><a href="/ru/">Русский (ru)</a> | <a href="/">English (en)</a> | <a href="/ja/">日本語 (ja)</a> | <a href="/tr/">Turkish (tr)</a> | <a href="/ko/">한국어 (ko)</a> | <a href="/fr/">Français (fr)</a> | <a href="/de/">Deutsch (de)</a> | <a href="/pl/">Polski (pl)</a> | <a href="/it/">Italiano (it)</a> | <a href="/uk/">Українська (uk)</a> | <a href="/es/">Español (es)</a> | <span>简体中文 (zh_cn)</span> | <a href="/pt_br/">Brazilian Portuguese (pt_br)</a></div>
+  <div>Written by Adam Wiggins</div>
+  <div>Last updated 2017</div>
+  <div><a href="https://github.com/heroku/12factor">Sourcecode</a></div>
+  <div><a href="/12factor.epub">Download ePub Book</a></div>
+  <div><a href="https://www.heroku.com/policy/privacy">Privacy Policy</a></div>
+</footer>
+</body>
+</html>

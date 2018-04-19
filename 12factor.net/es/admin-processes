@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>The Twelve-Factor App (Traducción de la versión original en Inglés)</title>
+  <meta name="description" content="A methodology for building modern, scalable, maintainable software-as-a-service apps.">
+  <meta name="author" content="Adam Wiggins">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" href="images/favicon.ico">
+
+  <link rel="stylesheet" href="/css/screen.css" media="screen">
+  <link rel="stylesheet" href="/css/mobile.css" media="screen">
+
+  <script type="text/javascript" src="//use.typekit.com/rsq7tro.js"></script>
+  <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+</head>
+<body>
+  
+  <!-- Google Tag Manager -->
+  <noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-TK5QTP"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-TK5QTP');</script>
+  <!-- End Google Tag Manager -->
+  
+
+  <header>
+    <h1><a href="./" title="The Twelve-Factor App">The Twelve-Factor App</a></h1>
+  </header>
+
+  <section class="abstract" id="factor">
+  <article>
+    
+<h2 id="xii_administracin_de_procesos">XII. Administración de procesos</h2>
+
+<h3 id="ejecutar_las_tareas_de_gestinadministracin_como_procesos_que_solo_se_ejecutan_una_vez">Ejecutar las tareas de gestión/administración como procesos que solo se ejecutan una vez</h3>
+
+<p>El <a href="./concurrency">juego de procesos</a> es el conjunto de procesos que se usa para hacer las tareas habituales de la aplicación (como procesar las peticiones web). Por otro lado, es frecuente que los desarrolladores quieran ejecutar procesos de administración o mantenimiento una sola vez, como por ejemplo:</p>
+
+<ul>
+<li>Ejecutar migraciones de las bases de datos (e.g. <code>manage.py migrate</code> de Django, <code>rake db:migrate</code> de Rails).</li>
+
+<li>Ejecutar una consola (también conocidas como <a href="http://en.wikipedia.org/wiki/Read-eval-print_loop">REPL</a>) para ejecutar código arbitrario o inspeccionar los modelos de la aplicación en una base de datos con datos reales. La mayoría de los lenguajes proporcionan un interprete del tipo REPL si se ejecuta el mismo mandato sin ningún argumento (e.g. <code>python</code> o <code>perl</code>) pero en algunos casos tienen un mandato distinto (e.g. <code>irb</code> en Ruby, <code>rails console</code> en Rails).</li>
+
+<li>Ejecutar scripts incluidos en el repositorio de la aplicación (e.g. <code>php scripts/fix_bad_records.php</code>).</li>
+</ul>
+
+<p>Los procesos de este tipo deberían ejecutarse en un entorno idéntico al que se usa normalmente en los <a href="./processes">procesos</a> habituales de la aplicación. Estos procesos se ejecutan en una <a href="./build-release-run">distribución</a> concreta, usando el mismo <a href="./codebase">código base</a> y la misma <a href="./config">configuración</a> que cualquier otro proceso que ejecuta esa distribución. El código de administración se debe enviar con el código de la aplicación para evitar problemas de sincronización.</p>
+
+<p>Se deberían usar las mismas técnicas de <a href="./dependencies">aislamiento de dependencias</a> en todos los tipos de procesos. Por ejemplo, si un proceso web Ruby usa el mandato <code>bundle exec thin start</code>, entonces una migración de la base de datos debería usar <code>bundle exec rake db:migrate</code>. De la misma manera, un programa Python que usa Virtualenv debería usar <code>bin/python</code> para ejecutar tanto el servidor web Tornado como cualquier proceso de administración <code>manage.py</code>.</p>
+
+<p>“Twelve-factor” recomienda encarecidamente lenguajes que proporcionan una consola del tipo REPL, ya que facilitan las tareas relacionadas con la ejecución de scripts que solo han de usarse una vez. En un despliegue local, se invocarán los procesos de administración con un mandato directo en la consola dentro del directorio de la aplicación. En un despliegue de producción, se puede usar ssh u otro mecanismo de ejecución de mandatos remoto proporcionado por el entorno de ejecución del despliegue para ejecutar dichos procesos.</p>
+
+  </article>
+</section>
+
+<section class="concrete">
+  <nav>
+    <div id="locales"><a href="/ru/admin-processes">Русский (ru)</a> | <a href="/admin-processes">English (en)</a> | <a href="/ja/admin-processes">日本語 (ja)</a> | <a href="/tr/admin-processes">Turkish (tr)</a> | <a href="/ko/admin-processes">한국어 (ko)</a> | <a href="/fr/admin-processes">Français (fr)</a> | <a href="/de/admin-processes">Deutsch (de)</a> | <a href="/pl/admin-processes">Polski (pl)</a> | <a href="/it/admin-processes">Italiano (it)</a> | <a href="/uk/admin-processes">Українська (uk)</a> | <span>Español (es)</span> | <a href="/zh_cn/admin-processes">简体中文 (zh_cn)</a> | <a href="/pt_br/admin-processes">Brazilian Portuguese (pt_br)</a></div>
+    <div id="prev"><a href="./logs">&laquo; Previous</a></div>
+    <div id="next"></div>
+  </nav>
+</section>
+
+
+  <footer>
+  <div id="locales"><a href="/ru/admin-processes">Русский (ru)</a> | <a href="/admin-processes">English (en)</a> | <a href="/ja/admin-processes">日本語 (ja)</a> | <a href="/tr/admin-processes">Turkish (tr)</a> | <a href="/ko/admin-processes">한국어 (ko)</a> | <a href="/fr/admin-processes">Français (fr)</a> | <a href="/de/admin-processes">Deutsch (de)</a> | <a href="/pl/admin-processes">Polski (pl)</a> | <a href="/it/admin-processes">Italiano (it)</a> | <a href="/uk/admin-processes">Українська (uk)</a> | <span>Español (es)</span> | <a href="/zh_cn/admin-processes">简体中文 (zh_cn)</a> | <a href="/pt_br/admin-processes">Brazilian Portuguese (pt_br)</a></div>
+  <div>Written by Adam Wiggins</div>
+  <div>Last updated 2017</div>
+  <div><a href="https://github.com/heroku/12factor">Sourcecode</a></div>
+  <div><a href="/12factor.epub">Download ePub Book</a></div>
+  <div><a href="https://www.heroku.com/policy/privacy">Privacy Policy</a></div>
+</footer>
+</body>
+</html>

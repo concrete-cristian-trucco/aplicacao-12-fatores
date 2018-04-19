@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>The Twelve-Factor App （日本語訳）</title>
+  <meta name="description" content="A methodology for building modern, scalable, maintainable software-as-a-service apps.">
+  <meta name="author" content="Adam Wiggins">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" href="images/favicon.ico">
+
+  <link rel="stylesheet" href="/css/screen.css" media="screen">
+  <link rel="stylesheet" href="/css/mobile.css" media="screen">
+
+  <script type="text/javascript" src="//use.typekit.com/rsq7tro.js"></script>
+  <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+</head>
+<body>
+  
+  <!-- Google Tag Manager -->
+  <noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-TK5QTP"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-TK5QTP');</script>
+  <!-- End Google Tag Manager -->
+  
+
+  <header>
+    <h1><a href="./" title="The Twelve-Factor App">The Twelve-Factor App</a></h1>
+  </header>
+
+  <section class="abstract" id="factor">
+  <article>
+    
+<h2 id="v_">V. ビルド、リリース、実行</h2>
+
+<h3 id="3">ビルド、リリース、実行の3つのステージを厳密に分離する</h3>
+
+<p><a href="./codebase">コードベース</a>は3つのステージを経て、（開発環境ではない）デプロイへと変換される。</p>
+
+<ul>
+<li><em>ビルドステージ</em> は、コードリポジトリを <em>ビルド</em> と呼ばれる実行可能な塊へと変える変換である。デプロイプロセスで指定したコミットのコードで指定されたバージョンを使って、ビルドステージは<a href="./dependencies">依存関係</a>を取得してローカル環境に配置し、バイナリやアセットファイルをコンパイルする。</li>
+
+<li><em>リリースステージ</em> は、ビルドステージで生成されたビルドを受け取り、それをデプロイの現在の<a href="./config">設定</a>と結合する。出来上がる <em>リリース</em> にはビルドと設定の両方が含まれ、実行環境の中ですぐにでも実行できるよう準備が整う。</li>
+
+<li><em>実行ステージ</em> （ランタイムとも呼ばれる）は、選択されたリリースに対して、アプリケーションのいくつかの<a href="./processes">プロセス</a>を起動することで、アプリケーションを実行環境の中で実行する。</li>
+</ul>
+
+<p><img src="/images/release.png" alt="コードがビルドになり、ビルドと設定が結合されてリリースが作られる。" /></p>
+
+<p><strong>Twelve-Factor Appは、ビルド、リリース、実行の3つのステージを厳密に分離する。</strong> 例えば、実行ステージにあるコードを変更してもその変更をビルドステージに伝える方法がないため、コードを実行中に変更することはあり得ない。</p>
+
+<p>デプロイツールは通常、リリース管理ツールを提供する。中でも注目すべきは、以前のリリースにロールバックする機能である。例えばデプロイツールの<a href="https://github.com/capistrano/capistrano/wiki">Capistrano</a>は、リリースを<code>releases</code>という名前のサブディレクトリに格納し、現在のリリースは現在のリリースのディレクトリへのシンボリックリンクとなる。Capistranoの<code>rollback</code>コマンドを使うと、簡単かつ即座に以前のリリースにロールバックできる。</p>
+
+<p>すべてのリリースは常に一意のリリースIDを持つべきである。リリースIDの例としては、リリースのタイムスタンプ（例：<code>2011-04-06-20:32:17</code>）や連番（例：<code>v100</code>）がある。リリースは追記専用の台帳であり、一度作られたリリースは変更することができない。変更する場合は新しいリリースを作らなければならない。</p>
+
+<p>ビルドステージは、新しいコードがデプロイされるときに必ずアプリケーションの開発者によって開始される。一方実行ステージは、サーバーの再起動時や、クラッシュしたプロセスがプロセスマネージャーによって再起動された時に自動で開始される。このため、実行ステージはできるだけ可変部分を持たないようにするべきである。なぜなら、アプリケーションの実行を妨げるような問題が起きると、開発者が待機していない真夜中にアプリケーションが壊れる結果になるためである。ビルドステージはもっと複雑でも構わない。なぜなら、ビルドステージのエラーは常にデプロイを実行している開発者の目の前で発生するためである。</p>
+
+  </article>
+</section>
+
+<section class="concrete">
+  <nav>
+    <div id="locales"><a href="/ru/build-release-run">Русский (ru)</a> | <a href="/build-release-run">English (en)</a> | <span>日本語 (ja)</span> | <a href="/tr/build-release-run">Turkish (tr)</a> | <a href="/ko/build-release-run">한국어 (ko)</a> | <a href="/fr/build-release-run">Français (fr)</a> | <a href="/de/build-release-run">Deutsch (de)</a> | <a href="/pl/build-release-run">Polski (pl)</a> | <a href="/it/build-release-run">Italiano (it)</a> | <a href="/uk/build-release-run">Українська (uk)</a> | <a href="/es/build-release-run">Español (es)</a> | <a href="/zh_cn/build-release-run">简体中文 (zh_cn)</a> | <a href="/pt_br/build-release-run">Brazilian Portuguese (pt_br)</a></div>
+    <div id="prev"><a href="./backing-services">&laquo; Previous</a></div>
+    <div id="next"><a href="./processes">Next &raquo;</a></div>
+  </nav>
+</section>
+
+
+  <footer>
+  <div id="locales"><a href="/ru/build-release-run">Русский (ru)</a> | <a href="/build-release-run">English (en)</a> | <span>日本語 (ja)</span> | <a href="/tr/build-release-run">Turkish (tr)</a> | <a href="/ko/build-release-run">한국어 (ko)</a> | <a href="/fr/build-release-run">Français (fr)</a> | <a href="/de/build-release-run">Deutsch (de)</a> | <a href="/pl/build-release-run">Polski (pl)</a> | <a href="/it/build-release-run">Italiano (it)</a> | <a href="/uk/build-release-run">Українська (uk)</a> | <a href="/es/build-release-run">Español (es)</a> | <a href="/zh_cn/build-release-run">简体中文 (zh_cn)</a> | <a href="/pt_br/build-release-run">Brazilian Portuguese (pt_br)</a></div>
+  <div>Written by Adam Wiggins</div>
+  <div>Last updated 2017</div>
+  <div><a href="https://github.com/heroku/12factor">Sourcecode</a></div>
+  <div><a href="/12factor.epub">Download ePub Book</a></div>
+  <div><a href="https://www.heroku.com/policy/privacy">Privacy Policy</a></div>
+</footer>
+</body>
+</html>

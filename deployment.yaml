@@ -1,0 +1,16 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: aplicacao-12fatores
+spec:
+  replicas: 2 
+  template:
+    metadata:
+      labels:
+       name: aplicacao-12fatores
+    spec:
+      containers:
+        - name: container-aplicacao-12fatores
+          image: concretecristiantrucco/12-factor  
+          ports:
+            - containerPort: 80

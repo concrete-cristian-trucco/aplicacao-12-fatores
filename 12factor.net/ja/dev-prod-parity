@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>The Twelve-Factor App （日本語訳）</title>
+  <meta name="description" content="A methodology for building modern, scalable, maintainable software-as-a-service apps.">
+  <meta name="author" content="Adam Wiggins">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" href="images/favicon.ico">
+
+  <link rel="stylesheet" href="/css/screen.css" media="screen">
+  <link rel="stylesheet" href="/css/mobile.css" media="screen">
+
+  <script type="text/javascript" src="//use.typekit.com/rsq7tro.js"></script>
+  <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+</head>
+<body>
+  
+  <!-- Google Tag Manager -->
+  <noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-TK5QTP"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-TK5QTP');</script>
+  <!-- End Google Tag Manager -->
+  
+
+  <header>
+    <h1><a href="./" title="The Twelve-Factor App">The Twelve-Factor App</a></h1>
+  </header>
+
+  <section class="abstract" id="factor">
+  <article>
+    
+<h2 id="x_">X. 開発/本番一致</h2>
+
+<h3 id="">開発、ステージング、本番環境をできるだけ一致させた状態を保つ</h3>
+
+<p>歴史的に、開発環境（開発者が直接変更するアプリケーションのローカル<a href="./codebase">デプロイ</a>）と本番環境（エンドユーザーからアクセスされるアプリケーションの実行中デプロイ）の間には大きなギャップがあった。これらのギャップは3つの領域で現れる。</p>
+
+<ul>
+<li><strong>時間のギャップ</strong>: 開発者が編集したコードが本番に反映されるまで数日、数週間、時には数ヶ月かかることがある。</li>
+
+<li><strong>人材のギャップ</strong>: 開発者が書いたコードを、インフラエンジニアがデプロイする。</li>
+
+<li><strong>ツールのギャップ</strong>: 本番デプロイではApache、MySQL、Linuxを使うのに、開発者がNginx、SQLite、OS Xのようなスタックを使うことがある。</li>
+</ul>
+
+<p><strong>Twelve-Factor Appでは、<a href="http://avc.com/2011/02/continuous-deployment/">継続的デプロイ</a>しやすいよう開発環境と本番環境のギャップを小さく保つ。</strong> 上で述べた3つのギャップを見る。</p>
+
+<ul>
+<li>時間のギャップを小さくする: 開発者が書いたコードは数時間後、さらには数分後にはデプロイされる。</li>
+
+<li>人材のギャップを小さくする: コードを書いた開発者はそのコードのデプロイに深く関わり、そのコードの本番環境での挙動をモニタリングする。</li>
+
+<li>ツールのギャップを小さくする: 開発環境と本番環境をできるだけ一致させた状態を保つ。</li>
+</ul>
+
+<p>上で述べたことを表にまとめる。</p>
+<table>
+  <tr>
+    <th />
+    <th>伝統的なアプリケーション</th>
+    <th>Twelve-Factor App</th>
+  </tr>
+  <tr>
+    <th>デプロイの間隔</th>
+    <td>数週間</td>
+    <td>数時間</td>
+  </tr>
+  <tr>
+    <th>コードを書く人とデプロイする人</th>
+    <td>異なる人</td>
+    <td>同じ人</td>
+  </tr>
+  <tr>
+    <th>開発環境と本番環境</th>
+    <td>異なる</td>
+    <td>できるだけ一致</td>
+  </tr>
+</table>
+<p><a href="./backing-services">バックエンドサービス</a>（アプリケーションのデータベース、キューイングシステム、キャッシュなど）は、開発/本番一致が重要になる領域の一つである。多くの言語は、異なる種類のサービスへの <em>アダプター</em> を含め、バックエンド・サービスへのアクセスを単純化するライブラリを提供している。以下の表にいくつかの例を示す。</p>
+<table>
+  <tr>
+    <th>種類</th>
+    <th>言語</th>
+    <th>ライブラリ</th>
+    <th>アダプター</th>
+  </tr>
+  <tr>
+    <td>データベース</td>
+    <td>Ruby/Rails</td>
+    <td>ActiveRecord</td>
+    <td>MySQL, PostgreSQL, SQLite</td>
+  </tr>
+  <tr>
+    <td>キュー</td>
+    <td>Python/Django</td>
+    <td>Celery</td>
+    <td>RabbitMQ, Beanstalkd, Redis</td>
+  </tr>
+  <tr>
+    <td>キャッシュ</td>
+    <td>Ruby/Rails</td>
+    <td>ActiveSupport::Cache</td>
+    <td>メモリ, ファイルシステム, Memcached</td>
+  </tr>
+</table>
+<p>本番環境ではより本格的で堅牢なバックエンドサービスが使われるにもかかわらず、開発者は自身のローカル開発環境で軽量なバックエンドサービスを使いたくなることがある。例えば、開発環境ではSQLiteを使い、本番ではPostgreSQLを使ったり、開発環境ではローカルプロセスのメモリをキャッシュに使い、本番ではMemcachedを使ったりするなどである。</p>
+
+<p>たとえ理論的にはアダプターがバックエンドサービスの違いをすべて抽象化してくれるとしても、 <strong>Twelve-Factorの開発者は、開発と本番の間で異なるバックエンドサービスを使いたくなる衝動に抵抗する。</strong> バックエンドサービスの違いは、わずかな非互換性が顕在化し、開発環境やステージング環境では正常に動作してテストも通過するコードが本番環境でエラーを起こす事態を招くことを意味する。この種のエラーは継続的デプロイを妨げる摩擦を生む。この摩擦とそれに伴って継続的デプロイが妨げられることのコストは、アプリケーションのライフサイクルに渡ってトータルで考えると非常に高くつく。</p>
+
+<p>軽量なローカルサービスは、以前ほど魅力的なものではなくなっている。Memcached、PostgreSQLやRabbitMQなどのモダンなバックエンドサービスは、<a href="http://mxcl.github.com/homebrew/">Homebrew</a> や <a href="https://help.ubuntu.com/community/AptGet/Howto">apt-get</a> などのモダンなパッケージングシステムのおかげで、簡単にインストールして実行できる。あるいは <a href="http://www.opscode.com/chef/">Chef</a> や <a href="http://docs.puppetlabs.com/">Puppet</a> などの宣言的なプロビジョニングツールと、<a href="http://vagrantup.com/">Vagrant</a> などの軽量な仮想環境を組み合わせることで、開発者は本番環境に限りなく近いローカル環境を作ることができる。開発/本番一致と継続的デプロイの利益に比べると、これらのシステムをインストールして利用するコストは低い。</p>
+
+<p>異なるバックエンドサービスへのアダプターは依然有用である。これらのアダプターは、新しいバックエンドサービスに移植するときの苦痛を比較的和らげてくれるためである。しかし、アプリケーションのすべてのデプロイ（開発、ステージング、本番環境）は同じ種類かつ同じバージョンのバックエンドサービスを利用するべきである。</p>
+
+  </article>
+</section>
+
+<section class="concrete">
+  <nav>
+    <div id="locales"><a href="/dev-prod-parity">English (en)</a> | <a href="/ko/dev-prod-parity">한국어 (ko)</a> | <span>日本語 (ja)</span> | <a href="/it/dev-prod-parity">Italiano (it)</a> | <a href="/pl/dev-prod-parity">Polski (pl)</a> | <a href="/zh_cn/dev-prod-parity">简体中文 (zh_cn)</a> | <a href="/de/dev-prod-parity">Deutsch (de)</a> | <a href="/es/dev-prod-parity">Español (es)</a> | <a href="/fr/dev-prod-parity">Français (fr)</a> | <a href="/tr/dev-prod-parity">Turkish (tr)</a> | <a href="/uk/dev-prod-parity">Українська (uk)</a> | <a href="/pt_br/dev-prod-parity">Brazilian Portuguese (pt_br)</a> | <a href="/ru/dev-prod-parity">Русский (ru)</a></div>
+    <div id="prev"><a href="./disposability">&laquo; Previous</a></div>
+    <div id="next"><a href="./logs">Next &raquo;</a></div>
+  </nav>
+</section>
+
+
+  <footer>
+  <div id="locales"><a href="/dev-prod-parity">English (en)</a> | <a href="/ko/dev-prod-parity">한국어 (ko)</a> | <span>日本語 (ja)</span> | <a href="/it/dev-prod-parity">Italiano (it)</a> | <a href="/pl/dev-prod-parity">Polski (pl)</a> | <a href="/zh_cn/dev-prod-parity">简体中文 (zh_cn)</a> | <a href="/de/dev-prod-parity">Deutsch (de)</a> | <a href="/es/dev-prod-parity">Español (es)</a> | <a href="/fr/dev-prod-parity">Français (fr)</a> | <a href="/tr/dev-prod-parity">Turkish (tr)</a> | <a href="/uk/dev-prod-parity">Українська (uk)</a> | <a href="/pt_br/dev-prod-parity">Brazilian Portuguese (pt_br)</a> | <a href="/ru/dev-prod-parity">Русский (ru)</a></div>
+  <div>Written by Adam Wiggins</div>
+  <div>Last updated 2017</div>
+  <div><a href="https://github.com/heroku/12factor">Sourcecode</a></div>
+  <div><a href="/12factor.epub">Download ePub Book</a></div>
+  <div><a href="https://www.heroku.com/policy/privacy">Privacy Policy</a></div>
+</footer>
+</body>
+</html>

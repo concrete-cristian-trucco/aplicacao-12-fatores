@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>The Twelve-Factor App To jest tłumaczenie.</title>
+  <meta name="description" content="A methodology for building modern, scalable, maintainable software-as-a-service apps.">
+  <meta name="author" content="Adam Wiggins">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" href="images/favicon.ico">
+
+  <link rel="stylesheet" href="/css/screen.css" media="screen">
+  <link rel="stylesheet" href="/css/mobile.css" media="screen">
+
+  <script type="text/javascript" src="//use.typekit.com/rsq7tro.js"></script>
+  <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+</head>
+<body>
+  
+  <!-- Google Tag Manager -->
+  <noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-TK5QTP"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-TK5QTP');</script>
+  <!-- End Google Tag Manager -->
+  
+
+  <header>
+    <h1><a href="./" title="The Twelve-Factor App">The Twelve-Factor App</a></h1>
+  </header>
+
+  <section class="abstract">
+  <article>
+<h1 id="wprowadzenie">Wprowadzenie</h1>
+
+<p>We współczesnym świecie oprogramowanie jest powszechnie wytwarzane w formie usługi, nazywane <em>software-as-service (SaaS)</em> lub aplikacjami internetowymi. Dwanaście aspektów aplikacji jest metodologią budowania aplikacji SaaS, które:</p>
+
+<ul>
+<li>Używają <strong>deklaratywnego</strong> formatu by zautomatyzować konfigurację aplikacji w celu zmniejszenia czasu i kosztów dołączenia nowych programistów do projektu;</li>
+
+<li>Mają <strong>czysty kontrakt</strong> z systemem operacyjnym, umożliwiając <strong>jak największą możliwość przenoszenia</strong> pomiędzy środowiskami, w których działają;</li>
+
+<li>Są dopasowane do <strong>wdrożenia</strong> na nowoczesne <strong>chmury obliczeniowe</strong>, zapobiegając potrzebie użycia serwerów i administracji systemu;</li>
+
+<li><strong>Minimalizują rozbieżności</strong> pomiędzy środowiskami developerskimi i produkcyjnymi, umożliwiając <strong>nieustanne wdrażanie aplikacji</strong> by zmaksymalizować prędkość zmian;</li>
+
+<li>I mogą <strong>skalować się</strong> bez większej zmiany narzędzi, architektury, czy sposobu pracy zespołu.</li>
+</ul>
+
+<p>Metodologia dwunastu aspektów może być stosowana do aplikacji napisanych w każdym języku programowania i wykorzystujących dowolną kombinację usług wspierających (bazy danych, kolejki, cache pamięci etc).</p>
+</article>
+  <article>
+<h1 id="background">Background</h1>
+
+<p>Kontrybutorzy tego dokumentu byli bezpośrednio zaangażowani w tworzenie i wdrażanie setek aplikacji i pośrednio byli świadkami produkcji, działania i skalowania setek tysięcy aplikacji dzięki naszej pracy na platformie <a href="http://www.heroku.com/">Heroku</a>.</p>
+
+<p>Ten dokument jest podsumowaniem całego naszego doświadczenia i obserwacji szerokiej gamy aplikacji SaaS. Jest on połączeniem idealnych praktyk developmentu, zwracania szczególnej uwagi na naturalny rozrost aplikacji w czasie, dynamiki współpracy developerów pracujących nad jednym codebase’m, oraz <a href="http://blog.heroku.com/archives/2011/6/28/the_new_heroku_4_erosion_resistance_explicit_contracts/">unikania kosztów gnijącego oprogramowania</a>.</p>
+
+<p>Naszym celem jest podniesienie poziomu świadomości o podstawowych problemach, które dostrzegliśmy przy tworzeniu nowoczesnych aplikacji, zapewnienie wspólnego słownictwa do rozmowy o tych problemach oraz zaoferowanie ogólnych rozwiązań dla tych problemów wraz z towarzyszącą terminologią. Format dokumentu jest inspirowany książkami Martina Fowlera <em><a href="http://books.google.com/books/about/Patterns_of_enterprise_application_archi.html?id=FyWZt5DdvFkC">Patterns of Enterprise Application Architecture</a></em> oraz <em><a href="http://books.google.com/books/about/Refactoring.html?id=1MsETFPD3I0C">Refactoring</a></em>.</p>
+</article>
+  <article>
+<h1 id="dla_kogo_przeznaczony_jest_ten_dokument">Dla kogo przeznaczony jest ten dokument?</h1>
+
+<p>Dla każdego developera tworzącego aplikacje, które działają jako usługa. Dla każdego Dev-opsa, który wdraża i zarządza takimi aplikacjami.</p>
+</article>
+</section>
+
+<section class="concrete">
+  <article>
+<h1 id="the_twelve_factors">The Twelve Factors</h1>
+
+<h2 id="i_codebase"><a href="./codebase">I. Codebase</a></h2>
+
+<h3 id="jedno_rdo_kodu_ledzone_systemem_kontroli_wersji_wiele_wdroe">Jedno źródło kodu śledzone systemem kontroli wersji, wiele wdrożeń</h3>
+
+<h2 id="ii_zalenoci"><a href="./dependencies">II. Zależności</a></h2>
+
+<h3 id="jawnie_zadeklaruj_i_wydziel_zalenoci">Jawnie zadeklaruj i wydziel zależności</h3>
+
+<h2 id="iii_konfiguracja"><a href="./config">III. Konfiguracja</a></h2>
+
+<h3 id="przechowuj_konfiguracj_w_rodowisku">Przechowuj konfigurację w środowisku</h3>
+
+<h2 id="iv_usugi_wspierajce"><a href="./backing-services">IV. Usługi wspierające</a></h2>
+
+<h3 id="traktuj_usugi_wspierajce_jako_przydzielone_zasoby">Traktuj usługi wspierające jako przydzielone zasoby</h3>
+
+<h2 id="v_buduj_publikuj_uruchamiaj"><a href="./build-release-run">V. Buduj, publikuj, uruchamiaj</a></h2>
+
+<h3 id="oddzielaj_etap_budowania_od_uruchamiania">Oddzielaj etap budowania od uruchamiania</h3>
+
+<h2 id="vi_procesy"><a href="./processes">VI. Procesy</a></h2>
+
+<h3 id="uruchamiaj_aplikacj_jako_jeden_lub_wicej_bezstanowych_procesw">Uruchamiaj aplikację jako jeden lub więcej bezstanowych procesów</h3>
+
+<h2 id="vii_przydzielanie_portw"><a href="./port-binding">VII. Przydzielanie portów</a></h2>
+
+<h3 id="udostpniaj_usugi_przez_przydzielanie_portw">Udostępniaj usługi przez przydzielanie portów</h3>
+
+<h2 id="viii_wspbieno"><a href="./concurrency">VIII. Współbieżność</a></h2>
+
+<h3 id="skaluj_przez_odpowiednio_dobrane_procesy">Skaluj przez odpowiednio dobrane procesy</h3>
+
+<h2 id="ix_zbywalno"><a href="./disposability">IX. Zbywalność</a></h2>
+
+<h3 id="zwiksz_elastyczno_pozwalajc_na_szybkie_uruchamianie_i_zatrzymywanie_aplikacji">Zwiększ elastyczność pozwalając na szybkie uruchamianie i zatrzymywanie aplikacji</h3>
+
+<h2 id="x_jednolito_rodowisk"><a href="./dev-prod-parity">X. Jednolitość środowisk</a></h2>
+
+<h3 id="utrzymuj_konfiguracj_rodowisk_jak_najbardziej_zblion_do_siebie">Utrzymuj konfigurację środowisk jak najbardziej zbliżoną do siebie</h3>
+
+<h2 id="xi_logi"><a href="./logs">XI. Logi</a></h2>
+
+<h3 id="traktuj_logi_jako_strumie_zdarze">Traktuj logi jako strumień zdarzeń</h3>
+
+<h2 id="xii_zarzdzanie_aplikacj"><a href="./admin-processes">XII. Zarządzanie aplikacją</a></h2>
+
+<h3 id="uruchamiaj_zadania_administracyjne_jako_jednorazowe_procesy">Uruchamiaj zadania administracyjne jako jednorazowe procesy</h3>
+</article>
+</section>
+
+
+  <footer>
+  <div id="locales"><a href="/">English (en)</a> | <a href="/ko/">한국어 (ko)</a> | <a href="/ja/">日本語 (ja)</a> | <a href="/it/">Italiano (it)</a> | <span>Polski (pl)</span> | <a href="/zh_cn/">简体中文 (zh_cn)</a> | <a href="/de/">Deutsch (de)</a> | <a href="/es/">Español (es)</a> | <a href="/fr/">Français (fr)</a> | <a href="/tr/">Turkish (tr)</a> | <a href="/uk/">Українська (uk)</a> | <a href="/pt_br/">Brazilian Portuguese (pt_br)</a> | <a href="/ru/">Русский (ru)</a></div>
+  <div>Written by Adam Wiggins</div>
+  <div>Last updated 2017</div>
+  <div><a href="https://github.com/heroku/12factor">Sourcecode</a></div>
+  <div><a href="/12factor.epub">Download ePub Book</a></div>
+  <div><a href="https://www.heroku.com/policy/privacy">Privacy Policy</a></div>
+</footer>
+</body>
+</html>

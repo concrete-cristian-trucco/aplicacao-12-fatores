@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>The Twelve-Factor App （日本語訳）</title>
+  <meta name="description" content="A methodology for building modern, scalable, maintainable software-as-a-service apps.">
+  <meta name="author" content="Adam Wiggins">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" href="images/favicon.ico">
+
+  <link rel="stylesheet" href="/css/screen.css" media="screen">
+  <link rel="stylesheet" href="/css/mobile.css" media="screen">
+
+  <script type="text/javascript" src="//use.typekit.com/rsq7tro.js"></script>
+  <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+</head>
+<body>
+  
+  <!-- Google Tag Manager -->
+  <noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-TK5QTP"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-TK5QTP');</script>
+  <!-- End Google Tag Manager -->
+  
+
+  <header>
+    <h1><a href="./" title="The Twelve-Factor App">The Twelve-Factor App</a></h1>
+  </header>
+
+  <section class="abstract" id="factor">
+  <article>
+    
+<h2 id="i_">I. コードベース</h2>
+
+<h3 id="1">バージョン管理されている1つのコードベースと複数のデプロイ</h3>
+
+<p>Twelve-Factor Appは<a href="http://git-scm.com/">Git</a>や<a href="https://www.mercurial-scm.org/">Mercurial</a>、<a href="http://subversion.apache.org/">Subversion</a>などのバージョン管理システムで常に変更を追跡している。リビジョン追跡データベースのコピーは <em>コードリポジトリ</em> と言われ、単に <em>リポジトリ</em> とも言われる。</p>
+
+<p><em>コードベース</em> は、単一のリポジトリ（Subversionのような集中バージョン管理システムの場合）またはルートコミットを共有する複数のリポジトリ（Gitのような分散バージョン管理システムの場合）である。</p>
+
+<p><img src="/images/codebase-deploys.png" alt="1つのコードベースは複数のデプロイにマッピングされる" /></p>
+
+<p>コードベースとアプリケーションの間には、常に1対1の関係がある。</p>
+
+<ul>
+<li>もし複数のコードベースがある場合、それはアプリケーションではない – それは分散システムである。分散システムのそれぞれのコンポーネントがアプリケーションであり、個別にTwelve-Factorに適合することができる。</li>
+
+<li>同じコードを共有する複数のアプリケーションは、Twelve-Factorに違反している。その場合の解決策は、共通のコードをライブラリに分解し、そのライブラリを<a href="./dependencies">依存関係管理ツール</a>で組み込むようにすることである。</li>
+</ul>
+
+<p>アプリケーションごとにただ1つのコードベースが存在するが、アプリケーションのデプロイは複数存在する。 <em>デプロイ</em> はアプリケーションの実行中のインスタンスである。これは通常1つの本番サイトと、1つ以上のステージングサイトである。さらにすべての開発者はローカル開発環境で動作するアプリケーションのコピーを持っており、それらもデプロイと見なせる。</p>
+
+<p>デプロイごとに異なるバージョンがアクティブであるかもしれないが、コードベースはすべてのデプロイを通して同一である。例えば、開発者はステージング環境にまだデプロイされていないコミットを抱えているし、ステージング環境には本番環境にデプロイされていないコミットが含まれている。しかし、これらのデプロイはすべて同一のコードベースを共有しているため、同一のアプリケーションの異なるデプロイであると認識できる。</p>
+
+  </article>
+</section>
+
+<section class="concrete">
+  <nav>
+    <div id="locales"><a href="/ru/codebase">Русский (ru)</a> | <a href="/codebase">English (en)</a> | <span>日本語 (ja)</span> | <a href="/tr/codebase">Turkish (tr)</a> | <a href="/ko/codebase">한국어 (ko)</a> | <a href="/fr/codebase">Français (fr)</a> | <a href="/de/codebase">Deutsch (de)</a> | <a href="/pl/codebase">Polski (pl)</a> | <a href="/it/codebase">Italiano (it)</a> | <a href="/uk/codebase">Українська (uk)</a> | <a href="/es/codebase">Español (es)</a> | <a href="/zh_cn/codebase">简体中文 (zh_cn)</a> | <a href="/pt_br/codebase">Brazilian Portuguese (pt_br)</a></div>
+    <div id="prev"></div>
+    <div id="next"><a href="./dependencies">Next &raquo;</a></div>
+  </nav>
+</section>
+
+
+  <footer>
+  <div id="locales"><a href="/ru/codebase">Русский (ru)</a> | <a href="/codebase">English (en)</a> | <span>日本語 (ja)</span> | <a href="/tr/codebase">Turkish (tr)</a> | <a href="/ko/codebase">한국어 (ko)</a> | <a href="/fr/codebase">Français (fr)</a> | <a href="/de/codebase">Deutsch (de)</a> | <a href="/pl/codebase">Polski (pl)</a> | <a href="/it/codebase">Italiano (it)</a> | <a href="/uk/codebase">Українська (uk)</a> | <a href="/es/codebase">Español (es)</a> | <a href="/zh_cn/codebase">简体中文 (zh_cn)</a> | <a href="/pt_br/codebase">Brazilian Portuguese (pt_br)</a></div>
+  <div>Written by Adam Wiggins</div>
+  <div>Last updated 2017</div>
+  <div><a href="https://github.com/heroku/12factor">Sourcecode</a></div>
+  <div><a href="/12factor.epub">Download ePub Book</a></div>
+  <div><a href="https://www.heroku.com/policy/privacy">Privacy Policy</a></div>
+</footer>
+</body>
+</html>

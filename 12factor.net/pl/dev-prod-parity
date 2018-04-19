@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>The Twelve-Factor App To jest tłumaczenie.</title>
+  <meta name="description" content="A methodology for building modern, scalable, maintainable software-as-a-service apps.">
+  <meta name="author" content="Adam Wiggins">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" href="images/favicon.ico">
+
+  <link rel="stylesheet" href="/css/screen.css" media="screen">
+  <link rel="stylesheet" href="/css/mobile.css" media="screen">
+
+  <script type="text/javascript" src="//use.typekit.com/rsq7tro.js"></script>
+  <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+</head>
+<body>
+  
+  <!-- Google Tag Manager -->
+  <noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-TK5QTP"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-TK5QTP');</script>
+  <!-- End Google Tag Manager -->
+  
+
+  <header>
+    <h1><a href="./" title="The Twelve-Factor App">The Twelve-Factor App</a></h1>
+  </header>
+
+  <section class="abstract" id="factor">
+  <article>
+    
+<h2 id="x_jednolito_rodowisk">X. Jednolitość środowisk</h2>
+
+<h3 id="utrzymuj_rodowisko_developerskie_stagingowe_i_produkcyjne_tak_podobne_jak_tylko_moliwe">Utrzymuj środowisko developerskie, stagingowe i produkcyjne tak podobne jak tylko możliwe</h3>
+
+<p>Z doświadczenia wiadomo, że od zawsze istniały różnice pomiędzy środowiskiem developerskim (developer pracujący nad swoją lokalną wersją <a href="./codebase">kodu</a> aplikacji) a produkcyjnym (działająca aplikacja dostępna dla użytkowników. Ze względu na ich charakter, możemy wymienić trzy rodzaje różnic:</p>
+
+<ul>
+<li><strong>Różnica czasowa:</strong> Developer może pracować nad kodem przez dni, tygodnie, miesiące zanim ostatecznie pojawi się on w wersji produkcyjnej.</li>
+
+<li><strong>Różnica odpowiedzialności</strong>: Developer tworzy kod aplikacji, natomiast kto inny wdraża go do na produkcję.</li>
+
+<li><strong>Różnica narzędzi</strong>: Developer może używać narzędzi takich jak Nginx, SQLite i systemu OS X, natomiast wersja produkcyjna będzie opierać się na Apache, MySQL i systemie Linux.</li>
+</ul>
+
+<p><strong>Aplikacja 12factor jest zaprojektowana tak by można ją było <a href="http://avc.com/2011/02/continuous-deployment/">bez przerwy wdrażać na produkcję</a> minimalizując różnice pomiędzy środowiskami.</strong> Mając na uwadze powyższe różnice, można sobie z nimi radzić na różne sposoby:</p>
+
+<ul>
+<li>Zmniejsz czas deploymentu: czas wdrożenia kodu napisanego przez developera powinien być mierzony w godzinach, a nawet w minutach.</li>
+
+<li>Przenieś odpowiedzialność: developer piszący kod powinien być zaangażowany we wdrożenia aplikacji na produkcję.</li>
+
+<li>Stosuj ten sam zestaw narzędzi: utrzymuj wszystkie środowiska w których działa aplikacja tak podobne jak to możliwe.</li>
+</ul>
+
+<p>Podsumowując w formie tabeli:</p>
+<table>
+  <tr>
+    <th />
+    <th>Tradycyjna aplikacja</th>
+    <th>Aplikacja 12factor</th>
+  </tr>
+  <tr>
+    <th>Czas pomiędzy wdrożeniami</th>
+    <td>Tygodnie</td>
+    <td>Godziny</td>
+  </tr>
+  <tr>
+    <th>Tworzenie kodu vs wdrażanie kodu</th>
+    <td>Różne osoby</td>
+    <td>Te same osoby</td>
+  </tr>
+  <tr>
+    <th>Środowisko developerskie vs produkcyjne</th>
+    <td>Mocno różniące się</td>
+    <td>Jak najbardziej zbliżone</td>
+  </tr>
+</table>
+<p>Zachowanie podobieństw między wdrożeniami jest ważne w przypadku <a href="./backing-services">usług wspierających</a> takich jak baza danych aplikacji, system kolejkowania czy też cache. Wiele języków oferuje biblioteki, które upraszczają korzystanie z usług wspierających w tym <em>adaptery</em> do usług różnego typu. Kilka przykładów w tabeli poniżej:</p>
+<table>
+  <tr>
+    <th>Typ</th>
+    <th>Język</th>
+    <th>Biblioteka</th>
+    <th>Adaptery</th>
+  </tr>
+  <tr>
+    <td>Baza danych</td>
+    <td>Ruby/Rails</td>
+    <td>ActiveRecord</td>
+    <td>MySQL, PostgreSQL, SQLite</td>
+  </tr>
+  <tr>
+    <td>Kolejka</td>
+    <td>Python/Django</td>
+    <td>Celery</td>
+    <td>RabbitMQ, Beanstalkd, Redis</td>
+  </tr>
+  <tr>
+    <td>Cache</td>
+    <td>Ruby/Rails</td>
+    <td>ActiveSupport::Cache</td>
+    <td>Pamięć, system plików, Memcached</td>
+  </tr>
+</table>
+<p>Czasami zdarza się, że developerzy w swoim lokalnym środowisku wolą korzystać z “lżejszych” wersji różnych usług, na produkcji natomiast używając bardziej zaawansowanych narzędzi. Przykładem takiej sytuacji jest używanie lokalnie SQLite, a PostgreSQL na produkcji. Podobnie wygląda też użycie na środowisku developerskim do cachowania pamięci, zamiast Memcached znajdującego się na produkcji.</p>
+
+<p><strong>Developer postępujący zgodnie zasadami 12factor opiera się pokusie używania usług różniących się pomiędzy środowiskami</strong>, nawet wtedy, gdy adaptery teoretycznie ukrywają różnice w implementacji pod warstwą abstrakcji. Z powodu różnic pomiędzy usługami wspierającymi mogą pojawić się niezgodności, powodując, że kod, który działał i był testowany lokalnie lub na stagingu, przestanie funkcjonować na produkcji. Pojawianie się tego typu błędów negatywnie wpływa na proces ciągłego wdrażania aplikacji. Czas stracony na wykrywaniu takich błędów i konsekwentnych awariach podczas wdrażania aplikacji może sporo kosztować, zwłaszcza gdy podobne problemy będą się z czasem gromadzić.</p>
+
+<p>Lekkie wersje usług w obecnych czasach nie są już tak atrakcyjne jak kiedyś. Nowoczesne usługi takie jak Memcached, PostgreSQL oraz RabbitMQ nie są trudne do instalacji w lokalnym środowisku, dzięki narzędziom jak <a href="http://mxcl.github.com/homebrew/">Homebrew</a> i <a href="https://help.ubuntu.com/community/AptGet/Howto">apt-get</a>. Innym rozwiązaniem są narzędzia do deklaratywnego <a href="https://en.wikipedia.org/wiki/Provisioning">provisioningu</a> takie jak <a href="http://www.opscode.com/chef/">Chef</a> czy <a href="http://docs.puppetlabs.com/">Puppet</a> połączone z lekkimi środowiskami wirtualnymi jak np. <a href="http://vagrantup.com/">Vagrant</a>. Pozwala ono developerom na uruchamianie lokalnych środowisk, które są bardzo zbliżone do produkcyjnych. Koszt instalacji i używania takich rozwiązań jest stosunkowo niski, biorąc pod uwagę korzyści płynące z utrzymywania jednolitych środowisk i procesu ciągłego wdrażania aplikacji.</p>
+
+<p>Adaptery dla różnych usług wspierających są wciąż użyteczne, gdyż dzięki nim zmiana usługi jest relatywnie łatwa. Należy jednak pamiętać, że wszystkie wdrożenia aplikacji (środowiska developerskie, stagingowe, produkcyjne) powinny używać tych samych typów i wersji usług wspierających.</p>
+
+  </article>
+</section>
+
+<section class="concrete">
+  <nav>
+    <div id="locales"><a href="/ru/dev-prod-parity">Русский (ru)</a> | <a href="/dev-prod-parity">English (en)</a> | <a href="/ja/dev-prod-parity">日本語 (ja)</a> | <a href="/tr/dev-prod-parity">Turkish (tr)</a> | <a href="/ko/dev-prod-parity">한국어 (ko)</a> | <a href="/fr/dev-prod-parity">Français (fr)</a> | <a href="/de/dev-prod-parity">Deutsch (de)</a> | <span>Polski (pl)</span> | <a href="/it/dev-prod-parity">Italiano (it)</a> | <a href="/uk/dev-prod-parity">Українська (uk)</a> | <a href="/es/dev-prod-parity">Español (es)</a> | <a href="/zh_cn/dev-prod-parity">简体中文 (zh_cn)</a> | <a href="/pt_br/dev-prod-parity">Brazilian Portuguese (pt_br)</a></div>
+    <div id="prev"><a href="./disposability">&laquo; Previous</a></div>
+    <div id="next"><a href="./logs">Next &raquo;</a></div>
+  </nav>
+</section>
+
+
+  <footer>
+  <div id="locales"><a href="/ru/dev-prod-parity">Русский (ru)</a> | <a href="/dev-prod-parity">English (en)</a> | <a href="/ja/dev-prod-parity">日本語 (ja)</a> | <a href="/tr/dev-prod-parity">Turkish (tr)</a> | <a href="/ko/dev-prod-parity">한국어 (ko)</a> | <a href="/fr/dev-prod-parity">Français (fr)</a> | <a href="/de/dev-prod-parity">Deutsch (de)</a> | <span>Polski (pl)</span> | <a href="/it/dev-prod-parity">Italiano (it)</a> | <a href="/uk/dev-prod-parity">Українська (uk)</a> | <a href="/es/dev-prod-parity">Español (es)</a> | <a href="/zh_cn/dev-prod-parity">简体中文 (zh_cn)</a> | <a href="/pt_br/dev-prod-parity">Brazilian Portuguese (pt_br)</a></div>
+  <div>Written by Adam Wiggins</div>
+  <div>Last updated 2017</div>
+  <div><a href="https://github.com/heroku/12factor">Sourcecode</a></div>
+  <div><a href="/12factor.epub">Download ePub Book</a></div>
+  <div><a href="https://www.heroku.com/policy/privacy">Privacy Policy</a></div>
+</footer>
+</body>
+</html>

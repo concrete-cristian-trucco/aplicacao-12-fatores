@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>The Twelve-Factor App (traduzido)</title>
+  <meta name="description" content="A methodology for building modern, scalable, maintainable software-as-a-service apps.">
+  <meta name="author" content="Adam Wiggins">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" href="images/favicon.ico">
+
+  <link rel="stylesheet" href="/css/screen.css" media="screen">
+  <link rel="stylesheet" href="/css/mobile.css" media="screen">
+
+  <script type="text/javascript" src="//use.typekit.com/rsq7tro.js"></script>
+  <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+</head>
+<body>
+  
+  <!-- Google Tag Manager -->
+  <noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-TK5QTP"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-TK5QTP');</script>
+  <!-- End Google Tag Manager -->
+  
+
+  <header>
+    <h1><a href="./" title="The Twelve-Factor App">The Twelve-Factor App</a></h1>
+  </header>
+
+  <section class="abstract" id="factor">
+  <article>
+    
+<h2 id="ii_dependncias">II. Dependências</h2>
+
+<h3 id="declare_e_isole_explicitamente_as_dependncias">Declare e isole explicitamente as dependências</h3>
+
+<p>A maioria das linguagens de programação oferecem um sistema de pacotes para a distribuição de bibliotecas de apoio, como o <a href="http://www.cpan.org/">CPAN</a> para Perl ou <a href="http://rubygems.org/">Rubygems</a> para Ruby. Bibliotecas instaladas por meio de um sistema de pacotes podem ser instaladas em todo o sistema (conhecidas como “site packages”) ou com escopo dentro do diretório contendo a aplicação (conhecidas como “vendoring” ou “building”).</p>
+
+<p><strong>Uma aplicação doze-fatores nunca confia na existência implícita de pacotes em todo o sistema.</strong> Ela declara todas as dependências, completa e exatamente, por meio de um manifesto de <em>declaração de dependência</em>. Além disso, ela usa uma ferramenta de <em>isolamento de dependência</em> durante a execução para garantir que não há dependências implícitas “vazamento” a partir do sistema circundante. A completa e explícita especificação de dependências é aplicada de maneira uniforme tanto para produção quanto para desenvolvimento.</p>
+
+<p>Por exemplo, <a href="https://bundler.io/">Bundler</a> para Ruby oferece o formato de manifesto <code>Gemfile</code> para declaração de dependência e <code>bundle exec</code> para isolamento das mesmas. Em Python existem duas ferramentas separadas para estas etapas – <a href="http://www.pip-installer.org/en/latest/">Pip</a> é utilizado para declaração e <a href="http://www.virtualenv.org/en/latest/">Virtualenv</a> para isolamento. Mesmo C tem <a href="http://www.gnu.org/s/autoconf/">Autoconf</a> para declaração de dependência, e vinculação estática pode fornecer o isolamento. Não importa qual o conjunto de ferramentas, declaração de dependência e isolamento devem ser sempre usados juntos – apenas um ou o outro não é suficiente para satisfazer doze-fatores.</p>
+
+<p>Um dos beneficios da declaração de dependência explícita é que simplifica a configuração da aplicação para novos desenvolvedores. O novo desenvolvedor pode verificar a base de código do aplicativo em sua máquina de desenvolvimento, exigindo apenas runtime da linguagem e gerenciador de dependência instalado como pré-requisitos. Eles serão capazes de configurar tudo o que é necessário para rodar o código da aplicação com um determinístico <em>comando de build</em>. Por exemplo, o comando de build para Ruby/Bundler é <code>bundle install</code>, enquanto que para Clojure/<a href="https://github.com/technomancy/leiningen#readme">Leiningen</a> é <code>lein deps</code>.</p>
+
+<p>Aplicações doze-fatores também não contam com a existência implícita de todas as ferramentas do sistema. Exemplos incluem executar algum comando externo como do ImageMagick ou <code>curl</code>. Embora possam existir essas ferramentas em muitos ou mesmo na maioria dos sistemas, não há garantia de que eles vão existir em todos os sistemas em que a aplicação pode rodar no futuro, ou se a versão encontrada em um futuro sistema será compatível com a aplicação. Se a aplicação precisa executar alguma ferramenta do sistema, essa ferramenta deve ser vendorizada na aplicação.</p>
+
+  </article>
+</section>
+
+<section class="concrete">
+  <nav>
+    <div id="locales"><a href="/ru/dependencies">Русский (ru)</a> | <a href="/dependencies">English (en)</a> | <a href="/ja/dependencies">日本語 (ja)</a> | <a href="/tr/dependencies">Turkish (tr)</a> | <a href="/ko/dependencies">한국어 (ko)</a> | <a href="/fr/dependencies">Français (fr)</a> | <a href="/de/dependencies">Deutsch (de)</a> | <a href="/pl/dependencies">Polski (pl)</a> | <a href="/it/dependencies">Italiano (it)</a> | <a href="/uk/dependencies">Українська (uk)</a> | <a href="/es/dependencies">Español (es)</a> | <a href="/zh_cn/dependencies">简体中文 (zh_cn)</a> | <span>Brazilian Portuguese (pt_br)</span></div>
+    <div id="prev"><a href="./codebase">&laquo; Previous</a></div>
+    <div id="next"><a href="./config">Next &raquo;</a></div>
+  </nav>
+</section>
+
+
+  <footer>
+  <div id="locales"><a href="/ru/dependencies">Русский (ru)</a> | <a href="/dependencies">English (en)</a> | <a href="/ja/dependencies">日本語 (ja)</a> | <a href="/tr/dependencies">Turkish (tr)</a> | <a href="/ko/dependencies">한국어 (ko)</a> | <a href="/fr/dependencies">Français (fr)</a> | <a href="/de/dependencies">Deutsch (de)</a> | <a href="/pl/dependencies">Polski (pl)</a> | <a href="/it/dependencies">Italiano (it)</a> | <a href="/uk/dependencies">Українська (uk)</a> | <a href="/es/dependencies">Español (es)</a> | <a href="/zh_cn/dependencies">简体中文 (zh_cn)</a> | <span>Brazilian Portuguese (pt_br)</span></div>
+  <div>Written by Adam Wiggins</div>
+  <div>Last updated 2017</div>
+  <div><a href="https://github.com/heroku/12factor">Sourcecode</a></div>
+  <div><a href="/12factor.epub">Download ePub Book</a></div>
+  <div><a href="https://www.heroku.com/policy/privacy">Privacy Policy</a></div>
+</footer>
+</body>
+</html>

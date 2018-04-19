@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>The Twelve-Factor App Türkçe çeviri</title>
+  <meta name="description" content="A methodology for building modern, scalable, maintainable software-as-a-service apps.">
+  <meta name="author" content="Adam Wiggins">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" href="images/favicon.ico">
+
+  <link rel="stylesheet" href="/css/screen.css" media="screen">
+  <link rel="stylesheet" href="/css/mobile.css" media="screen">
+
+  <script type="text/javascript" src="//use.typekit.com/rsq7tro.js"></script>
+  <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+</head>
+<body>
+  
+  <!-- Google Tag Manager -->
+  <noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-TK5QTP"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-TK5QTP');</script>
+  <!-- End Google Tag Manager -->
+  
+
+  <header>
+    <h1><a href="./" title="The Twelve-Factor App">The Twelve-Factor App</a></h1>
+  </header>
+
+  <section class="abstract" id="factor">
+  <article>
+    
+<h2 id="xi_gnlkler">XI. Günlükler</h2>
+
+<h3 id="gnlklere_olay_ak_gibi_davranma">Günlüklere olay akışı gibi davranma</h3>
+
+<p><em>Günlükler</em> çalışan bir uygulamanın davranışının görünür olmasını sağlar. Sunucu tabanlı ortamlarda genellikle diskteki bir dosyaya yazılırlar(“logfile”); ama bu sadece çıktı formatındadır.</p>
+
+<p>Günlükler, bütün çalışan süreçler ve destek servislerinin çıktı akışlarından kümelenmiş, zaman sıralı olayların <a href="https://adam.herokuapp.com/past/2011/4/1/logs_are_streams_not_files/">akışıdır</a>. Günlükler ilk formda her bir satır için bir olay olacak şekilde yazı formatındadır(Bununla birlikte istisnalardaki geri dönüşleri birden fazla satırda ölçebilir). Günlükler başta ve sonda düzeltilmemiş ama akış, uygulama işlediği sürece devam eder.</p>
+
+<p><strong>On iki faktör uygulaması çıkış akışlarının depolaması veya yönlendirilmesiyle ilgilenmez.</strong> Günlük dosyalarını yazma ve yönetme yapmamalıdır. Bunun yerine, her çalışan süreç kendi olay akışını tamponlamadan <code>stdout</code>‘a yazar. Yerel geliştirme süresince, geliştirici uygulamanın davranışını gözlemlemek için terminallerinin önplanında bu akışı inceleyecekler.</p>
+
+<p>Evreleme ve ürün dağıtımlarında herbir sürecin akışı çalışma ortamı tarafından yakalanmış diğer uygulamadaki, diğer bütün akışlarla birlikte sıralanmış, görüntüleme ve uzun dönem arşivleme için bir veya daha fazla son hedeflerine yönlendirilmiş olacaklar. Bu arşivsel hedefler uygulama tarafından görülebilir veya yapılandırılabilir değildir, bunun yerine tamamen çalışma ortamı tarafından yönetilirler. Açık kaynak günlük yönlendiricileri (<a href="https://github.com/heroku/logplex">Logplex</a> ve <a href="https://github.com/fluent/fluentd">Fluentd</a> gibi) bu amaç için erişilebilirdir.</p>
+
+<p>Bir uygulama için olay akışı dosyaya yönlendirilebilir veya terminalden gerçek zamanlı kuyruklama aracılığla izlenebilir. En önemlisi, akış <a href="http://www.splunk.com/">Splunk</a> gibi günlük numaralandırma ve analiz sistemine veya <a href="http://hive.apache.org/">Hadoop/Hive</a> gibi genel amaçlı veri depolama sistemine gönderilebilir. Bu sistemler uygulamanın zamanla olan davranışlarında iç gözlem yapmak için büyük güç ve esnekliğe izin verir. Bunları içerir:</p>
+
+<ul>
+<li>Geçmişteki özel olayları bulmak.</li>
+
+<li>Eğilimlerin geniş aralıklı grafikleri(her bir dakika için olan istekler gibi).</li>
+
+<li>Kullanıcı tanımlı kestirme yollara göre aktif uyarma(Bir dakikadaki hataların niceliği belirli bir alt sınırı geçtiği zaman olan uyarı gibi).</li>
+</ul>
+
+  </article>
+</section>
+
+<section class="concrete">
+  <nav>
+    <div id="locales"><a href="/logs">English (en)</a> | <a href="/ko/logs">한국어 (ko)</a> | <a href="/ja/logs">日本語 (ja)</a> | <a href="/it/logs">Italiano (it)</a> | <a href="/pl/logs">Polski (pl)</a> | <a href="/zh_cn/logs">简体中文 (zh_cn)</a> | <a href="/de/logs">Deutsch (de)</a> | <a href="/es/logs">Español (es)</a> | <a href="/fr/logs">Français (fr)</a> | <span>Turkish (tr)</span> | <a href="/uk/logs">Українська (uk)</a> | <a href="/pt_br/logs">Brazilian Portuguese (pt_br)</a> | <a href="/ru/logs">Русский (ru)</a></div>
+    <div id="prev"><a href="./dev-prod-parity">&laquo; Previous</a></div>
+    <div id="next"><a href="./admin-processes">Next &raquo;</a></div>
+  </nav>
+</section>
+
+
+  <footer>
+  <div id="locales"><a href="/logs">English (en)</a> | <a href="/ko/logs">한국어 (ko)</a> | <a href="/ja/logs">日本語 (ja)</a> | <a href="/it/logs">Italiano (it)</a> | <a href="/pl/logs">Polski (pl)</a> | <a href="/zh_cn/logs">简体中文 (zh_cn)</a> | <a href="/de/logs">Deutsch (de)</a> | <a href="/es/logs">Español (es)</a> | <a href="/fr/logs">Français (fr)</a> | <span>Turkish (tr)</span> | <a href="/uk/logs">Українська (uk)</a> | <a href="/pt_br/logs">Brazilian Portuguese (pt_br)</a> | <a href="/ru/logs">Русский (ru)</a></div>
+  <div>Written by Adam Wiggins</div>
+  <div>Last updated 2017</div>
+  <div><a href="https://github.com/heroku/12factor">Sourcecode</a></div>
+  <div><a href="/12factor.epub">Download ePub Book</a></div>
+  <div><a href="https://www.heroku.com/policy/privacy">Privacy Policy</a></div>
+</footer>
+</body>
+</html>

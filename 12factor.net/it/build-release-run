@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>The Twelve-Factor App (Questo testo è una traduzione della versione originale in inglese.)</title>
+  <meta name="description" content="A methodology for building modern, scalable, maintainable software-as-a-service apps.">
+  <meta name="author" content="Adam Wiggins">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" href="images/favicon.ico">
+
+  <link rel="stylesheet" href="/css/screen.css" media="screen">
+  <link rel="stylesheet" href="/css/mobile.css" media="screen">
+
+  <script type="text/javascript" src="//use.typekit.com/rsq7tro.js"></script>
+  <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+</head>
+<body>
+  
+  <!-- Google Tag Manager -->
+  <noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-TK5QTP"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-TK5QTP');</script>
+  <!-- End Google Tag Manager -->
+  
+
+  <header>
+    <h1><a href="./" title="The Twelve-Factor App">The Twelve-Factor App</a></h1>
+  </header>
+
+  <section class="abstract" id="factor">
+  <article>
+    
+<h2 id="v_build_release_esecuzione">V. Build, release, esecuzione</h2>
+
+<h3 id="separare_in_modo_netto_lo_stadio_di_build_dallesecuzione">Separare in modo netto lo stadio di build dall’esecuzione</h3>
+
+<p>Una <a href="./codebase">codebase</a> viene “trasformata” in deployment attraverso tre fasi:</p>
+
+<ul>
+<li>la fase di <em>build</em>, che converte il codice del repo in una build “eseguibile”. Usando una certa versione del codice, a una specifica commit, nella fase di build vengono compilati i binari con gli asset appropriati includendo anche le eventuali dipendenze;</li>
+
+<li>la fase di <em>release</em> prende la build prodotta nella fase precedente e la combina con l’attuale insieme di impostazioni di configurazione del deployment specifico. La <em>release</em> risultante contiene sia la build che le impostazioni;</li>
+
+<li>la fase di <em>esecuzione</em> (conosciuta anche come “runtime”) vede l’applicazione in esecuzione nell’ambiente di destinazione, attraverso l’avvio di processi della release scelta;</li>
+</ul>
+
+<p><img src="/images/release.png" alt="Il codice diventa build, che combinata con le impostazioni diventa release." /></p>
+
+<p><strong>Un’app twelve-factor definisce una separazione netta tra build, release ed esecuzione.</strong> Per esempio, è impossibile effettuare dei cambiamenti del codice a runtime, dato che non c’è modo di propagare queste modifiche all’“indietro”, verso la fase di build.</p>
+
+<p>I tool di deployment offrono tipicamente dei tool di gestione delle release, in particolare alcuni dedicati a un rollback verso una release precedente. Per esempio, <a href="https://github.com/capistrano/capistrano/wiki">Capistrano</a> memorizza le varie release in una sotto-directory chiamata <code>releases</code>, in cui la release attuale non è che un symlink verso la directory della release attuale. Il comando di rollback permette di tornare indietro a una certa release velocemente.</p>
+
+<p>Ogni release dovrebbe inoltre possedere un ID univoco di rilascio, come per esempio un timestamp (es. <code>2011-04-06-20:32:17</code>) o un numero incrementale (es. <code>v100</code>). In un certo senso, la creazione di una release è una procedura “a senso unico” e una certa release non può essere modificata dopo la sua creazione. Qualsiasi cambiamento deve quindi prevedere una nuova release.</p>
+
+<p>Una fase di build è sempre avviata da uno sviluppatore, non appena il codice viene modificato. Al contrario, l’esecuzione può essere anche gestita in modo automatico (si pensi al riavvio del server oppure a un crash con successivo riavvio del processo). A ogni modo, una volta in esecuzione, la regola aurea è di evitare il più possibile (se non del tutto) modifiche che potrebbero rompere qualche equilibrio. Magari nel bel mezzo della notte, quando non c’è nessuno disponibile. La fase di build può essere sicuramente più “faticosa”, comunque, visto che possono verificarsi degli errori da risolvere prima di proseguire.</p>
+
+  </article>
+</section>
+
+<section class="concrete">
+  <nav>
+    <div id="locales"><a href="/build-release-run">English (en)</a> | <a href="/ko/build-release-run">한국어 (ko)</a> | <a href="/ja/build-release-run">日本語 (ja)</a> | <span>Italiano (it)</span> | <a href="/pl/build-release-run">Polski (pl)</a> | <a href="/zh_cn/build-release-run">简体中文 (zh_cn)</a> | <a href="/de/build-release-run">Deutsch (de)</a> | <a href="/es/build-release-run">Español (es)</a> | <a href="/fr/build-release-run">Français (fr)</a> | <a href="/tr/build-release-run">Turkish (tr)</a> | <a href="/uk/build-release-run">Українська (uk)</a> | <a href="/pt_br/build-release-run">Brazilian Portuguese (pt_br)</a> | <a href="/ru/build-release-run">Русский (ru)</a></div>
+    <div id="prev"><a href="./backing-services">&laquo; Previous</a></div>
+    <div id="next"><a href="./processes">Next &raquo;</a></div>
+  </nav>
+</section>
+
+
+  <footer>
+  <div id="locales"><a href="/build-release-run">English (en)</a> | <a href="/ko/build-release-run">한국어 (ko)</a> | <a href="/ja/build-release-run">日本語 (ja)</a> | <span>Italiano (it)</span> | <a href="/pl/build-release-run">Polski (pl)</a> | <a href="/zh_cn/build-release-run">简体中文 (zh_cn)</a> | <a href="/de/build-release-run">Deutsch (de)</a> | <a href="/es/build-release-run">Español (es)</a> | <a href="/fr/build-release-run">Français (fr)</a> | <a href="/tr/build-release-run">Turkish (tr)</a> | <a href="/uk/build-release-run">Українська (uk)</a> | <a href="/pt_br/build-release-run">Brazilian Portuguese (pt_br)</a> | <a href="/ru/build-release-run">Русский (ru)</a></div>
+  <div>Written by Adam Wiggins</div>
+  <div>Last updated 2017</div>
+  <div><a href="https://github.com/heroku/12factor">Sourcecode</a></div>
+  <div><a href="/12factor.epub">Download ePub Book</a></div>
+  <div><a href="https://www.heroku.com/policy/privacy">Privacy Policy</a></div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>The Twelve-Factor App (traduzido)</title>
+  <meta name="description" content="A methodology for building modern, scalable, maintainable software-as-a-service apps.">
+  <meta name="author" content="Adam Wiggins">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" href="images/favicon.ico">
+
+  <link rel="stylesheet" href="/css/screen.css" media="screen">
+  <link rel="stylesheet" href="/css/mobile.css" media="screen">
+
+  <script type="text/javascript" src="//use.typekit.com/rsq7tro.js"></script>
+  <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+</head>
+<body>
+  
+  <!-- Google Tag Manager -->
+  <noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-TK5QTP"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-TK5QTP');</script>
+  <!-- End Google Tag Manager -->
+  
+
+  <header>
+    <h1><a href="./" title="The Twelve-Factor App">The Twelve-Factor App</a></h1>
+  </header>
+
+  <section class="abstract" id="factor">
+  <article>
+    
+<h2 id="viii_concorrncia">VIII. Concorrência</h2>
+
+<h3 id="escale_atravs_do_processo_modelo">Escale através do processo modelo</h3>
+
+<p>Qualquer programa de computador, uma vez executado, está representado por um ou mais processos. Aplicações web têm tomado uma variedade de formas de processo de execução. Por exemplo, processos PHP rodam como processos filhos do Apache, iniciados sob demanda conforme necessário por volume de requisições. Processos Java tomam o caminho inverso, com a JVM proporcionando um processo uber maciço que reserva um grande bloco de recursos do sistema (CPU e memória) na inicialização, com concorrência gerenciada internamente via threads. Em ambos os casos, o(s) processo(os) em execução são apenas minimamente visível para os desenvolvedores da aplicação.</p>
+
+<p><img src="/images/process-types.png" alt="Escala é expressado como processos em execução, a diversidade da carga de trabalho é expressada como tipos de processo." /></p>
+
+<p><strong>Na aplicação doze-fatores, processos são cidadãos de primeira classe.</strong> Processos na aplicação doze-fatores utilizam fortes sugestões do modelo de processos UNIX para execução de serviços daemon, o desenvolvedor pode arquitetar a aplicação dele para lidar com diversas cargas de trabalho, atribuindo a cada tipo de trabalho a um <em>tipo de processo</em>. Por exemplo, solicitações HTTP podem ser manipuladas para um processo web, e tarefas background de longa duração podem ser manipuladas por um processo trabalhador.</p>
+
+<p>Isto não exclui processos individuais da manipulação de sua própria multiplexação interna, por threads dentro do runtime da VM, ou o modelo async/evented encontrado em ferramentas como <a href="http://rubyeventmachine.com/">EventMachine</a>, <a href="http://twistedmatrix.com/trac/">Twisted</a>, ou <a href="http://nodejs.org/">Node.js</a>. Mas uma VM individual pode aumentar (escala vertical), de modo que a aplicação deve ser capaz de abranger processos em execução em várias máquinas físicas.</p>
+
+<p>O modelo de processo realmente brilha quando chega a hora de escalar. O <a href="./processes">compartilhar-nada, natureza horizontal particionada de um processo da aplicação doze-fatores</a> significa que a adição de mais simultaneidade é uma operação simples e de confiança. A matriz de tipos de processo e número de processos de cada tipo é conhecida como o <em>processo de formação</em>.</p>
+
+<p>Processos de uma app doze-fatores <a href="http://dustin.github.com/2010/02/28/running-processes.html">nunca deveriam daemonizar</a> ou escrever arquivos PID. Em vez disso, confiar no gerente de processo do sistema operacional (como <a href="https://www.freedesktop.org/wiki/Software/systemd/">systemd</a>, um gerenciador de processos distribuídos em uma plataforma de nuvem, ou uma ferramenta como <a href="http://blog.daviddollar.org/2011/05/06/introducing-foreman.html">Foreman</a> em desenvolvimento) para gerenciar <a href="./logs">fluxos de saída</a>, responder a processos travados, e lidar com reinícios e desligamentos iniciados pelo usuário.</p>
+
+  </article>
+</section>
+
+<section class="concrete">
+  <nav>
+    <div id="locales"><a href="/ru/concurrency">Русский (ru)</a> | <a href="/concurrency">English (en)</a> | <a href="/ja/concurrency">日本語 (ja)</a> | <a href="/tr/concurrency">Turkish (tr)</a> | <a href="/ko/concurrency">한국어 (ko)</a> | <a href="/fr/concurrency">Français (fr)</a> | <a href="/de/concurrency">Deutsch (de)</a> | <a href="/pl/concurrency">Polski (pl)</a> | <a href="/it/concurrency">Italiano (it)</a> | <a href="/uk/concurrency">Українська (uk)</a> | <a href="/es/concurrency">Español (es)</a> | <a href="/zh_cn/concurrency">简体中文 (zh_cn)</a> | <span>Brazilian Portuguese (pt_br)</span></div>
+    <div id="prev"><a href="./port-binding">&laquo; Previous</a></div>
+    <div id="next"><a href="./disposability">Next &raquo;</a></div>
+  </nav>
+</section>
+
+
+  <footer>
+  <div id="locales"><a href="/ru/concurrency">Русский (ru)</a> | <a href="/concurrency">English (en)</a> | <a href="/ja/concurrency">日本語 (ja)</a> | <a href="/tr/concurrency">Turkish (tr)</a> | <a href="/ko/concurrency">한국어 (ko)</a> | <a href="/fr/concurrency">Français (fr)</a> | <a href="/de/concurrency">Deutsch (de)</a> | <a href="/pl/concurrency">Polski (pl)</a> | <a href="/it/concurrency">Italiano (it)</a> | <a href="/uk/concurrency">Українська (uk)</a> | <a href="/es/concurrency">Español (es)</a> | <a href="/zh_cn/concurrency">简体中文 (zh_cn)</a> | <span>Brazilian Portuguese (pt_br)</span></div>
+  <div>Written by Adam Wiggins</div>
+  <div>Last updated 2017</div>
+  <div><a href="https://github.com/heroku/12factor">Sourcecode</a></div>
+  <div><a href="/12factor.epub">Download ePub Book</a></div>
+  <div><a href="https://www.heroku.com/policy/privacy">Privacy Policy</a></div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>The Twelve-Factor App (traduzido)</title>
+  <meta name="description" content="A methodology for building modern, scalable, maintainable software-as-a-service apps.">
+  <meta name="author" content="Adam Wiggins">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" href="images/favicon.ico">
+
+  <link rel="stylesheet" href="/css/screen.css" media="screen">
+  <link rel="stylesheet" href="/css/mobile.css" media="screen">
+
+  <script type="text/javascript" src="//use.typekit.com/rsq7tro.js"></script>
+  <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+</head>
+<body>
+  
+  <!-- Google Tag Manager -->
+  <noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-TK5QTP"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-TK5QTP');</script>
+  <!-- End Google Tag Manager -->
+  
+
+  <header>
+    <h1><a href="./" title="The Twelve-Factor App">The Twelve-Factor App</a></h1>
+  </header>
+
+  <section class="abstract" id="factor">
+  <article>
+    
+<h2 id="v_construa_lance_execute">V. Construa, lance, execute</h2>
+
+<h3 id="separe_estritamente_os_estgios_de_construo_e_execuo">Separe estritamente os estágios de construção e execução</h3>
+
+<p>Uma <a href="./codebase">base de código</a> é transformada num deploy (de não-desenvolvimento) através de três estágios:</p>
+
+<ul>
+<li>O <em>estágio de construção</em> é uma transformação que converte um repositório de código em um pacote executável conhecido como <em>construção</em>. Usando uma versão do código de um commit especificado pelo processo de desenvolvimento, o estágio de construção obtém e fornece <a href="./dependencies">dependências</a> e compila binários e ativos.</li>
+
+<li>O <em>estágio de lançamento</em> pega a construção produzida pelo estágio de construção e a combina com a atual <a href="./config">configuração</a> do deploy. O <em>lançamento</em> resultante contém tanto a construção quanto a configuração e está pronta para execução imediata no ambiente de execução.</li>
+
+<li>O <em>estágio de execução</em> roda o app no ambiente de execução, através do início de alguns dos <a href="./processes">processos</a> do app com um determinado lançamento.</li>
+</ul>
+
+<p><img src="/images/release.png" alt="Código vira uma construção, que é combinada com a configuração para se criar um lançamento." /></p>
+
+<p><strong>O app doze-fatores usa separação estrita entre os estágios de construção, lançamento e execução.</strong> Por exemplo, é impossível alterar código em tempo de execução, já que não há meios de se propagar tais mudanças de volta ao estágio de construção.</p>
+
+<p>Ferramentas para deploy tipicamente oferecem ferramentas de gestão de lançamento, mais notadamente a habilidade de se reverter à um lançamento prévio. Por exemplo, a ferramenta de deploy <a href="https://github.com/capistrano/capistrano/wiki">Capistrano</a> armazena lançamentos em um subdiretório chamado <code>releases</code>, onde o lançamento atual é um link simbólico para o diretório de lançamento atual. Seu comando <code>rollback</code> torna fácil reverter para um lançamento prévio.</p>
+
+<p>Cada lançamento deve sempre ter um identificador de lançamento único, tal qual o timestamp do lançamento (como <code>2011-04-06-20:32:17</code>) ou um número incremental (como <code>v100</code>). Lançamentos são livro-razões onde apenas se acrescenta informações, ou seja, uma vez criado o lançamento não pode ser alterado. Qualquer mudança deve gerar um novo lançamento.</p>
+
+<p>Construções são iniciadas pelos desenvolvedores do app sempre que novos códigos entram no deploy. A execução de um executável, todavia, pode acontecer automaticamente em casos como o reinício do servidor, ou um processo travado sendo reiniciado pelo gerenciador de processos. Assim, no estágio de execução deve haver quanto menos partes móveis quanto possível, já que problemas que previnem um app de rodar pode causá-lo a travar no meio da noite quando não há desenvolvedores por perto. O estágio de construção pode ser mais complexo, já que os erros estão sempre à vista do desenvolvedor que está cuidando do deploy.</p>
+
+  </article>
+</section>
+
+<section class="concrete">
+  <nav>
+    <div id="locales"><a href="/ru/build-release-run">Русский (ru)</a> | <a href="/build-release-run">English (en)</a> | <a href="/ja/build-release-run">日本語 (ja)</a> | <a href="/tr/build-release-run">Turkish (tr)</a> | <a href="/ko/build-release-run">한국어 (ko)</a> | <a href="/fr/build-release-run">Français (fr)</a> | <a href="/de/build-release-run">Deutsch (de)</a> | <a href="/pl/build-release-run">Polski (pl)</a> | <a href="/it/build-release-run">Italiano (it)</a> | <a href="/uk/build-release-run">Українська (uk)</a> | <a href="/es/build-release-run">Español (es)</a> | <a href="/zh_cn/build-release-run">简体中文 (zh_cn)</a> | <span>Brazilian Portuguese (pt_br)</span></div>
+    <div id="prev"><a href="./backing-services">&laquo; Previous</a></div>
+    <div id="next"><a href="./processes">Next &raquo;</a></div>
+  </nav>
+</section>
+
+
+  <footer>
+  <div id="locales"><a href="/ru/build-release-run">Русский (ru)</a> | <a href="/build-release-run">English (en)</a> | <a href="/ja/build-release-run">日本語 (ja)</a> | <a href="/tr/build-release-run">Turkish (tr)</a> | <a href="/ko/build-release-run">한국어 (ko)</a> | <a href="/fr/build-release-run">Français (fr)</a> | <a href="/de/build-release-run">Deutsch (de)</a> | <a href="/pl/build-release-run">Polski (pl)</a> | <a href="/it/build-release-run">Italiano (it)</a> | <a href="/uk/build-release-run">Українська (uk)</a> | <a href="/es/build-release-run">Español (es)</a> | <a href="/zh_cn/build-release-run">简体中文 (zh_cn)</a> | <span>Brazilian Portuguese (pt_br)</span></div>
+  <div>Written by Adam Wiggins</div>
+  <div>Last updated 2017</div>
+  <div><a href="https://github.com/heroku/12factor">Sourcecode</a></div>
+  <div><a href="/12factor.epub">Download ePub Book</a></div>
+  <div><a href="https://www.heroku.com/policy/privacy">Privacy Policy</a></div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>The Twelve-Factor App Ce texte est une traduction</title>
+  <meta name="description" content="A methodology for building modern, scalable, maintainable software-as-a-service apps.">
+  <meta name="author" content="Adam Wiggins">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" href="images/favicon.ico">
+
+  <link rel="stylesheet" href="/css/screen.css" media="screen">
+  <link rel="stylesheet" href="/css/mobile.css" media="screen">
+
+  <script type="text/javascript" src="//use.typekit.com/rsq7tro.js"></script>
+  <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+</head>
+<body>
+  
+  <!-- Google Tag Manager -->
+  <noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-TK5QTP"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-TK5QTP');</script>
+  <!-- End Google Tag Manager -->
+  
+
+  <header>
+    <h1><a href="./" title="The Twelve-Factor App">The Twelve-Factor App</a></h1>
+  </header>
+
+  <section class="abstract" id="factor">
+  <article>
+    
+<h2 id="vi_processus">VI. Processus</h2>
+
+<h3 id="excutez_lapplication_comme_un_ou_plusieurs_processus_sans_tat">Exécutez l’application comme un ou plusieurs processus sans état</h3>
+
+<p>L’application est exécutée dans l’environnement d’exécution comme un ou plusieurs <em>processus</em>.</p>
+
+<p>Dans la situation la plus simple, le code est un script indépendant, l’environnement d’exécution est l’ordinateur portable du développeur sur lequel est installé de quoi exécuter le langage, et le processus est lancé depuis la ligne de commande. (par exemple, <code>python mon_script.py</code>). De l’autre côté du spectre, un déploiement de production d’une application sophistiquée peut utiliser plusieurs <a href="./concurrency">types de processus, instanciés dans 0 ou plus processus en fonctionnement</a>.</p>
+
+<p><strong>Les processus 12 facteurs sont sans état et ne partagent <a href="http://en.wikipedia.org/wiki/Shared_nothing_architecture">rien (en)</a>.</strong> Toute donnée qui doit être persistée doit être stockée dans un <a href="./backing-services">service externe</a> stateful, typiquement une base de données.</p>
+
+<p>L’espace mémoire ou le système de fichier du processus peut être utilisé comme cache momentané pour des transactions uniques. Par exemple, télécharger un gros fichier, effectuer une opération dessus, puis stocker le résultat de l’opération dans la base de données. Les applications 12 facteurs ne supposent jamais que quelque chose ayant été mis en cache en mémoire ou sur le disque sera disponible dans une future requête ou job — avec plusieurs processus de chaque type qui s’exécutent, il y a de grandes chances qu’une future requête soit effectuée par un processus différent. Même lorsque l’on fait tourner seulement un processus, un redémarrage (déclenché par le déploiement du code, un changement de configuration, ou l’environnement d’exécution qui déplace le processus vers un lieu physique différent) va généralement balayer toutes les modifications locales (c’est-à-dire en mémoire et sur le disque).</p>
+
+<p>Des outils de création de paquets de ressources (ou “asset packagers”) (tel que <a href="http://documentcloud.github.com/jammit/">Jammit</a> ou <a href="http://django-compressor.readthedocs.org/">django-compressor</a>) utilisent le système de fichier comme cache pour les ressources compilées. Une application 12 facteurs préfère faire cette compilation durant l’<a href="./build-release-run">étape d’assemblage</a>, comme avec le <a href="http://guides.rubyonrails.org/asset_pipeline.html">pipeline des ressources de Rails</a>, plutôt que durant l’exécution.</p>
+
+<p>Certains systèmes web s’appuient sur des <a href="http://en.wikipedia.org/wiki/Load_balancing_%28computing%29#Persistence">“sessions persistantes” (en)</a> – c’est-à-dire, mettre en cache les données de session utilisateur dans le processus de l’application et attendre que les requêtes futures du même visiteur seront routées dans le même processus. Les sessions persistantes sont une violation des 12 facteurs, qu’il ne faudrait jamais utiliser. Les états de session sont de bons candidats pour un datastore qui offre des dates d’expiration, comme <a href="http://memcached.org/">Memcached</a> ou <a href="http://redis.io/">Redis</a>.</p>
+
+  </article>
+</section>
+
+<section class="concrete">
+  <nav>
+    <div id="locales"><a href="/processes">English (en)</a> | <a href="/ko/processes">한국어 (ko)</a> | <a href="/ja/processes">日本語 (ja)</a> | <a href="/it/processes">Italiano (it)</a> | <a href="/pl/processes">Polski (pl)</a> | <a href="/zh_cn/processes">简体中文 (zh_cn)</a> | <a href="/de/processes">Deutsch (de)</a> | <a href="/es/processes">Español (es)</a> | <span>Français (fr)</span> | <a href="/tr/processes">Turkish (tr)</a> | <a href="/uk/processes">Українська (uk)</a> | <a href="/pt_br/processes">Brazilian Portuguese (pt_br)</a> | <a href="/ru/processes">Русский (ru)</a></div>
+    <div id="prev"><a href="./build-release-run">&laquo; Previous</a></div>
+    <div id="next"><a href="./port-binding">Next &raquo;</a></div>
+  </nav>
+</section>
+
+
+  <footer>
+  <div id="locales"><a href="/processes">English (en)</a> | <a href="/ko/processes">한국어 (ko)</a> | <a href="/ja/processes">日本語 (ja)</a> | <a href="/it/processes">Italiano (it)</a> | <a href="/pl/processes">Polski (pl)</a> | <a href="/zh_cn/processes">简体中文 (zh_cn)</a> | <a href="/de/processes">Deutsch (de)</a> | <a href="/es/processes">Español (es)</a> | <span>Français (fr)</span> | <a href="/tr/processes">Turkish (tr)</a> | <a href="/uk/processes">Українська (uk)</a> | <a href="/pt_br/processes">Brazilian Portuguese (pt_br)</a> | <a href="/ru/processes">Русский (ru)</a></div>
+  <div>Written by Adam Wiggins</div>
+  <div>Last updated 2017</div>
+  <div><a href="https://github.com/heroku/12factor">Sourcecode</a></div>
+  <div><a href="/12factor.epub">Download ePub Book</a></div>
+  <div><a href="https://www.heroku.com/policy/privacy">Privacy Policy</a></div>
+</footer>
+</body>
+</html>

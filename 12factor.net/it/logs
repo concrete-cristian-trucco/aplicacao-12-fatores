@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>The Twelve-Factor App (Questo testo è una traduzione della versione originale in inglese.)</title>
+  <meta name="description" content="A methodology for building modern, scalable, maintainable software-as-a-service apps.">
+  <meta name="author" content="Adam Wiggins">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" href="images/favicon.ico">
+
+  <link rel="stylesheet" href="/css/screen.css" media="screen">
+  <link rel="stylesheet" href="/css/mobile.css" media="screen">
+
+  <script type="text/javascript" src="//use.typekit.com/rsq7tro.js"></script>
+  <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+</head>
+<body>
+  
+  <!-- Google Tag Manager -->
+  <noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-TK5QTP"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-TK5QTP');</script>
+  <!-- End Google Tag Manager -->
+  
+
+  <header>
+    <h1><a href="./" title="The Twelve-Factor App">The Twelve-Factor App</a></h1>
+  </header>
+
+  <section class="abstract" id="factor">
+  <article>
+    
+<h2 id="xi_log">XI. Log</h2>
+
+<h3 id="tratta_i_log_come_stream_di_eventi">Tratta i log come stream di eventi</h3>
+
+<p>I <em>log</em> offrono una maggiore chiarezza riguardo un comportamento di un’app in esecuzione. In ambienti basati su server, questi sono tendenzialmente scritti su un file su disco (logfile). A ogni modo, è solo un formato.</p>
+
+<p>Un log può essere definito infatti come uno <a href="https://adam.herokuapp.com/past/2011/4/1/logs_are_streams_not_files/">stream</a> di eventi aggregati e ordinati cronologicamente. Tali eventi vengono presi da tutti i vari output stream presenti di tutti i processi attivi, oltre che dai vari backing service. Nella loro forma grezza, i log si presentano come un file di testo con un evento per ogni linea (con le dovute eccezioni). Non hanno un inizio o una fine ben definiti, ma un continuo di informazioni fin quando l’applicazione è al lavoro.</p>
+
+<p><strong>Un’applicazione twelve-factor non dovrebbe preoccuparsi di lavorare con il proprio output stream.</strong> Non dovrebbe lavorare o comunque gestire i vari logfile. Dovrebbe, invece, fare in modo che ogni processo si occupi di scrivere il proprio stream di eventi su “<code>stdout</code>”. Durante lo sviluppo in locale, quindi, lo sviluppatore potrà visionare lo stream in modo completo direttamente dal terminale, per capire meglio il comportamento della sua applicazione.</p>
+
+<p>In staging o in produzione, invece, ogni stream viene “preso” dall’ambiente di esecuzione ed elaborato insieme a tutti gli altri stream dell’applicazione, quindi indirizzato verso una o più “destinazioni” finali per la visualizzazione e archiviazione a lungo termine. Queste “destinazioni” non sono visibili o configurabili, ma vengono gestite totalmente dall’ambiente di esecuzione. Per questi scopi esistono strumenti come <a href="https://github.com/heroku/logplex">Logplex</a> e <a href="https://github.com/fluent/fluentd">Fluentd</a>).</p>
+
+<p>Uno stream di eventi di un’applicazione può essere quindi indirizzato verso un file, o visionato in tempo reale su un terminale. Ancora, lo stream può essere inviato a un sistema di analisi e indicizzazione di log, come <a href="http://www.splunk.com/">Splunk</a>, oppure a un sistema di memorizzazione general-purpose come <a href="http://hive.apache.org/">Hadoop/Hive</a>. Questi sistemi hanno ottimi tool per effettuare un lavoro di analisi del comportamento dell’applicazione, come per esempio:</p>
+
+<ul>
+<li>Ricerca di specifici eventi nel passato;</li>
+
+<li>Grafici per rappresentare dei trend (es. richieste per minuto);</li>
+
+<li>Attivazione di alert specifici in base a regole definite dall’utente (es. alert avverte l’amministratore se il rate di eventi al minuto sale oltre una certa soglia);</li>
+</ul>
+
+  </article>
+</section>
+
+<section class="concrete">
+  <nav>
+    <div id="locales"><a href="/ru/logs">Русский (ru)</a> | <a href="/logs">English (en)</a> | <a href="/ja/logs">日本語 (ja)</a> | <a href="/tr/logs">Turkish (tr)</a> | <a href="/ko/logs">한국어 (ko)</a> | <a href="/fr/logs">Français (fr)</a> | <a href="/de/logs">Deutsch (de)</a> | <a href="/pl/logs">Polski (pl)</a> | <span>Italiano (it)</span> | <a href="/uk/logs">Українська (uk)</a> | <a href="/es/logs">Español (es)</a> | <a href="/zh_cn/logs">简体中文 (zh_cn)</a> | <a href="/pt_br/logs">Brazilian Portuguese (pt_br)</a></div>
+    <div id="prev"><a href="./dev-prod-parity">&laquo; Previous</a></div>
+    <div id="next"><a href="./admin-processes">Next &raquo;</a></div>
+  </nav>
+</section>
+
+
+  <footer>
+  <div id="locales"><a href="/ru/logs">Русский (ru)</a> | <a href="/logs">English (en)</a> | <a href="/ja/logs">日本語 (ja)</a> | <a href="/tr/logs">Turkish (tr)</a> | <a href="/ko/logs">한국어 (ko)</a> | <a href="/fr/logs">Français (fr)</a> | <a href="/de/logs">Deutsch (de)</a> | <a href="/pl/logs">Polski (pl)</a> | <span>Italiano (it)</span> | <a href="/uk/logs">Українська (uk)</a> | <a href="/es/logs">Español (es)</a> | <a href="/zh_cn/logs">简体中文 (zh_cn)</a> | <a href="/pt_br/logs">Brazilian Portuguese (pt_br)</a></div>
+  <div>Written by Adam Wiggins</div>
+  <div>Last updated 2017</div>
+  <div><a href="https://github.com/heroku/12factor">Sourcecode</a></div>
+  <div><a href="/12factor.epub">Download ePub Book</a></div>
+  <div><a href="https://www.heroku.com/policy/privacy">Privacy Policy</a></div>
+</footer>
+</body>
+</html>

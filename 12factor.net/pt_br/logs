@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>The Twelve-Factor App (traduzido)</title>
+  <meta name="description" content="A methodology for building modern, scalable, maintainable software-as-a-service apps.">
+  <meta name="author" content="Adam Wiggins">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" href="images/favicon.ico">
+
+  <link rel="stylesheet" href="/css/screen.css" media="screen">
+  <link rel="stylesheet" href="/css/mobile.css" media="screen">
+
+  <script type="text/javascript" src="//use.typekit.com/rsq7tro.js"></script>
+  <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+</head>
+<body>
+  
+  <!-- Google Tag Manager -->
+  <noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-TK5QTP"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-TK5QTP');</script>
+  <!-- End Google Tag Manager -->
+  
+
+  <header>
+    <h1><a href="./" title="The Twelve-Factor App">The Twelve-Factor App</a></h1>
+  </header>
+
+  <section class="abstract" id="factor">
+  <article>
+    
+<h2 id="xi_logs">XI. Logs</h2>
+
+<h3 id="trate_logs_como_fluxos_de_eventos">Trate logs como fluxos de eventos</h3>
+
+<p><em>Logs</em> provém visibilidade no comportamento de um app em execução. Em ambientes de servidor eles são comumente escritos num arquivo em disco (um “logfile”); mas este é apenas um formato de saída.</p>
+
+<p>Logs são o <a href="https://adam.herokuapp.com/past/2011/4/1/logs_are_streams_not_files/">fluxo</a> de eventos agregados e ordenados por tempo coletados dos fluxos de saída de todos os processos em execução e serviços de apoio. Logs na sua forma crua são tipicamente um formato de texto com um evento por linha (apesar que pilhas de exceção podem ocupar várias linhas). Logs não tem começos ou términos fixos, mas fluem continuamente enquanto o app estiver operante.</p>
+
+<p><strong>Um app doze-fatores nunca se preocupa com o roteamento ou armazenagem do seu fluxo de saída.</strong> Ele não deve tentar escrever ou gerir arquivos de logs. No lugar, cada processo em execução escreve seu próprio fluxo de evento, sem buffer, para o <code>stdout</code>. Durante o desenvolvimento local, o desenvolvedor verá este fluxo no plano de frente do seu terminal para observar o comportamento do app.</p>
+
+<p>Em deploys de homologação ou produção, cada fluxo dos processos serão capturados pelo ambiente de execução, colados com todos os demais fluxos do app, e direcionados para um ou mais destinos finais para visualização e arquivamento de longo prazo. Estes destinos de arquivamento não são visíveis ou configuráveis pelo app, e ao invés disso, são completamente geridos pelo ambiente de execução. Roteadores de log open source (tais como <a href="https://github.com/heroku/logplex">Logplex</a> e <a href="https://github.com/fluent/fluentd">Fluentd</a>) estão disponíveis para este propósito.</p>
+
+<p>O fluxo de evento para um app pode ser direcionado para um arquivo, ou visto em tempo real via <code>tail</code> num terminal. Mais significativamente, o fluxo pode ser enviado para um sistema indexador e analisador tal como <a href="http://www.splunk.com/">Splunk</a>, ou um sistema mais genérico de <em>data warehousing</em> como o <a href="http://hive.apache.org/">Hadoop/Hive</a>. Estes sistemas permitem grande poder e flexibilidade para observar o comportamento de um app durante o tempo, incluindo:</p>
+
+<ul>
+<li>Encontrando eventos específicos no passado.</li>
+
+<li>Gráficos em larga escala de tendências (como requisições por minuto)</li>
+
+<li>Notificações ativas de acordo com as heurísticas determinadas pelo usuário (como uma notificação quando a quantidade de erros por minuto exceder um certo limite).</li>
+</ul>
+
+  </article>
+</section>
+
+<section class="concrete">
+  <nav>
+    <div id="locales"><a href="/logs">English (en)</a> | <a href="/ko/logs">한국어 (ko)</a> | <a href="/ja/logs">日本語 (ja)</a> | <a href="/it/logs">Italiano (it)</a> | <a href="/pl/logs">Polski (pl)</a> | <a href="/zh_cn/logs">简体中文 (zh_cn)</a> | <a href="/de/logs">Deutsch (de)</a> | <a href="/es/logs">Español (es)</a> | <a href="/fr/logs">Français (fr)</a> | <a href="/tr/logs">Turkish (tr)</a> | <a href="/uk/logs">Українська (uk)</a> | <span>Brazilian Portuguese (pt_br)</span> | <a href="/ru/logs">Русский (ru)</a></div>
+    <div id="prev"><a href="./dev-prod-parity">&laquo; Previous</a></div>
+    <div id="next"><a href="./admin-processes">Next &raquo;</a></div>
+  </nav>
+</section>
+
+
+  <footer>
+  <div id="locales"><a href="/logs">English (en)</a> | <a href="/ko/logs">한국어 (ko)</a> | <a href="/ja/logs">日本語 (ja)</a> | <a href="/it/logs">Italiano (it)</a> | <a href="/pl/logs">Polski (pl)</a> | <a href="/zh_cn/logs">简体中文 (zh_cn)</a> | <a href="/de/logs">Deutsch (de)</a> | <a href="/es/logs">Español (es)</a> | <a href="/fr/logs">Français (fr)</a> | <a href="/tr/logs">Turkish (tr)</a> | <a href="/uk/logs">Українська (uk)</a> | <span>Brazilian Portuguese (pt_br)</span> | <a href="/ru/logs">Русский (ru)</a></div>
+  <div>Written by Adam Wiggins</div>
+  <div>Last updated 2017</div>
+  <div><a href="https://github.com/heroku/12factor">Sourcecode</a></div>
+  <div><a href="/12factor.epub">Download ePub Book</a></div>
+  <div><a href="https://www.heroku.com/policy/privacy">Privacy Policy</a></div>
+</footer>
+</body>
+</html>

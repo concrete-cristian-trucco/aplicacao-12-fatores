@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>The Twelve-Factor App To jest tłumaczenie.</title>
+  <meta name="description" content="A methodology for building modern, scalable, maintainable software-as-a-service apps.">
+  <meta name="author" content="Adam Wiggins">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" href="images/favicon.ico">
+
+  <link rel="stylesheet" href="/css/screen.css" media="screen">
+  <link rel="stylesheet" href="/css/mobile.css" media="screen">
+
+  <script type="text/javascript" src="//use.typekit.com/rsq7tro.js"></script>
+  <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+</head>
+<body>
+  
+  <!-- Google Tag Manager -->
+  <noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-TK5QTP"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-TK5QTP');</script>
+  <!-- End Google Tag Manager -->
+  
+
+  <header>
+    <h1><a href="./" title="The Twelve-Factor App">The Twelve-Factor App</a></h1>
+  </header>
+
+  <section class="abstract" id="factor">
+  <article>
+    
+<h2 id="xi_logi">XI. Logi</h2>
+
+<h3 id="traktuj_logi_jako_strumie_zdarze">Traktuj logi jako strumień zdarzeń</h3>
+
+<p><em>Logi</em> zapewniają wgląd w zachowanie działającej aplikacji. W środowiskach korzystających z serwera zazwyczaj są zapisywane na dysku (plik “logfile”); jednak jest to tylko wybrany format zapisu.</p>
+
+<p>Logi są listą zaagregowanych i uporządkowanych w czasie <a href="https://adam.herokuapp.com/past/2011/4/1/logs_are_streams_not_files/">zdarzeń</a> zebranych ze strumieni wyjściowych wszystkich uruchomionych procesów i usług wspierających. Logi w swojej pierwotnej formie występują zazwyczaj w formacie tekstowym, gdzie jedno zdarzenie zajmuje jedną linię w pliku (wyjątkiem jest jednak <a href="https://en.wikipedia.org/wiki/Stack_trace">backtrace</a>, który może zajmować wiele linii). Logi nie mają określonego początku ani końca, napływają nieustannie podczas działania aplikacji.</p>
+
+<p><strong>Aplikacja 12factor nie odpowiada za przekierowywanie i zapis swojego strumienia wyjściowego.</strong> Nie powinna też zapisywać czy zarządzać plikami logów. Zamiast tego, każdy działający proces zapisuje swój niebuforowany strumień zdarzeń do <code>stdout</code>. Podczas pracy w lokalnym środowisku developer może obserwować zachowanie aplikacji przeglądając strumień w oknie terminala</p>
+
+<p>We wdrożeniu stagingowym czy produkcyjnym, każdy strumień procesów zostanie przechwycony przez środowisko wykonawcze, dołączony do pozostałych i skierowany do jednego lub wielu miejsc w celu przeglądania i długoterminowego zapisu. Miejsca zapisu nie są widoczne ani konfigurowane przez aplikację - w całości zarządza nimi środowisko wykonawcze. W tym celu można skorzystać z narzędzi do obsługi logów (takich jak <a href="https://github.com/heroku/logplex">Logplex</a> lub <a href="https://github.com/fluent/fluentd">Fluentd</a>) dostępnych na licencji open-source.</p>
+
+<p>Strumień zdarzeń aplikacji może być skierowany do pliku lub obserwowany w czasie rzeczywistym przy pomocy komendy <code>tail</code> w terminalu. Przeważnie strumień jest wysyłany do systemu indeksowania i analizowania jak np. <a href="http://www.splunk.com/">Splunk</a>, albo do systemu magazynowania danych jak <a href="http://hive.apache.org/">Hadoop/Hive</a>. Wymienione systemy oferują duże możliwości i elastyczność obserwacji i badania zachowań aplikacji w czasie, w tym:</p>
+
+<ul>
+<li>Wyszukiwanie konkretnych zdarzeń z przeszłości.</li>
+
+<li>Wizualizację masowych statystyk (np. zapytania na minutę).</li>
+
+<li>Wysyłanie powiadomień na podstawie wcześniej zdefiniowanych heurystyk (np. o tym, że liczba błędów przekroczyła dozwoloną wartość).</li>
+</ul>
+
+  </article>
+</section>
+
+<section class="concrete">
+  <nav>
+    <div id="locales"><a href="/logs">English (en)</a> | <a href="/ko/logs">한국어 (ko)</a> | <a href="/ja/logs">日本語 (ja)</a> | <a href="/it/logs">Italiano (it)</a> | <span>Polski (pl)</span> | <a href="/zh_cn/logs">简体中文 (zh_cn)</a> | <a href="/de/logs">Deutsch (de)</a> | <a href="/es/logs">Español (es)</a> | <a href="/fr/logs">Français (fr)</a> | <a href="/tr/logs">Turkish (tr)</a> | <a href="/uk/logs">Українська (uk)</a> | <a href="/pt_br/logs">Brazilian Portuguese (pt_br)</a> | <a href="/ru/logs">Русский (ru)</a></div>
+    <div id="prev"><a href="./dev-prod-parity">&laquo; Previous</a></div>
+    <div id="next"><a href="./admin-processes">Next &raquo;</a></div>
+  </nav>
+</section>
+
+
+  <footer>
+  <div id="locales"><a href="/logs">English (en)</a> | <a href="/ko/logs">한국어 (ko)</a> | <a href="/ja/logs">日本語 (ja)</a> | <a href="/it/logs">Italiano (it)</a> | <span>Polski (pl)</span> | <a href="/zh_cn/logs">简体中文 (zh_cn)</a> | <a href="/de/logs">Deutsch (de)</a> | <a href="/es/logs">Español (es)</a> | <a href="/fr/logs">Français (fr)</a> | <a href="/tr/logs">Turkish (tr)</a> | <a href="/uk/logs">Українська (uk)</a> | <a href="/pt_br/logs">Brazilian Portuguese (pt_br)</a> | <a href="/ru/logs">Русский (ru)</a></div>
+  <div>Written by Adam Wiggins</div>
+  <div>Last updated 2017</div>
+  <div><a href="https://github.com/heroku/12factor">Sourcecode</a></div>
+  <div><a href="/12factor.epub">Download ePub Book</a></div>
+  <div><a href="https://www.heroku.com/policy/privacy">Privacy Policy</a></div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>The Twelve-Factor App (Questo testo è una traduzione della versione originale in inglese.)</title>
+  <meta name="description" content="A methodology for building modern, scalable, maintainable software-as-a-service apps.">
+  <meta name="author" content="Adam Wiggins">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" href="images/favicon.ico">
+
+  <link rel="stylesheet" href="/css/screen.css" media="screen">
+  <link rel="stylesheet" href="/css/mobile.css" media="screen">
+
+  <script type="text/javascript" src="//use.typekit.com/rsq7tro.js"></script>
+  <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+</head>
+<body>
+  
+  <!-- Google Tag Manager -->
+  <noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-TK5QTP"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-TK5QTP');</script>
+  <!-- End Google Tag Manager -->
+  
+
+  <header>
+    <h1><a href="./" title="The Twelve-Factor App">The Twelve-Factor App</a></h1>
+  </header>
+
+  <section class="abstract" id="factor">
+  <article>
+    
+<h2 id="ix_rilasciabilit">IX. Rilasciabilità</h2>
+
+<h3 id="massimizzare_la_robustezza_con_avvii_veloci_e_shutdown_graduali">Massimizzare la robustezza con avvii veloci e shutdown graduali</h3>
+
+<p><strong>I <a href="./processes">processi</a> di un’applicazione twelve-factor sono <em>rilasciabili</em>, cioè possono essere avviati o fermati senza problemi al momento del bisogno.</strong> Questa caratteristica ovviamente facilita le procedure di scaling, deploy rapido della <a href="./codebase">codebase</a> o cambi dei file di <a href="./config">configurazione</a>.</p>
+
+<p>I processi dovrebbero inoltre ambire a <strong>minimizzare i tempi di avvio</strong>. Idealmente, un processo impiega pochi secondi dal tempo di lancio al momento in cui tutto è pronto per ricevere nuove richieste. Dei tempi brevi di avvio inoltre forniscono una maggiore agilità in fase di <a href="./build-release-run">release</a>; il tutto a vantaggio della robustezza dell’applicazione, dato che il process manager può così muoversi agevolmente verso un’altra macchina fisica, se necessario.</p>
+
+<p>I processi dovrebbero inoltre <strong>terminare in modo tutt’altro che brusco, quindi graduale, in caso di ricezione di un segnale <a href="http://en.wikipedia.org/wiki/SIGTERM">SIGTERM</a></strong> dal process manager. Per un’applicazione web, la giusta terminazione di un processo viene ottenuta quando si cessa innanzitutto di ascoltare sulla porta dedicata del servizio (evitando quindi di ricevere altre richieste), permettendo poi di terminare le richieste esistenti e infine di concludere la fase di terminazione in modo definitivo.</p>
+
+<p>Per un processo worker, invece, la fase di terminazione più adatta vede il ritorno del job corrente alla coda. Per esempio, su <a href="http://www.rabbitmq.com/">RabbitMQ</a> il worker può inviare un <a href="http://www.rabbitmq.com/amqp-0-9-1-quickref.html#basic.nack"><code>NACK</code></a>; su <a href="http://kr.github.com/beanstalkd/">Beanstalkd</a>, il job viene automaticamente rimandato in coda nel caso in cui il worker si disconnette. I sistemi basati su lock come [Delayed ]</p>
+
+<p>I processi dovrebbero, inoltre, essere “robusti nei confronti di situazioni di crash improvviso”, cosa che si verifica ad esempio in caso di problemi a livello di hardware sottostante. Nonostante questa seconda evenienza si verifichi meno frequentemente di una chiusura con <code>SIGTERM</code>, può comunque succedere. L’approccio raccomandato, in questi casi, è l’uso di un sistema robusto di code, come Beanstalkd, che rimanda il job in coda in caso di timeout o disconnessione. Ad ogni modo, una buona applicazione twelve-factor deve poter gestire senza problemi le terminazioni inaspettate. Il <a href="http://lwn.net/Articles/191059/">Crash-only design</a> porta questo concetto alla sua <a href="http://docs.couchdb.org/en/latest/intro/overview.html">logica conclusione</a>.</p>
+
+  </article>
+</section>
+
+<section class="concrete">
+  <nav>
+    <div id="locales"><a href="/disposability">English (en)</a> | <a href="/ko/disposability">한국어 (ko)</a> | <a href="/ja/disposability">日本語 (ja)</a> | <span>Italiano (it)</span> | <a href="/pl/disposability">Polski (pl)</a> | <a href="/zh_cn/disposability">简体中文 (zh_cn)</a> | <a href="/de/disposability">Deutsch (de)</a> | <a href="/es/disposability">Español (es)</a> | <a href="/fr/disposability">Français (fr)</a> | <a href="/tr/disposability">Turkish (tr)</a> | <a href="/uk/disposability">Українська (uk)</a> | <a href="/pt_br/disposability">Brazilian Portuguese (pt_br)</a> | <a href="/ru/disposability">Русский (ru)</a></div>
+    <div id="prev"><a href="./concurrency">&laquo; Previous</a></div>
+    <div id="next"><a href="./dev-prod-parity">Next &raquo;</a></div>
+  </nav>
+</section>
+
+
+  <footer>
+  <div id="locales"><a href="/disposability">English (en)</a> | <a href="/ko/disposability">한국어 (ko)</a> | <a href="/ja/disposability">日本語 (ja)</a> | <span>Italiano (it)</span> | <a href="/pl/disposability">Polski (pl)</a> | <a href="/zh_cn/disposability">简体中文 (zh_cn)</a> | <a href="/de/disposability">Deutsch (de)</a> | <a href="/es/disposability">Español (es)</a> | <a href="/fr/disposability">Français (fr)</a> | <a href="/tr/disposability">Turkish (tr)</a> | <a href="/uk/disposability">Українська (uk)</a> | <a href="/pt_br/disposability">Brazilian Portuguese (pt_br)</a> | <a href="/ru/disposability">Русский (ru)</a></div>
+  <div>Written by Adam Wiggins</div>
+  <div>Last updated 2017</div>
+  <div><a href="https://github.com/heroku/12factor">Sourcecode</a></div>
+  <div><a href="/12factor.epub">Download ePub Book</a></div>
+  <div><a href="https://www.heroku.com/policy/privacy">Privacy Policy</a></div>
+</footer>
+</body>
+</html>

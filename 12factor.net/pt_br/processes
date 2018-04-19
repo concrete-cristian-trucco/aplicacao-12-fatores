@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>The Twelve-Factor App (traduzido)</title>
+  <meta name="description" content="A methodology for building modern, scalable, maintainable software-as-a-service apps.">
+  <meta name="author" content="Adam Wiggins">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" href="images/favicon.ico">
+
+  <link rel="stylesheet" href="/css/screen.css" media="screen">
+  <link rel="stylesheet" href="/css/mobile.css" media="screen">
+
+  <script type="text/javascript" src="//use.typekit.com/rsq7tro.js"></script>
+  <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+</head>
+<body>
+  
+  <!-- Google Tag Manager -->
+  <noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-TK5QTP"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-TK5QTP');</script>
+  <!-- End Google Tag Manager -->
+  
+
+  <header>
+    <h1><a href="./" title="The Twelve-Factor App">The Twelve-Factor App</a></h1>
+  </header>
+
+  <section class="abstract" id="factor">
+  <article>
+    
+<h2 id="vi_processos">VI. Processos</h2>
+
+<h3 id="execute_a_aplicao_como_um_ou_mais_processos_que_no_armazenam_estado">Execute a aplicação como um ou mais processos que não armazenam estado</h3>
+
+<p>A aplicação é executada em um ambiente de execução como um ou mais <em>processos</em>.</p>
+
+<p>No caso mais simples, o código é um script autônomo, o ambiente de execução é o laptop local de um desenvolvedor com o runtime da linguagem instalado, e o processo é iniciado pela linha de comando (por exemplo, <code>python my_script</code>). Na outra extremidade do espectro, o deploy em produção de uma aplicação sofisticada pode utilizar vários <a href="./concurrency">tipos de processos, instanciado em zero ou mais processos em andamento</a>.</p>
+
+<p><strong>Processos doze-fatores são stateless(não armazenam estado) e <a href="http://en.wikipedia.org/wiki/Shared_nothing_architecture">share-nothing</a>.</strong> Quaisquer dados que precise persistir deve ser armazenado em um serviço de apoio stateful(que armazena o seu estado), tipicamente uma base de dados.</p>
+
+<p>O espaço de memória ou sistema de arquivos do processo pode ser usado como um breve, cache de transação única. Por exemplo, o download de um arquivo grande, operando sobre ele, e armazenando os resultados da operação no banco de dados. A aplicação doze-fatores nunca assume que qualquer coisa cacheada na memória ou no disco estará disponível em uma futura solicitação ou job – com muitos processos de cada tipo rodando, as chances são altas de que uma futura solicitação será servida por um processo diferente. Mesmo quando rodando em apenas um processo, um restart (desencadeado pelo deploy de um código, mudança de configuração, ou o ambiente de execução realocando o processo para uma localização física diferente) geralmente vai acabar com todo o estado local (por exemplo, memória e sistema de arquivos).</p>
+
+<p>Empacotadores de assets (como <a href="http://documentcloud.github.com/jammit/">Jammit</a> ou <a href="http://django-compressor.readthedocs.org/">django-compressor</a>) usa o sistema de arquivos como um cache para assets compilados. Uma aplicação doze-fatores prefere fazer isto compilando durante a <a href="./build-release-run">fase de build</a>, tal como o <a href="http://guides.rubyonrails.org/asset_pipeline.html">Rails asset pipeline</a>, do que em tempo de execução.</p>
+
+<p>Alguns sistemas web dependem de <a href="http://en.wikipedia.org/wiki/Load_balancing_%28computing%29#Persistence">“sessões persistentes”</a> – ou seja, fazem cache dos dados da sessão do usuário na memória do processo da aplicação, esperando futuras requisições do mesmo visitante para serem encaminhadas para o mesmo processo. Sessões persistentes são uma violação do doze-fatores e nunca devem ser utilizadas ou invocadas. Dados do estado da sessão são bons candidatos para um datastore que oferece tempo de expiração, tal como <a href="http://memcached.org/">Memcached</a> ou <a href="http://redis.io/">Redis</a>.</p>
+
+  </article>
+</section>
+
+<section class="concrete">
+  <nav>
+    <div id="locales"><a href="/processes">English (en)</a> | <a href="/ko/processes">한국어 (ko)</a> | <a href="/ja/processes">日本語 (ja)</a> | <a href="/it/processes">Italiano (it)</a> | <a href="/pl/processes">Polski (pl)</a> | <a href="/zh_cn/processes">简体中文 (zh_cn)</a> | <a href="/de/processes">Deutsch (de)</a> | <a href="/es/processes">Español (es)</a> | <a href="/fr/processes">Français (fr)</a> | <a href="/tr/processes">Turkish (tr)</a> | <a href="/uk/processes">Українська (uk)</a> | <span>Brazilian Portuguese (pt_br)</span> | <a href="/ru/processes">Русский (ru)</a></div>
+    <div id="prev"><a href="./build-release-run">&laquo; Previous</a></div>
+    <div id="next"><a href="./port-binding">Next &raquo;</a></div>
+  </nav>
+</section>
+
+
+  <footer>
+  <div id="locales"><a href="/processes">English (en)</a> | <a href="/ko/processes">한국어 (ko)</a> | <a href="/ja/processes">日本語 (ja)</a> | <a href="/it/processes">Italiano (it)</a> | <a href="/pl/processes">Polski (pl)</a> | <a href="/zh_cn/processes">简体中文 (zh_cn)</a> | <a href="/de/processes">Deutsch (de)</a> | <a href="/es/processes">Español (es)</a> | <a href="/fr/processes">Français (fr)</a> | <a href="/tr/processes">Turkish (tr)</a> | <a href="/uk/processes">Українська (uk)</a> | <span>Brazilian Portuguese (pt_br)</span> | <a href="/ru/processes">Русский (ru)</a></div>
+  <div>Written by Adam Wiggins</div>
+  <div>Last updated 2017</div>
+  <div><a href="https://github.com/heroku/12factor">Sourcecode</a></div>
+  <div><a href="/12factor.epub">Download ePub Book</a></div>
+  <div><a href="https://www.heroku.com/policy/privacy">Privacy Policy</a></div>
+</footer>
+</body>
+</html>

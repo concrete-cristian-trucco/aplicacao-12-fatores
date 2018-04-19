@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>The Twelve-Factor App (Traducción de la versión original en Inglés)</title>
+  <meta name="description" content="A methodology for building modern, scalable, maintainable software-as-a-service apps.">
+  <meta name="author" content="Adam Wiggins">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" href="images/favicon.ico">
+
+  <link rel="stylesheet" href="/css/screen.css" media="screen">
+  <link rel="stylesheet" href="/css/mobile.css" media="screen">
+
+  <script type="text/javascript" src="//use.typekit.com/rsq7tro.js"></script>
+  <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+</head>
+<body>
+  
+  <!-- Google Tag Manager -->
+  <noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-TK5QTP"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-TK5QTP');</script>
+  <!-- End Google Tag Manager -->
+  
+
+  <header>
+    <h1><a href="./" title="The Twelve-Factor App">The Twelve-Factor App</a></h1>
+  </header>
+
+  <section class="abstract" id="factor">
+  <article>
+    
+<h2 id="ix_desechabilidad">IX. Desechabilidad</h2>
+
+<h3 id="hacer_el_sistema_ms_robusto_intentando_conseguir_inicios_rpidos_y_finalizaciones_seguras">Hacer el sistema más robusto intentando conseguir inicios rápidos y finalizaciones seguras</h3>
+
+<p><strong>Los <a href="./processes">procesos</a> de las aplicaciones “twelve-factor” son <em>desechables</em>, lo que significa que pueden iniciarse o finalizarse en el momento que sea necesario.</strong> Esto permite un escalado rápido y flexible, un despliegue rápido del <a href="./codebase">código</a> y de los cambios de las <a href="./config">configuraciones</a>, y despliegues más robustos en producción.</p>
+
+<p>Los procesos deberían intentar conseguir <strong>minimizar el tiempo de arranque</strong>. En el mejor de los casos, un proceso necesita unos pocos segundos desde que se ejecuta el mandato hasta que arranca y está preparado para recibir peticiones o trabajos. Mejorar el tiempo de arranque proporciona mayor agilidad en el proceso de <a href="./build-release-run">distribución</a> y escalado; y lo hace más robusto, porque el gestor de procesos puede mover procesos de forma segura entre máquinas físicas más fácilmente.</p>
+
+<p>Los procesos <strong>se paran de manera segura cuando reciben una señal <a href="http://en.wikipedia.org/wiki/SIGTERM">SIGTERM</a></strong> desde el gestor de procesos. Un proceso web para de manera segura cuando deja de escuchar el puerto asociado al servicio (así rechaza cualquier nueva petición), permitiendo que cualquier petición termine de procesarse y pueda finalizar sin problemas. Implícitamente, según este modelo, las peticiones HTTP son breves (no duran más de unos pocos segundos) y, en el caso de un sondeo largo, el cliente debería intentar reconectar una y otra vez cuando se pierda la conexión.</p>
+
+<p>Para finalizar de manera segura, un trabajador (o “worker”) debe devolver el trabajo actual a una cola de trabajos. Por ejemplo, en <a href="http://www.rabbitmq.com/">RabbitMQ</a> un trabajador puede mandar un <a href="http://www.rabbitmq.com/amqp-0-9-1-quickref.html#basic.nack"><code>NACK</code></a>; en <a href="http://kr.github.com/beanstalkd/">Beanstalkd</a>, el trabajo se devuelve a una cola automáticamente en el momento en el que el trabajador finaliza. Los sistemas de exclusión mutua como <a href="https://github.com/collectiveidea/delayed_job#readme">Delayed Job</a> necesitan estar seguros para liberar su candado en el registro de trabajos. Implícitamente, según este modelo, todos los trabajos son <a href="https://es.wikipedia.org/wiki/Reentrancia_%28inform%C3%A1tica%29">reentrantes</a>, lo que se consigue normalmente generando los resultados de manera transaccional, o convirtiendo la operación en <a href="http://es.wikipedia.org/wiki/Idempotencia">idempotente</a>.</p>
+
+<p>Los procesos deberían estar <strong>preparados contra finalizaciones inesperadas</strong>, como en el caso de un fallo a nivel hardware. Aunque es un caso más raro que una finalización mediante la señal <code>SIGTERM</code>, se puede dar el caso. Lo recomendable es usar un sistema de colas robusto, como Beanstalkd, que devuelve los trabajos a su cola cuando los clientes se desconectan o expira su tiempo de espera (“timeout”). En cualquier caso, una aplicación “twelve-factor” es una arquitectura que trata finalizaciones inesperadas y peligrosas. El <a href="http://lwn.net/Articles/191059/">diseño Crash-only</a> lleva este concepto a su <a href="http://docs.couchdb.org/en/latest/intro/overview.html">conclusión lógica</a>.</p>
+
+  </article>
+</section>
+
+<section class="concrete">
+  <nav>
+    <div id="locales"><a href="/disposability">English (en)</a> | <a href="/ko/disposability">한국어 (ko)</a> | <a href="/ja/disposability">日本語 (ja)</a> | <a href="/it/disposability">Italiano (it)</a> | <a href="/pl/disposability">Polski (pl)</a> | <a href="/zh_cn/disposability">简体中文 (zh_cn)</a> | <a href="/de/disposability">Deutsch (de)</a> | <span>Español (es)</span> | <a href="/fr/disposability">Français (fr)</a> | <a href="/tr/disposability">Turkish (tr)</a> | <a href="/uk/disposability">Українська (uk)</a> | <a href="/pt_br/disposability">Brazilian Portuguese (pt_br)</a> | <a href="/ru/disposability">Русский (ru)</a></div>
+    <div id="prev"><a href="./concurrency">&laquo; Previous</a></div>
+    <div id="next"><a href="./dev-prod-parity">Next &raquo;</a></div>
+  </nav>
+</section>
+
+
+  <footer>
+  <div id="locales"><a href="/disposability">English (en)</a> | <a href="/ko/disposability">한국어 (ko)</a> | <a href="/ja/disposability">日本語 (ja)</a> | <a href="/it/disposability">Italiano (it)</a> | <a href="/pl/disposability">Polski (pl)</a> | <a href="/zh_cn/disposability">简体中文 (zh_cn)</a> | <a href="/de/disposability">Deutsch (de)</a> | <span>Español (es)</span> | <a href="/fr/disposability">Français (fr)</a> | <a href="/tr/disposability">Turkish (tr)</a> | <a href="/uk/disposability">Українська (uk)</a> | <a href="/pt_br/disposability">Brazilian Portuguese (pt_br)</a> | <a href="/ru/disposability">Русский (ru)</a></div>
+  <div>Written by Adam Wiggins</div>
+  <div>Last updated 2017</div>
+  <div><a href="https://github.com/heroku/12factor">Sourcecode</a></div>
+  <div><a href="/12factor.epub">Download ePub Book</a></div>
+  <div><a href="https://www.heroku.com/policy/privacy">Privacy Policy</a></div>
+</footer>
+</body>
+</html>

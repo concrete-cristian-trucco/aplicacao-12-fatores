@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>The Twelve-Factor App To jest tłumaczenie.</title>
+  <meta name="description" content="A methodology for building modern, scalable, maintainable software-as-a-service apps.">
+  <meta name="author" content="Adam Wiggins">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" href="images/favicon.ico">
+
+  <link rel="stylesheet" href="/css/screen.css" media="screen">
+  <link rel="stylesheet" href="/css/mobile.css" media="screen">
+
+  <script type="text/javascript" src="//use.typekit.com/rsq7tro.js"></script>
+  <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+</head>
+<body>
+  
+  <!-- Google Tag Manager -->
+  <noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-TK5QTP"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-TK5QTP');</script>
+  <!-- End Google Tag Manager -->
+  
+
+  <header>
+    <h1><a href="./" title="The Twelve-Factor App">The Twelve-Factor App</a></h1>
+  </header>
+
+  <section class="abstract" id="factor">
+  <article>
+    
+<h2 id="vii_przydzielanie_portw">VII. Przydzielanie portów</h2>
+
+<h3 id="udostpniaj_usugi_przez_przydzielanie_portw">Udostępniaj usługi przez przydzielanie portów</h3>
+
+<p>Zdarza się, że aplikacje internetowe uruchamiane są w ramach serwera web. Napisane w PHP np. działają jako moduł <a href="http://httpd.apache.org/">Apache HTTPD</a>, natomiast aplikacje w Javie mogą być uruchomiane wewnątrz serwera aplikacji, np. <a href="http://tomcat.apache.org/">Tomcat</a>.</p>
+
+<p><strong>Aplikacja 12factor nie posiada zewnętrznych zależności</strong> co czyni ją niezależną wobec innych modułów znajdujących się na serwerze. Aplikacja internetowa <strong>udostępniać będzie np. HTTP w formie usługi przez przydzielenie portu</strong>. Umożliwia jej to obsługę zapytań przychodzących do wybranego portu.</p>
+
+<p>Aby skorzystać z usługi udostępnionej przez aplikację, developer może otworzyć adres URL jak np. <code>http://localhost:5000/</code>. W przypadku aplikacji wdrożonej w środowisku produkcyjnym zapytania do udostępnionej publicznie nazwy hosta są obsługiwane przez warstwę nawigacji. Kierowane są one później do procesu sieciowego udostępnionego na danym porcie.</p>
+
+<p>Kwestię obsługi takich zapytań można rozwiązać dodając bibliotekę webservera jako kolejną <a href="./dependencies">zewnętrzną zależność</a>, jak np. <a href="http://www.tornadoweb.org/">Tornado</a> w Pythonie, <a href="http://code.macournoyer.com/thin/">Thin</a> w Ruby, lub <a href="http://www.eclipse.org/jetty/">Jetty</a> dla Javy i innych języków opierających się na JVM. Obsługa zapytania jest całkowicie oprogramowana przez kod aplikacji, natomiast kontraktem ze środowiskiem wykonawczym jest przydzielenie portu w celu obsłużenia tego zapytania.</p>
+
+<p>HTTP nie jest jedyną usługą, którą możną eksportować przez przydzielenie portu. Niemal każdy rodzaj oprogramowania serwerowego może być uruchomiony przez przydzielenie portu na którym jest uruchomiony proces i oczekiwać na przychodzące zapytania. Do przykładów należą <a href="http://www.ejabberd.im/">ejabberd</a> (komunikujący się przez <a href="http://xmpp.org/">XMPP</a>), oraz <a href="http://redis.io/">Redis</a> (komunikujący się przez <a href="http://redis.io/topics/protocol">Redis protocol</a>).</p>
+
+<p>Warto również zauważyć, że przez przydzielnie portu aplikacja może pełnić funkcję <a href="./backing-services">usługi wspierającej</a> dla innej aplikacji przez udostępnienie swojego adresu URL jako adres zasobu w <a href="./config">konfiguracji</a> tejże aplikacji.</p>
+
+  </article>
+</section>
+
+<section class="concrete">
+  <nav>
+    <div id="locales"><a href="/port-binding">English (en)</a> | <a href="/ko/port-binding">한국어 (ko)</a> | <a href="/ja/port-binding">日本語 (ja)</a> | <a href="/it/port-binding">Italiano (it)</a> | <span>Polski (pl)</span> | <a href="/zh_cn/port-binding">简体中文 (zh_cn)</a> | <a href="/de/port-binding">Deutsch (de)</a> | <a href="/es/port-binding">Español (es)</a> | <a href="/fr/port-binding">Français (fr)</a> | <a href="/tr/port-binding">Turkish (tr)</a> | <a href="/uk/port-binding">Українська (uk)</a> | <a href="/pt_br/port-binding">Brazilian Portuguese (pt_br)</a> | <a href="/ru/port-binding">Русский (ru)</a></div>
+    <div id="prev"><a href="./processes">&laquo; Previous</a></div>
+    <div id="next"><a href="./concurrency">Next &raquo;</a></div>
+  </nav>
+</section>
+
+
+  <footer>
+  <div id="locales"><a href="/port-binding">English (en)</a> | <a href="/ko/port-binding">한국어 (ko)</a> | <a href="/ja/port-binding">日本語 (ja)</a> | <a href="/it/port-binding">Italiano (it)</a> | <span>Polski (pl)</span> | <a href="/zh_cn/port-binding">简体中文 (zh_cn)</a> | <a href="/de/port-binding">Deutsch (de)</a> | <a href="/es/port-binding">Español (es)</a> | <a href="/fr/port-binding">Français (fr)</a> | <a href="/tr/port-binding">Turkish (tr)</a> | <a href="/uk/port-binding">Українська (uk)</a> | <a href="/pt_br/port-binding">Brazilian Portuguese (pt_br)</a> | <a href="/ru/port-binding">Русский (ru)</a></div>
+  <div>Written by Adam Wiggins</div>
+  <div>Last updated 2017</div>
+  <div><a href="https://github.com/heroku/12factor">Sourcecode</a></div>
+  <div><a href="/12factor.epub">Download ePub Book</a></div>
+  <div><a href="https://www.heroku.com/policy/privacy">Privacy Policy</a></div>
+</footer>
+</body>
+</html>

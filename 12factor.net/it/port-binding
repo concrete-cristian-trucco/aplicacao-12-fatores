@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>The Twelve-Factor App (Questo testo è una traduzione della versione originale in inglese.)</title>
+  <meta name="description" content="A methodology for building modern, scalable, maintainable software-as-a-service apps.">
+  <meta name="author" content="Adam Wiggins">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" href="images/favicon.ico">
+
+  <link rel="stylesheet" href="/css/screen.css" media="screen">
+  <link rel="stylesheet" href="/css/mobile.css" media="screen">
+
+  <script type="text/javascript" src="//use.typekit.com/rsq7tro.js"></script>
+  <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+</head>
+<body>
+  
+  <!-- Google Tag Manager -->
+  <noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-TK5QTP"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-TK5QTP');</script>
+  <!-- End Google Tag Manager -->
+  
+
+  <header>
+    <h1><a href="./" title="The Twelve-Factor App">The Twelve-Factor App</a></h1>
+  </header>
+
+  <section class="abstract" id="factor">
+  <article>
+    
+<h2 id="vii_binding_delle_porte">VII. Binding delle Porte</h2>
+
+<h3 id="esporta_i_servizi_tramite_binding_delle_porte">Esporta i servizi tramite binding delle porte</h3>
+
+<p>Normalmente, le applicazioni web sono qualcosa di eseguito all’interno di un server web, che fa da contenitore. Per esempio, le applicazioni PHP possono venire eseguite come modulo all’interno di <a href="http://httpd.apache.org/">Apache HTTPD</a>, così come un’applicazione Java viene eseguita in <a href="http://tomcat.apache.org/">Tomcat</a>.</p>
+
+<p><strong>L’applicazione twelve-factor</strong> è completamente self-contained (contenuta in se stessa) e non si affida a un altro servizio (come appunto un webserver) nell’ambiente di esecuzione. La web app <strong>esporta HTTP come un servizio effettuando un binding specifico a una porta</strong>, rimanendo in ascolto su tale porta per le richieste in entrata.</p>
+
+<p>In un ambiente di sviluppo locale, lo sviluppatore accede al servizio tramite un URL come <code>http://localhost:5000/</code>. In fase di deployment, invece, un layer di routing gestisce le richieste da un hostname pubblico alla specifica porta desiderata.</p>
+
+<p>Tale funzionalità viene, frequentemente, implementata tramite <a href="./dependencies">dichiarazione delle opportune dipendenze</a>, aggiungendo una libreria webserver all’applicazionecome <a href="http://www.tornadoweb.org/">Tornado</a> per Python, <a href="http://code.macournoyer.com/thin/">Thin</a> per Ruby, o <a href="http://www.eclipse.org/jetty/">Jetty</a> per Java e altri linguaggi basati su JVM. L’evento, nella sua interezza, “ha luogo” nello spazio dell’utente, nel codice dell’applicazione.</p>
+
+<p>HTTP non è l’unico servizio che può essere esportato tramite port binding. In realtà quasi ogni tipo di software può essere eseguito tramite uno specifico binding tra processo e porta dedicata. Alcuni esempi includono <a href="http://www.ejabberd.im/">ejabberd</a> (a tal proposito, leggere su <a href="http://xmpp.org/">XMPP</a>), e <a href="http://redis.io/">Redis</a> (a proposito del <a href="http://redis.io/topics/protocol">protoccolo Redis</a>).</p>
+
+<p>Nota inoltre che usare il binding delle porte permette a un’applicazione di diventare il backing service di un’altra applicazione, tramite un URL dedicato o comunque come una risorsa la cui configurazione si può gestire tramite appositi file di <a href="./config">config</a> dell’app consumer del servizio.</p>
+
+  </article>
+</section>
+
+<section class="concrete">
+  <nav>
+    <div id="locales"><a href="/port-binding">English (en)</a> | <a href="/ko/port-binding">한국어 (ko)</a> | <a href="/ja/port-binding">日本語 (ja)</a> | <span>Italiano (it)</span> | <a href="/pl/port-binding">Polski (pl)</a> | <a href="/zh_cn/port-binding">简体中文 (zh_cn)</a> | <a href="/de/port-binding">Deutsch (de)</a> | <a href="/es/port-binding">Español (es)</a> | <a href="/fr/port-binding">Français (fr)</a> | <a href="/tr/port-binding">Turkish (tr)</a> | <a href="/uk/port-binding">Українська (uk)</a> | <a href="/pt_br/port-binding">Brazilian Portuguese (pt_br)</a> | <a href="/ru/port-binding">Русский (ru)</a></div>
+    <div id="prev"><a href="./processes">&laquo; Previous</a></div>
+    <div id="next"><a href="./concurrency">Next &raquo;</a></div>
+  </nav>
+</section>
+
+
+  <footer>
+  <div id="locales"><a href="/port-binding">English (en)</a> | <a href="/ko/port-binding">한국어 (ko)</a> | <a href="/ja/port-binding">日本語 (ja)</a> | <span>Italiano (it)</span> | <a href="/pl/port-binding">Polski (pl)</a> | <a href="/zh_cn/port-binding">简体中文 (zh_cn)</a> | <a href="/de/port-binding">Deutsch (de)</a> | <a href="/es/port-binding">Español (es)</a> | <a href="/fr/port-binding">Français (fr)</a> | <a href="/tr/port-binding">Turkish (tr)</a> | <a href="/uk/port-binding">Українська (uk)</a> | <a href="/pt_br/port-binding">Brazilian Portuguese (pt_br)</a> | <a href="/ru/port-binding">Русский (ru)</a></div>
+  <div>Written by Adam Wiggins</div>
+  <div>Last updated 2017</div>
+  <div><a href="https://github.com/heroku/12factor">Sourcecode</a></div>
+  <div><a href="/12factor.epub">Download ePub Book</a></div>
+  <div><a href="https://www.heroku.com/policy/privacy">Privacy Policy</a></div>
+</footer>
+</body>
+</html>

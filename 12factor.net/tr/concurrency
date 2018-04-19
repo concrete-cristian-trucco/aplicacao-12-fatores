@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>The Twelve-Factor App Türkçe çeviri</title>
+  <meta name="description" content="A methodology for building modern, scalable, maintainable software-as-a-service apps.">
+  <meta name="author" content="Adam Wiggins">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" href="images/favicon.ico">
+
+  <link rel="stylesheet" href="/css/screen.css" media="screen">
+  <link rel="stylesheet" href="/css/mobile.css" media="screen">
+
+  <script type="text/javascript" src="//use.typekit.com/rsq7tro.js"></script>
+  <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+</head>
+<body>
+  
+  <!-- Google Tag Manager -->
+  <noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-TK5QTP"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-TK5QTP');</script>
+  <!-- End Google Tag Manager -->
+  
+
+  <header>
+    <h1><a href="./" title="The Twelve-Factor App">The Twelve-Factor App</a></h1>
+  </header>
+
+  <section class="abstract" id="factor">
+  <article>
+    
+<h2 id="viii_e_zamanllk">VIII. Eş Zamanlılık</h2>
+
+<h3 id="sre_modeli_yardmyla_datklatrma">Süreç modeli yardımıyla dağıtıklaştırma</h3>
+
+<p>Herhangi bir bilgisayar programı bir kere çalıştığı zaman bir veya daha fazla süreç tarafından temsil edilir. Web uygulamaları çeşitli süreç çalışma formlarını alır. Örneğin, Php süreçleri Apache’nin çocuk süreçleri olarak çalışır, istek üzerine talep hacmine tarafından ihtiyaç duyulduğunda başlatılır. Java süreçleri, karşıt yaklaşımı benimser; JVM, başlangıçta çok sayıda sistem kaynağı (CPU ve bellek) ayıran büyük bir uber işlemi sağlar ve eşzamanlılık iş parçacıkları aracılığıyla dahili olarak yönetilir. Her iki durumda, çalışan süreçler, uygulamanın geliştiricilerine yalnızca minimum düzeyde görünürdür.</p>
+
+<p><img src="/images/process-types.png" alt="Ölçek, çalışan süreçler olarak ifade edilir, iş yükü çeşitliliği, süreç tipi olarak tanımlanır." /></p>
+
+<p><strong>On iki faktör uygulamasında, süreçler birinci sınıf üyelerdir.</strong> On iki faktör uygulamasındaki süreçler <a href="https://adam.herokuapp.com/past/2011/5/9/applying_the_unix_process_model_to_web_apps/">arka planda çalışan servis programları için olan unix süreç modelinden</a> güçlü ipuçları alır. Bu modeli kullanarak geliştirici uygulamasını her bir tip işe bir <em>süreç tipi</em> atayarak, ayrı iş yüklerini kontrol etmek için uygulamasını planlayabilir. Örneğin, HTTP istekleri web süreçleri tarafından işlenir ve uzun çalışan arkaplan görevleri, işçi süreçler tarafından işlenir.</p>
+
+<p>Bu, bireysel süreçlerin kendi dahili çoklu işlemelerini içermiyor değil, çalışma zamanı içindeki iş parçacıkları aracılığıyla VM, veya <a href="http://rubyeventmachine.com/">EventMachine</a>, <a href="http://twistedmatrix.com/trac/">Twisted</a>, <a href="http://nodejs.org/">Node.js</a> gibi araçlarda bulunan asenkron model. Fakat bireysel VM yalnızca çok aşırı büyüyebilir (dikey ölçekte), bu yüzden uygulama aynı zamanda çoklu fiziksel makinelerde çalışan çoklu süreçleri içerebilmelidir.</p>
+
+<p>Bu süreç modeli, konu ölçeklendirme zamanına geldiğinde gerçekten çok başarılıdır. Paylaşımsız, yatay olarak bölümlenebilir bir doğası olan on iki faktör uygulama süreçleri, daha fazla eş zamanlılık eklemenin kolay ve güvenilir bir işlem olduğu anlamına gelir. Süreç tipleri dizisi ve her bir tipin süreçlerinin numarası <em>süreç oluşumu</em> olarak bilinir.</p>
+
+<p>On iki faktör uygulama süreçleri <a href="http://dustin.github.com/2010/02/28/running-processes.html">asla arka planda çalışmamalı</a> ya da PID dosyalarını yazmamalıdır. Bunun yerine, <a href="./logs">çıktı akışlarını</a> kontrol etmek, çökmüş süreçlere cevap vermek, kullanıcı başlatımlı tekrar başlatma ve kapatmaları işlemek için işletim sistemlerinin süreç yöneticisine( <a href="https://www.freedesktop.org/wiki/Software/systemd/">systemd</a> gibi bulut platformunda yayınlanmış süreç yöneticisi veya geliştirme sürecinde <a href="http://blog.daviddollar.org/2011/05/06/introducing-foreman.html">Foreman</a>‘e benzer araçlar ) dayanır.</p>
+
+  </article>
+</section>
+
+<section class="concrete">
+  <nav>
+    <div id="locales"><a href="/concurrency">English (en)</a> | <a href="/ko/concurrency">한국어 (ko)</a> | <a href="/ja/concurrency">日本語 (ja)</a> | <a href="/it/concurrency">Italiano (it)</a> | <a href="/pl/concurrency">Polski (pl)</a> | <a href="/zh_cn/concurrency">简体中文 (zh_cn)</a> | <a href="/de/concurrency">Deutsch (de)</a> | <a href="/es/concurrency">Español (es)</a> | <a href="/fr/concurrency">Français (fr)</a> | <span>Turkish (tr)</span> | <a href="/uk/concurrency">Українська (uk)</a> | <a href="/pt_br/concurrency">Brazilian Portuguese (pt_br)</a> | <a href="/ru/concurrency">Русский (ru)</a></div>
+    <div id="prev"><a href="./port-binding">&laquo; Previous</a></div>
+    <div id="next"><a href="./disposability">Next &raquo;</a></div>
+  </nav>
+</section>
+
+
+  <footer>
+  <div id="locales"><a href="/concurrency">English (en)</a> | <a href="/ko/concurrency">한국어 (ko)</a> | <a href="/ja/concurrency">日本語 (ja)</a> | <a href="/it/concurrency">Italiano (it)</a> | <a href="/pl/concurrency">Polski (pl)</a> | <a href="/zh_cn/concurrency">简体中文 (zh_cn)</a> | <a href="/de/concurrency">Deutsch (de)</a> | <a href="/es/concurrency">Español (es)</a> | <a href="/fr/concurrency">Français (fr)</a> | <span>Turkish (tr)</span> | <a href="/uk/concurrency">Українська (uk)</a> | <a href="/pt_br/concurrency">Brazilian Portuguese (pt_br)</a> | <a href="/ru/concurrency">Русский (ru)</a></div>
+  <div>Written by Adam Wiggins</div>
+  <div>Last updated 2017</div>
+  <div><a href="https://github.com/heroku/12factor">Sourcecode</a></div>
+  <div><a href="/12factor.epub">Download ePub Book</a></div>
+  <div><a href="https://www.heroku.com/policy/privacy">Privacy Policy</a></div>
+</footer>
+</body>
+</html>
